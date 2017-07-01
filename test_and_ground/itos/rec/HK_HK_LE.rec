@@ -1,0 +1,20 @@
+CfeTelemetryPacket FSW_HK_HkPkt
+{
+    applyWhen={FieldInRange{field=applicationId, range=0x9B}}
+
+  U1    HK_CMDPC          {generateMnemonic="no"}
+  U1    HK_CMDEC          {generateMnemonic="no"}
+  U21   HK_Spare          {generateMnemonic="no"}
+  U21   HK_CMBPKTSSENT    {generateMnemonic="no"}
+  U21   HK_MISSDATACTR     {generateMnemonic="no"}
+  U4321 HK_MEMPOOLHNDL    {generateMnemonic="no"}
+}
+
+/* Define the mnemonics */
+D FSW_HK_HkPkt_packet_time {sourceFields={FSW_HK_HkPkt.time}}
+U FSW_HK_CMDPC {sourceFields={FSW_HK_HkPkt.HK_CMDPC}}
+U FSW_HK_CMDEC {sourceFields={FSW_HK_HkPkt.HK_CMDEC}}
+U FSW_HK_CMBPKTSSENT    {sourceFields={FSW_HK_HkPkt.HK_CMBPKTSSENT}}
+U FSW_HK_MISSDATACTR     {sourceFields={FSW_HK_HkPkt.HK_MISSDATACTR}}
+U FSW_HK_MEMPOOLHNDL    {sourceFields={FSW_HK_HkPkt.HK_MEMPOOLHNDL}}
+

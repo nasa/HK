@@ -1,0 +1,1731 @@
+<html><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Test Execution Summary</title>
+    <style type="text/css" media="screen">
+p {margin-top:0in; margin-bottom:.0001pt; margin-left:0in; margin-right:0in;}
+ul, ol  {margin-top:0in; margin-bottom:.0001pt; margin-left:0in; margin-right:0in;}
+body, table { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; }
+table.display { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; width: 100%;}
+table.display2 { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; width: 95%;}
+.display td, .display2 td { vertical-align: top; font-size: 9pt;}
+table.list { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; width: 95%; border-width: 1px; border-style: solid; border-color: #333399; border-collapse: collapse; padding: 5px 5px 5px 5px; }
+.list th { color: #000000; background-color: #F9F9E3; border-width: 1px; border-style: solid; border-color: #333399; }
+.list td { background-color: #F9F7F7; vertical-align: top; border-width: 1px; border-style: solid; border-color: #333399; padding: 5px 5px 5px 5px; }
+table.list2 { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; border-width: 0px; border-style: solid; border-color: #333399; padding: 0px 0px 0px 0px; }
+.list2 th { font-size: 11pt; color: #333399; text-align: left; text-decoration: underline; background-color: #FFFFFF; padding: 2px 2px 2px 2px; }
+.list2 td { background-color: #FFFFFF; vertical-align: top; padding: 2px 2px 2px 2px; }
+table.list3 { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; width: 100%; border-width: 1px; border-style: solid; border-color: #333399; border-collapse: collapse; padding: 0px 0px 0px 0px; }
+.list3 th { color: #000000; background-color: #ECECEC; border-width: 1px 0px 1px 0px; border-style: solid; border-color: #333399; padding: 5px 5px 5px 5px; }
+.list3 td { background-color: #F9F7F7; vertical-align: top; border-style: solid; border-color: #333399; border-width: 1px 0px 1px 0px; padding: 5px 5px 5px 5px; }
+td.logo { width: 10%; }
+.border { border-width: 0px; border-style: solid; border-color: #333399; padding: 2px 2px 2px 2px; }
+.center { text-align: center; }
+.right { text-align: right; }
+.nowrap { white-space: nowrap; }
+.title { font-size: 16pt; color: #333399; font-weight: bold; text-align: center; }
+.date { font-size: 10pt; color: #333399; font-weight: bold; text-align: right; }
+.header { font-size: 11pt; color: #000000; text-align: center; }
+.footer { font-size: 9pt; color: #999999; text-align: left; }
+.heading1 { font-size: 11pt; color: #000000; font-weight: bold; background-color: #F6E78C; }
+.heading2 { font-size: 11pt; color: #333399; font-weight: bold; background-color: #F6E78C; }
+.heading3 { font-size: 11pt; color: #000000; font-weight: bold; background-color: #E6E6CB; }
+.heading4 { font-size: 11pt; color: #333399; font-weight: bold; background-color: #E6E6CB; }
+.heading5 { font-size: 11pt; color: #000000; font-weight: bold; background-color: #CFCF9D; }
+.heading6 { font-size: 11pt; color: #333399; font-weight: bold; background-color: #CFCF9D; }
+.heading7 { font-size: 15pt; color: #000000; font-weight: bold; background-color: #CFCF9D; }
+.heading8 { font-size: 10pt; color: #000000; font-weight: bold; text-align: center; background-color: #F5EFCA; }
+.heading9 { font-size: 10pt; color: #000000; font-weight: bold; background-color: #F6E78C; }
+.grouping1 { font-size: 10pt; color: #333399; font-weight: bold; background-color: #CFCF9D; }
+.grouping2 { font-size: 10pt; color: #000000; font-weight: bold; background-color: #CFCF9D; }
+.grouping3 { font-size: 9pt; color: #333399; font-weight: bold; background-color: #E6E6CB; }
+.odd_row { background-color: #F8F3F7; }
+.even_row { background-color: #FFFBFF; }
+.level1 { background-color: #FFEFF7; padding: 2px 2px 2px 2px; }
+.level2 { background-color: #F7E7EF; padding: 2px 2px 2px 2px; }
+.level2_indent { background-color: #F7E7EF; padding: 2px 2px 2px 12px; }
+.level3 { background-color: #EFDFE7; padding: 2px 2px 2px 2px; }
+.level3_indent { background-color: #EFDFE7; padding: 2px 2px 2px 22px; }
+.level4 { background-color: #E7D7DF; padding: 2px 2px 2px 2px; }
+.level4_indent { background-color: #E7D7DF; padding: 2px 2px 2px 32px; }
+.level5 { background-color: #DFCFD7; padding: 2px 2px 2px 2px; }
+.level5_indent { background-color: #DFCFD7; padding: 2px 2px 2px 42px; }
+.level6 { background-color: #D1BFC8; padding: 2px 2px 2px 2px; }
+.level6_indent { background-color: #D1BFC8; padding: 2px 2px 2px 52px; }
+.level7 { background-color: #C2B0B9; padding: 2px 2px 2px 2px; }
+.level7_indent { background-color: #C2B0B9; padding: 2px 2px 2px 62px; }
+.level8 { background-color: #B0A0A8; padding: 2px 2px 2px 2px; }
+.level8_indent { background-color: #B0A0A8; padding: 2px 2px 2px 72px; }
+.indent_transparent { padding: 0px 0px 0px 12px }
+.context_backward_level4_indent { background-color: #E7D7DF; padding: 2px 2px 2px 2px; }
+.context_backward_level3_indent { background-color: #EFDFE7; padding: 2px 2px 2px 12px; }
+.context_backward_level2_indent { background-color: #F7E7EF; padding: 2px 2px 2px 22px; }
+.context_backward_level1_indent { background-color: #FFEFF7; padding: 2px 2px 2px 32px; }
+.context { color: #333399; font-weight: bold; background-color: #FFFFFF; border-style: solid; border-color: #000000; border-width: 1px; padding: 2px 2px 2px 2px; }
+.context_indent { color: #333399; font-weight: bold; background-color: #FFFFFF; border-style: solid; border-color: #000000; border-width: 1px; padding: 2px 2px 2px 42px; }
+.context_forward_level1_indent { background-color: #FFEFF7; padding: 2px 2px 2px 52px; }
+.context_forward_level2_indent { background-color: #F7E7EF; padding: 2px 2px 2px 62px; }
+.context_forward_level3_indent { background-color: #EFDFE7; padding: 2px 2px 2px 72px; }
+.context_forward_level4_indent { background-color: #E7D7DF; padding: 2px 2px 2px 82px; }
+.document_level1 { background-color: #FFFFFF; padding: 2px 2px 2px 2px; }
+.document_level2 { background-color: #FFFFFF; padding: 2px 2px 2px 12px; }
+.document_level3 { background-color: #FFFFFF; padding: 2px 2px 2px 22px; }
+.document_level4 { background-color: #FFFFFF; padding: 2px 2px 2px 32px; }
+.underline { text-decoration: underline; }
+.bold { color: #000000; font-weight: bold; }
+.bold_large { font-size: 12pt; color: #000000; font-weight: bold; }
+.bold_very_large { font-size: 14pt; color: #000000; font-weight: bold; }
+.bold_italic { color: #000000; font-weight: bold; font-style: italic; }
+.bold_underline { color: #000000; font-weight: bold; text-decoration: underline; }
+.bold_color { color: #333399; font-weight: bold; }
+.bold_color_large { font-size: 12pt; color: #333399; font-weight: bold; }
+.bold_color_italic { color: #333399; font-weight: bold; font-style: italic; }
+.bold_color_underline { color: #333399; font-weight: bold; text-decoration: underline; }
+.bold_color_underline_large { font-size: 11pt; color: #333399; font-weight: bold; text-decoration: underline; }
+.hr_default { height:1px; width:100%; color: #000000; background:#000000; }
+.calendar_no_date_cell { background-color: #F3F3F3; }
+</style>
+
+    <style type="text/css" media="print">
+p {margin-top:0in; margin-bottom:.0001pt; margin-left:0in; margin-right:0in;}
+ul, ol  {margin-top:0in; margin-bottom:.0001pt; margin-left:0in; margin-right:0in;}
+thead { display: table-header-group; }
+tfoot { display: table-footer-group; }
+tbody { display:table-row-group; }
+body, table { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; }
+table.display { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; width: 100%;}
+table.display2 { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; width: 95%;}
+.display td, .display2 td { vertical-align: top; font-size: 9pt;}
+table.list { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; width: 95%; border-width: 1px; border-style: solid; border-color: #333399; border-collapse: collapse; padding: 5px 5px 5px 5px; }
+.list th { color: #000000; background-color: #F9F9E3; border-width: 1px; border-style: solid; border-color: #333399; }
+.list td { background-color: #F9F7F7; vertical-align: top; border-width: 1px; border-style: solid; border-color: #333399; padding: 5px 5px 5px 5px; }
+table.list2 { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; border-width: 0px; border-style: solid; border-color: #333399; padding: 0px 0px 0px 0px; }
+.list2 th { font-size: 11pt; color: #333399; text-align: left; text-decoration: underline; background-color: #FFFFFF; padding: 2px 2px 2px 2px; }
+.list2 td { background-color: #FFFFFF; vertical-align: top; padding: 2px 2px 2px 2px; }
+table.list3 { font-family: Arial, Helvetica, Tahoma; font-size: 9pt; width: 100%; border-width: 1px; border-style: solid; border-color: #333399; border-collapse: collapse; padding: 0px 0px 0px 0px; }
+.list3 th { color: #000000; background-color: #ECECEC; border-width: 1px 0px 1px 0px; border-style: solid; border-color: #333399; padding: 5px 5px 5px 5px; }
+.list3 td { background-color: #F9F7F7; vertical-align: top; border-style: solid; border-color: #333399; border-width: 1px 0px 1px 0px; padding: 5px 5px 5px 5px; }
+td.logo { width: 10%; }
+.border { border-width: 0px; border-style: solid; border-color: #333399; padding: 2px 2px 2px 2px; }
+.center { text-align: center; }
+.right { text-align: right; }
+.nowrap { white-space: nowrap; }
+.title { font-size: 16pt; color: #333399; font-weight: bold; text-align: center; }
+.date { font-size: 10pt; color: #333399; font-weight: bold; text-align: right; }
+.header { font-size: 11pt; color: #000000; text-align: center; }
+.footer { font-size: 9pt; color: #999999; text-align: left; }
+.heading1 { font-size: 11pt; color: #000000; font-weight: bold; background-color: #F6E78C; }
+.heading2 { font-size: 11pt; color: #333399; font-weight: bold; background-color: #F6E78C; }
+.heading3 { font-size: 11pt; color: #000000; font-weight: bold; background-color: #E6E6CB; }
+.heading4 { font-size: 11pt; color: #333399; font-weight: bold; background-color: #E6E6CB; }
+.heading5 { font-size: 11pt; color: #000000; font-weight: bold; background-color: #CFCF9D; }
+.heading6 { font-size: 11pt; color: #333399; font-weight: bold; background-color: #CFCF9D; }
+.heading7 { font-size: 15pt; color: #000000; font-weight: bold; background-color: #CFCF9D; }
+.heading8 { font-size: 10pt; color: #000000; font-weight: bold; text-align: center; background-color: #F5EFCA; }
+.heading9 { font-size: 10pt; color: #000000; font-weight: bold; background-color: #F6E78C; }
+.grouping1 { font-size: 10pt; color: #333399; font-weight: bold; background-color: #CFCF9D; }
+.grouping2 { font-size: 10pt; color: #000000; font-weight: bold; background-color: #CFCF9D; }
+.grouping3 { font-size: 9pt; color: #333399; font-weight: bold; background-color: #E6E6CB; }
+.odd_row { background-color: #F8F3F7; }
+.even_row { background-color: #FFFBFF; }
+.level1 { background-color: #FFEFF7; padding: 2px 2px 2px 2px; }
+.level2 { background-color: #F7E7EF; padding: 2px 2px 2px 2px; }
+.level2_indent { background-color: #F7E7EF; padding: 2px 2px 2px 12px; }
+.level3 { background-color: #EFDFE7; padding: 2px 2px 2px 2px; }
+.level3_indent { background-color: #EFDFE7; padding: 2px 2px 2px 22px; }
+.level4 { background-color: #E7D7DF; padding: 2px 2px 2px 2px; }
+.level4_indent { background-color: #E7D7DF; padding: 2px 2px 2px 32px; }
+.level5 { background-color: #DFCFD7; padding: 2px 2px 2px 2px; }
+.level5_indent { background-color: #DFCFD7; padding: 2px 2px 2px 42px; }
+.level6 { background-color: #D1BFC8; padding: 2px 2px 2px 2px; }
+.level6_indent { background-color: #D1BFC8; padding: 2px 2px 2px 52px; }
+.level7 { background-color: #C2B0B9; padding: 2px 2px 2px 2px; }
+.level7_indent { background-color: #C2B0B9; padding: 2px 2px 2px 62px; }
+.level8 { background-color: #B0A0A8; padding: 2px 2px 2px 2px; }
+.level8_indent { background-color: #B0A0A8; padding: 2px 2px 2px 72px; }
+.indent_transparent { padding: 0px 0px 0px 12px; }
+.context_backward_level4_indent { background-color: #E7D7DF; padding: 2px 2px 2px 2px; }
+.context_backward_level3_indent { background-color: #EFDFE7; padding: 2px 2px 2px 12px; }
+.context_backward_level2_indent { background-color: #F7E7EF; padding: 2px 2px 2px 22px; }
+.context_backward_level1_indent { background-color: #FFEFF7; padding: 2px 2px 2px 32px; }
+.context { color: #333399; font-weight: bold; background-color: #FFFFFF; border-style: solid; border-color: #000000; border-width: 1px; padding: 2px 2px 2px 2px; }
+.context_indent { color: #333399; font-weight: bold; background-color: #FFFFFF; border-style: solid; border-color: #000000; border-width: 1px; padding: 2px 2px 2px 42px; }
+.context_forward_level1_indent { background-color: #FFEFF7; padding: 2px 2px 2px 52px; }
+.context_forward_level2_indent { background-color: #F7E7EF; padding: 2px 2px 2px 62px; }
+.context_forward_level3_indent { background-color: #EFDFE7; padding: 2px 2px 2px 72px; }
+.context_forward_level4_indent { background-color: #E7D7DF; padding: 2px 2px 2px 82px; }
+.document_level1 { background-color: #FFFFFF; padding: 2px 2px 2px 2px; }
+.document_level2 { background-color: #FFFFFF; padding: 2px 2px 2px 12px; }
+.document_level3 { background-color: #FFFFFF; padding: 2px 2px 2px 22px; }
+.document_level4 { background-color: #FFFFFF; padding: 2px 2px 2px 32px; }
+.underline { text-decoration: underline; }
+.bold { color: #000000; font-weight: bold; }
+.bold_large { font-size: 12pt; color: #000000; font-weight: bold; }
+.bold_very_large { font-size: 14pt; color: #000000; font-weight: bold; }
+.bold_italic { color: #000000; font-weight: bold; font-style: italic; }
+.bold_underline { color: #000000; font-weight: bold; text-decoration: underline; }
+.bold_color { color: #333399; font-weight: bold; }
+.bold_color_large { font-size: 12pt; color: #333399; font-weight: bold; }
+.bold_color_italic { color: #333399; font-weight: bold; font-style: italic; }
+.bold_color_underline { color: #333399; font-weight: bold; text-decoration: underline; }
+.bold_color_underline_large { font-size: 11pt; color: #333399; font-weight: bold; text-decoration: underline; }
+.hr_default { height:1px; width:100%; color: #000000; background:#000000; }
+.calendar_no_date_cell { background-color: #F3F3F3; }
+</style>
+
+	<script type="text/javascript">
+		var line_count=0;
+		
+		function writeEvenOddTRTag() {
+			line_count++; 
+			if (line_count%2 == 0)
+				document.write("<tr class='even_row'>");
+			else
+				document.write("<tr class='odd_row'>");
+		}
+	</script>
+</head>
+
+
+
+<body>
+<table class="heading">
+<tbody><tr>
+	<td></td>
+	<td class="title_white" width="100%" align="right">Test Execution Summary</td>
+	<td>&nbsp;</td>
+</tr>
+</tbody></table>
+<table class="white_bg">
+    <tbody><tr><td></td></tr>
+</tbody></table>
+<table class="heading" width="100%">
+    <tbody><tr><td></td></tr>
+
+</tbody></table>
+<p class="header"></p>
+<p class="date">Nov 9, 2016</p>
+
+<table class="detailcols fullWidth">
+<!-- block ID=4444-->
+
+<!-- Display issue heading -->
+<tbody><tr><th style="text-align: left">HK_BasicHousekeeping - Item 4444 </th></tr>
+<!-- Display issue field names and values -->
+
+<tr><td><b>TEST_Test_Name:</b> HK_BasicHousekeeping</td></tr>
+
+<tr><td><b>TEST_Description:</b> &nbsp;</td></tr>
+
+<tr><td><b>TEST_Current_Build:</b> 2.4.1.0</td></tr>
+
+<tr><td><b>TEST_Execution_Assigned_To:</b> Walt Moleski (wmoleski)</td></tr>
+
+<tr><td><b>TEST_Execution_Testbed:</b> cFE 6.5.0.0; OSAL 4.2.0.0; PSP 1.3.0.0</td></tr>
+
+<tr><td><b>TEST_Execution_Checksum:</b> 50244</td></tr>
+
+<tr><td><b>TEST_Execution_Completion_Date:</b> Nov 9, 2016</td></tr>
+
+<tr><td><b>TEST_Execution_Time:</b> 455.295 seconds; 7.58825 minutes</td></tr>
+
+<tr><td><b>TEST_Execution_Comments:</b> <!-- MKS HTML -->All requirements passed.</td></tr>
+
+<tr><td><b>TEST_Comments:</b> &nbsp;</td></tr>
+
+<!-- Relationships info -->
+<!-- Display relationship heading -->
+<tr><td>DCRs Submitted / Tested and Requirements Validated</td></tr>
+
+
+<tr><td class="detailheading" style="text-align: left">Links_To_TEST_from_DCRs_Backward,ALM_Validates:</td></tr>
+<tr>
+    <td>
+        <table class="detailcols fullWidth">
+        
+        <tbody><tr>
+            
+            <th>ReqID</th>
+            
+            <th>Text</th>
+            
+            <th>Build Test Method</th>
+            
+            <th>REQ_Build_Sys_Test_Results</th>
+            
+            <th>REQ_Build_Sys_Test_Comments</th>
+            
+            <th>DCR_Title</th>
+            
+            <th>DCR_TEST_Outcome</th>
+            
+        </tr>
+        <!-- block ID=4444-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2000</td>
+            
+            <td><!-- MKS HTML -->HK shall collect flight software housekeeping data from table-specified input messages</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4444-->
+<!-- block ID=4444-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK2001</td>
+            
+            <td><!-- MKS HTML -->HK shall output table-defined messages,
+ at the scheduled rate, by combining input message data starting at the 
+table-defined offset and table-defined number of bytes to the 
+table-defined offset in the output message.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4444-->
+<!-- block ID=4444-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2001.1</td>
+            
+            <td><!-- MKS HTML -->Upon a table update, HK shall update the output message formats specified in the table during normal execution.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_stresshousekeeping, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4444-->
+<!-- block ID=4444-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK3000</td>
+            
+            <td><!-- MKS HTML --><p>HK shall generate a housekeeping message containing the following:</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data Counter</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds:&nbsp; 
+verified cmdpc and cmdec increment properly. &nbsp; &nbsp; &nbsp; &nbsp;
+ Tested in procudure hk_basichousekeeping, hk_stresshousekeeping, 
+hk_stresstableload:&nbsp; verified cmbpktssent increments properly. 
+&nbsp; Tested in procudure hk_missingdata, hk_stressmissingdata:&nbsp; 
+verified cmbpktssent and missdatactr increment properly.</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4444-->
+<!-- block ID=4444-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK4000</td>
+            
+            <td><!-- MKS HTML --><p>Upon initialization of the HK Application, HK shall initialize the following data to Zero</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data CounterZero</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds, 
+hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, 
+hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4444-->
+
+        </tbody></table>
+    </td>
+</tr>
+
+<tr><td><hr class="hr_default"></td></tr>
+<tr><td>&nbsp;</td></tr>
+<script type="text/javascript"> line_count=0; </script>
+<!-- blockend ID=4444-->
+<!-- block ID=4443-->
+
+<!-- Display issue heading -->
+<tr><th style="text-align: left">HK_GenCmds - Item 4443 </th></tr>
+<!-- Display issue field names and values -->
+
+<tr><td><b>TEST_Test_Name:</b> HK_GenCmds</td></tr>
+
+<tr><td><b>TEST_Description:</b> &nbsp;</td></tr>
+
+<tr><td><b>TEST_Current_Build:</b> 2.4.1.0</td></tr>
+
+<tr><td><b>TEST_Execution_Assigned_To:</b> Walt Moleski (wmoleski)</td></tr>
+
+<tr><td><b>TEST_Execution_Testbed:</b> cFE 6.5.0.0; OSAL 4.2.0.0; PSP 1.3.0.0</td></tr>
+
+<tr><td><b>TEST_Execution_Checksum:</b> 50244</td></tr>
+
+<tr><td><b>TEST_Execution_Completion_Date:</b> Nov 8, 2016</td></tr>
+
+<tr><td><b>TEST_Execution_Time:</b> 340.499 seconds; 5.67498 minutes</td></tr>
+
+<tr><td><b>TEST_Execution_Comments:</b> <!-- MKS HTML -->All requirements passed.</td></tr>
+
+<tr><td><b>TEST_Comments:</b> &nbsp;</td></tr>
+
+<!-- Relationships info -->
+<!-- Display relationship heading -->
+<tr><td>DCRs Submitted / Tested and Requirements Validated</td></tr>
+
+
+<tr><td class="detailheading" style="text-align: left">Links_To_TEST_from_DCRs_Backward,ALM_Validates:</td></tr>
+<tr>
+    <td>
+        <table class="detailcols fullWidth">
+        
+        <tbody><tr>
+            
+            <th>ReqID</th>
+            
+            <th>Text</th>
+            
+            <th>Build Test Method</th>
+            
+            <th>REQ_Build_Sys_Test_Results</th>
+            
+            <th>REQ_Build_Sys_Test_Comments</th>
+            
+            <th>DCR_Title</th>
+            
+            <th>DCR_TEST_Outcome</th>
+            
+        </tr>
+        <!-- block ID=4443-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK1000</td>
+            
+            <td><!-- MKS HTML -->Upon receipt of a No-Op command, HK shall increment the HK Valid Command Counter and generate an event message.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4443-->
+<!-- block ID=4443-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK1001</td>
+            
+            <td><!-- MKS HTML --><p>Upon receipt of a Reset command, HK shall reset the following housekeeping variables to a value of zero:</p><p>a) HK Valid Command Counter</p><p>b) HK Command Rejected Counter</p><p>c) Number of Output Messages Sent<br>d) Missing Data Counte</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4443-->
+<!-- block ID=4443-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK1002</td>
+            
+            <td><!-- MKS HTML -->For all HK commands, if the length 
+contained in the message header is not equal to the expected length, HK 
+shall reject the command.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4443-->
+<!-- block ID=4443-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK1003</td>
+            
+            <td><!-- MKS HTML -->If HK accepts any command as valid, HK 
+shall execute the command, increment the HK Valid Command Counter and 
+issue an event message</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4443-->
+<!-- block ID=4443-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK1004</td>
+            
+            <td><!-- MKS HTML -->If HK rejects any command, HK shall 
+abort the command execution, increment the HK Command Rejected Counter 
+and issue an error event message</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4443-->
+<!-- block ID=4443-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK3000</td>
+            
+            <td><!-- MKS HTML --><p>HK shall generate a housekeeping message containing the following:</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data Counter</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds:&nbsp; 
+verified cmdpc and cmdec increment properly. &nbsp; &nbsp; &nbsp; &nbsp;
+ Tested in procudure hk_basichousekeeping, hk_stresshousekeeping, 
+hk_stresstableload:&nbsp; verified cmbpktssent increments properly. 
+&nbsp; Tested in procudure hk_missingdata, hk_stressmissingdata:&nbsp; 
+verified cmbpktssent and missdatactr increment properly.</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4443-->
+<!-- block ID=4443-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK4000</td>
+            
+            <td><!-- MKS HTML --><p>Upon initialization of the HK Application, HK shall initialize the following data to Zero</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data CounterZero</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds, 
+hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, 
+hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4443-->
+
+        </tbody></table>
+    </td>
+</tr>
+
+<tr><td><hr class="hr_default"></td></tr>
+<tr><td>&nbsp;</td></tr>
+<script type="text/javascript"> line_count=0; </script>
+<!-- blockend ID=4443-->
+<!-- block ID=4445-->
+
+<!-- Display issue heading -->
+<tr><th style="text-align: left">HK_MissingData - Item 4445 </th></tr>
+<!-- Display issue field names and values -->
+
+<tr><td><b>TEST_Test_Name:</b> HK_MissingData</td></tr>
+
+<tr><td><b>TEST_Description:</b> &nbsp;</td></tr>
+
+<tr><td><b>TEST_Current_Build:</b> 2.4.1.0</td></tr>
+
+<tr><td><b>TEST_Execution_Assigned_To:</b> Walt Moleski (wmoleski)</td></tr>
+
+<tr><td><b>TEST_Execution_Testbed:</b> cFE 6.5.0.0; OSAL 4.2.0.0; PSP 1.3.0.0</td></tr>
+
+<tr><td><b>TEST_Execution_Checksum:</b> 50244</td></tr>
+
+<tr><td><b>TEST_Execution_Completion_Date:</b> Nov 9, 2016</td></tr>
+
+<tr><td><b>TEST_Execution_Time:</b> 688.063 seconds; 11.4677 minutes (No Discard) - 685.919 seconds; 11.432 minutes (Discard)</td></tr>
+
+<tr><td><b>TEST_Execution_Comments:</b> <!-- MKS HTML -->All 
+requirements passed. This test was executed twice. Once with the Discard
+ Combo Packets configuration parameter set to NO and once with it set to
+ Yes.</td></tr>
+
+<tr><td><b>TEST_Comments:</b> &nbsp;</td></tr>
+
+<!-- Relationships info -->
+<!-- Display relationship heading -->
+<tr><td>DCRs Submitted / Tested and Requirements Validated</td></tr>
+
+
+<tr><td class="detailheading" style="text-align: left">Links_To_TEST_from_DCRs_Backward,ALM_Validates:</td></tr>
+<tr>
+    <td>
+        <table class="detailcols fullWidth">
+        
+        <tbody><tr>
+            
+            <th>ReqID</th>
+            
+            <th>Text</th>
+            
+            <th>Build Test Method</th>
+            
+            <th>REQ_Build_Sys_Test_Results</th>
+            
+            <th>REQ_Build_Sys_Test_Comments</th>
+            
+            <th>DCR_Title</th>
+            
+            <th>DCR_TEST_Outcome</th>
+            
+        </tr>
+        <!-- block ID=4445-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2000</td>
+            
+            <td><!-- MKS HTML -->HK shall collect flight software housekeeping data from table-specified input messages</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4445-->
+<!-- block ID=4445-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK2001</td>
+            
+            <td><!-- MKS HTML -->HK shall output table-defined messages,
+ at the scheduled rate, by combining input message data starting at the 
+table-defined offset and table-defined number of bytes to the 
+table-defined offset in the output message.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4445-->
+<!-- block ID=4445-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2001.2</td>
+            
+            <td><!-- MKS HTML -->If the &lt;PLATFORM_DEFINED&gt; 
+parameter Discard Combo Packets is set to NO and HK does not receive a 
+message from an application, HK shall use all values associated with 
+last received message for that application in the combined message for 
+that telemetry collection period.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_missingdata, hk_stressmissingdata</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4445-->
+<!-- block ID=4445-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK2001.3</td>
+            
+            <td><!-- MKS HTML -->If HK does not receive a message from 
+an application, HK app shall increment the missing data counter&nbsp;and
+ send an event specifying &nbsp;the message ID for the missing message</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_missingdata, hk_stresshousekeeping (caused by an input packet being too short), hk_stressmissingdata</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4445-->
+<!-- block ID=4445-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2001.5</td>
+            
+            <td><!-- MKS HTML -->If the &lt;PLATFORM_DEFINED&gt; 
+parameter Discard Combo Packets is set to NO and&nbsp;the input message 
+offset + bytes for any input message specified in the HK table is 
+greater than the received message length then HK shall use the last 
+received data associated with that message and issue no more than one 
+event message per input message.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_stresshousekeeping</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4445-->
+<!-- block ID=4445-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK2001.6</td>
+            
+            <td><!-- MKS HTML -->If the &lt;PLATFORM_DEFINED&gt; 
+parameter Discard Combo Packets is set to YES and HK does not receive a 
+message from an application, HK shall discard the combined message 
+containing the values associated with the missing application message 
+for that telemetry collection period.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in hk_missingdata procedure with the Discard Combo Packets configuration parameter set to YES.</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4445-->
+<!-- block ID=4445-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2007.7</td>
+            
+            <td><!-- MKS HTML -->If the &lt;PLATFORM_DEFINED&gt; 
+parameter Discard Combo Packets is set to YES and&nbsp;the input message
+ offset + bytes for any input message specified in the HK table is 
+greater than the received message length then HK shall discard the 
+combined message containing the values associated with the illegal 
+length application message for that telemetry collection period.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in hk_missingdata procedure with the Discard Combo Packets configuration parameter set to YES.</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4445-->
+<!-- block ID=4445-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK3000</td>
+            
+            <td><!-- MKS HTML --><p>HK shall generate a housekeeping message containing the following:</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data Counter</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds:&nbsp; 
+verified cmdpc and cmdec increment properly. &nbsp; &nbsp; &nbsp; &nbsp;
+ Tested in procudure hk_basichousekeeping, hk_stresshousekeeping, 
+hk_stresstableload:&nbsp; verified cmbpktssent increments properly. 
+&nbsp; Tested in procudure hk_missingdata, hk_stressmissingdata:&nbsp; 
+verified cmbpktssent and missdatactr increment properly.</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4445-->
+<!-- block ID=4445-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK4000</td>
+            
+            <td><!-- MKS HTML --><p>Upon initialization of the HK Application, HK shall initialize the following data to Zero</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data CounterZero</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds, 
+hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, 
+hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4445-->
+
+        </tbody></table>
+    </td>
+</tr>
+
+<tr><td><hr class="hr_default"></td></tr>
+<tr><td>&nbsp;</td></tr>
+<script type="text/javascript"> line_count=0; </script>
+<!-- blockend ID=4445-->
+<!-- block ID=4446-->
+
+<!-- Display issue heading -->
+<tr><th style="text-align: left">HK_StressHousekeeping - Item 4446 </th></tr>
+<!-- Display issue field names and values -->
+
+<tr><td><b>TEST_Test_Name:</b> HK_StressHousekeeping</td></tr>
+
+<tr><td><b>TEST_Description:</b> &nbsp;</td></tr>
+
+<tr><td><b>TEST_Current_Build:</b> 2.4.1.0</td></tr>
+
+<tr><td><b>TEST_Execution_Assigned_To:</b> Walt Moleski (wmoleski)</td></tr>
+
+<tr><td><b>TEST_Execution_Testbed:</b> cFE 6.5.0.0; OSAL 4.2.0.0; PSP 1.3.0.0</td></tr>
+
+<tr><td><b>TEST_Execution_Checksum:</b> 50244</td></tr>
+
+<tr><td><b>TEST_Execution_Completion_Date:</b> Nov 9, 2016</td></tr>
+
+<tr><td><b>TEST_Execution_Time:</b> 785.196 seconds; 13.0866 minutes</td></tr>
+
+<tr><td><b>TEST_Execution_Comments:</b> <!-- MKS HTML -->All requirements passed.</td></tr>
+
+<tr><td><b>TEST_Comments:</b> &nbsp;</td></tr>
+
+<!-- Relationships info -->
+<!-- Display relationship heading -->
+<tr><td>DCRs Submitted / Tested and Requirements Validated</td></tr>
+
+
+<tr><td class="detailheading" style="text-align: left">Links_To_TEST_from_DCRs_Backward,ALM_Validates:</td></tr>
+<tr>
+    <td>
+        <table class="detailcols fullWidth">
+        
+        <tbody><tr>
+            
+            <th>ReqID</th>
+            
+            <th>Text</th>
+            
+            <th>Build Test Method</th>
+            
+            <th>REQ_Build_Sys_Test_Results</th>
+            
+            <th>REQ_Build_Sys_Test_Comments</th>
+            
+            <th>DCR_Title</th>
+            
+            <th>DCR_TEST_Outcome</th>
+            
+        </tr>
+        <!-- block ID=4446-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2000</td>
+            
+            <td><!-- MKS HTML -->HK shall collect flight software housekeeping data from table-specified input messages</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4446-->
+<!-- block ID=4446-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK2001</td>
+            
+            <td><!-- MKS HTML -->HK shall output table-defined messages,
+ at the scheduled rate, by combining input message data starting at the 
+table-defined offset and table-defined number of bytes to the 
+table-defined offset in the output message.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4446-->
+<!-- block ID=4446-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2001.1</td>
+            
+            <td><!-- MKS HTML -->Upon a table update, HK shall update the output message formats specified in the table during normal execution.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_stresshousekeeping, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4446-->
+<!-- block ID=4446-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK2001.3</td>
+            
+            <td><!-- MKS HTML -->If HK does not receive a message from 
+an application, HK app shall increment the missing data counter&nbsp;and
+ send an event specifying &nbsp;the message ID for the missing message</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_missingdata, hk_stresshousekeeping (caused by an input packet being too short), hk_stressmissingdata</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4446-->
+<!-- block ID=4446-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2001.5</td>
+            
+            <td><!-- MKS HTML -->If the &lt;PLATFORM_DEFINED&gt; 
+parameter Discard Combo Packets is set to NO and&nbsp;the input message 
+offset + bytes for any input message specified in the HK table is 
+greater than the received message length then HK shall use the last 
+received data associated with that message and issue no more than one 
+event message per input message.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_stresshousekeeping</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4446-->
+<!-- block ID=4446-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK3000</td>
+            
+            <td><!-- MKS HTML --><p>HK shall generate a housekeeping message containing the following:</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data Counter</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds:&nbsp; 
+verified cmdpc and cmdec increment properly. &nbsp; &nbsp; &nbsp; &nbsp;
+ Tested in procudure hk_basichousekeeping, hk_stresshousekeeping, 
+hk_stresstableload:&nbsp; verified cmbpktssent increments properly. 
+&nbsp; Tested in procudure hk_missingdata, hk_stressmissingdata:&nbsp; 
+verified cmbpktssent and missdatactr increment properly.</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4446-->
+<!-- block ID=4446-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK4000</td>
+            
+            <td><!-- MKS HTML --><p>Upon initialization of the HK Application, HK shall initialize the following data to Zero</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data CounterZero</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds, 
+hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, 
+hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4446-->
+
+        </tbody></table>
+    </td>
+</tr>
+
+<tr><td><hr class="hr_default"></td></tr>
+<tr><td>&nbsp;</td></tr>
+<script type="text/javascript"> line_count=0; </script>
+<!-- blockend ID=4446-->
+<!-- block ID=4447-->
+
+<!-- Display issue heading -->
+<tr><th style="text-align: left">HK_StressMissingData - Item 4447 </th></tr>
+<!-- Display issue field names and values -->
+
+<tr><td><b>TEST_Test_Name:</b> HK_StressMissingData</td></tr>
+
+<tr><td><b>TEST_Description:</b> &nbsp;</td></tr>
+
+<tr><td><b>TEST_Current_Build:</b> 2.4.1.0</td></tr>
+
+<tr><td><b>TEST_Execution_Assigned_To:</b> Walt Moleski (wmoleski)</td></tr>
+
+<tr><td><b>TEST_Execution_Testbed:</b> cFE 6.5.0.0; OSAL 4.2.0.0; PSP 1.3.0.0</td></tr>
+
+<tr><td><b>TEST_Execution_Checksum:</b> 50244</td></tr>
+
+<tr><td><b>TEST_Execution_Completion_Date:</b> Nov 9, 2016</td></tr>
+
+<tr><td><b>TEST_Execution_Time:</b> 884.769 seconds; 14.7461 minutes (No Discard) - 816.539 seconds; 13.609 minutes (Discard)</td></tr>
+
+<tr><td><b>TEST_Execution_Comments:</b> <!-- MKS HTML -->All 
+requirements passed. This test was executed twice. Once with the Discard
+ Combo Packets configuration parameter set to NO and once with it set to
+ Yes.</td></tr>
+
+<tr><td><b>TEST_Comments:</b> &nbsp;</td></tr>
+
+<!-- Relationships info -->
+<!-- Display relationship heading -->
+<tr><td>DCRs Submitted / Tested and Requirements Validated</td></tr>
+
+
+<tr><td class="detailheading" style="text-align: left">Links_To_TEST_from_DCRs_Backward,ALM_Validates:</td></tr>
+<tr>
+    <td>
+        <table class="detailcols fullWidth">
+        
+        <tbody><tr>
+            
+            <th>ReqID</th>
+            
+            <th>Text</th>
+            
+            <th>Build Test Method</th>
+            
+            <th>REQ_Build_Sys_Test_Results</th>
+            
+            <th>REQ_Build_Sys_Test_Comments</th>
+            
+            <th>DCR_Title</th>
+            
+            <th>DCR_TEST_Outcome</th>
+            
+        </tr>
+        <!-- block ID=4447-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2000</td>
+            
+            <td><!-- MKS HTML -->HK shall collect flight software housekeeping data from table-specified input messages</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4447-->
+<!-- block ID=4447-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK2001</td>
+            
+            <td><!-- MKS HTML -->HK shall output table-defined messages,
+ at the scheduled rate, by combining input message data starting at the 
+table-defined offset and table-defined number of bytes to the 
+table-defined offset in the output message.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4447-->
+<!-- block ID=4447-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2001.2</td>
+            
+            <td><!-- MKS HTML -->If the &lt;PLATFORM_DEFINED&gt; 
+parameter Discard Combo Packets is set to NO and HK does not receive a 
+message from an application, HK shall use all values associated with 
+last received message for that application in the combined message for 
+that telemetry collection period.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_missingdata, hk_stressmissingdata</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4447-->
+<!-- block ID=4447-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK2001.3</td>
+            
+            <td><!-- MKS HTML -->If HK does not receive a message from 
+an application, HK app shall increment the missing data counter&nbsp;and
+ send an event specifying &nbsp;the message ID for the missing message</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_missingdata, hk_stresshousekeeping (caused by an input packet being too short), hk_stressmissingdata</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4447-->
+<!-- block ID=4447-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2001.6</td>
+            
+            <td><!-- MKS HTML -->If the &lt;PLATFORM_DEFINED&gt; 
+parameter Discard Combo Packets is set to YES and HK does not receive a 
+message from an application, HK shall discard the combined message 
+containing the values associated with the missing application message 
+for that telemetry collection period.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in hk_missingdata procedure with the Discard Combo Packets configuration parameter set to YES.</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4447-->
+<!-- block ID=4447-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK3000</td>
+            
+            <td><!-- MKS HTML --><p>HK shall generate a housekeeping message containing the following:</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data Counter</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds:&nbsp; 
+verified cmdpc and cmdec increment properly. &nbsp; &nbsp; &nbsp; &nbsp;
+ Tested in procudure hk_basichousekeeping, hk_stresshousekeeping, 
+hk_stresstableload:&nbsp; verified cmbpktssent increments properly. 
+&nbsp; Tested in procudure hk_missingdata, hk_stressmissingdata:&nbsp; 
+verified cmbpktssent and missdatactr increment properly.</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4447-->
+<!-- block ID=4447-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK4000</td>
+            
+            <td><!-- MKS HTML --><p>Upon initialization of the HK Application, HK shall initialize the following data to Zero</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data CounterZero</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds, 
+hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, 
+hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4447-->
+
+        </tbody></table>
+    </td>
+</tr>
+
+<tr><td><hr class="hr_default"></td></tr>
+<tr><td>&nbsp;</td></tr>
+<script type="text/javascript"> line_count=0; </script>
+<!-- blockend ID=4447-->
+<!-- block ID=4448-->
+
+<!-- Display issue heading -->
+<tr><th style="text-align: left">HK_StressTableLoad - Item 4448 </th></tr>
+<!-- Display issue field names and values -->
+
+<tr><td><b>TEST_Test_Name:</b> HK_StressTableLoad</td></tr>
+
+<tr><td><b>TEST_Description:</b> &nbsp;</td></tr>
+
+<tr><td><b>TEST_Current_Build:</b> 2.4.1.0</td></tr>
+
+<tr><td><b>TEST_Execution_Assigned_To:</b> Walt Moleski (wmoleski)</td></tr>
+
+<tr><td><b>TEST_Execution_Testbed:</b> cFE 6.5.0.0; OSAL 4.2.0.0; PSP 1.3.0.0</td></tr>
+
+<tr><td><b>TEST_Execution_Checksum:</b> 50244</td></tr>
+
+<tr><td><b>TEST_Execution_Completion_Date:</b> Nov 9, 2016</td></tr>
+
+<tr><td><b>TEST_Execution_Time:</b> 551.923 seconds; 9.19871 minutes</td></tr>
+
+<tr><td><b>TEST_Execution_Comments:</b> <!-- MKS HTML -->All requirements passed.</td></tr>
+
+<tr><td><b>TEST_Comments:</b> &nbsp;</td></tr>
+
+<!-- Relationships info -->
+<!-- Display relationship heading -->
+<tr><td>DCRs Submitted / Tested and Requirements Validated</td></tr>
+
+
+<tr><td class="detailheading" style="text-align: left">Links_To_TEST_from_DCRs_Backward,ALM_Validates:</td></tr>
+<tr>
+    <td>
+        <table class="detailcols fullWidth">
+        
+        <tbody><tr>
+            
+            <th>ReqID</th>
+            
+            <th>Text</th>
+            
+            <th>Build Test Method</th>
+            
+            <th>REQ_Build_Sys_Test_Results</th>
+            
+            <th>REQ_Build_Sys_Test_Comments</th>
+            
+            <th>DCR_Title</th>
+            
+            <th>DCR_TEST_Outcome</th>
+            
+        </tr>
+        <!-- block ID=4448-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2000</td>
+            
+            <td><!-- MKS HTML -->HK shall collect flight software housekeeping data from table-specified input messages</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4448-->
+<!-- block ID=4448-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK2001</td>
+            
+            <td><!-- MKS HTML -->HK shall output table-defined messages,
+ at the scheduled rate, by combining input message data starting at the 
+table-defined offset and table-defined number of bytes to the 
+table-defined offset in the output message.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4448-->
+<!-- block ID=4448-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK2001.1</td>
+            
+            <td><!-- MKS HTML -->Upon a table update, HK shall update the output message formats specified in the table during normal execution.</td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_basichousekeeping, hk_stresshousekeeping, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4448-->
+<!-- block ID=4448-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="even_row">
+            
+            <td>HK3000</td>
+            
+            <td><!-- MKS HTML --><p>HK shall generate a housekeeping message containing the following:</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data Counter</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds:&nbsp; 
+verified cmdpc and cmdec increment properly. &nbsp; &nbsp; &nbsp; &nbsp;
+ Tested in procudure hk_basichousekeeping, hk_stresshousekeeping, 
+hk_stresstableload:&nbsp; verified cmbpktssent increments properly. 
+&nbsp; Tested in procudure hk_missingdata, hk_stressmissingdata:&nbsp; 
+verified cmbpktssent and missdatactr increment properly.</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4448-->
+<!-- block ID=4448-->
+
+		
+        
+        <!-- Display relationship issue field headings -->
+        
+        
+        <!-- Display relationship issue field values -->
+		<script type="text/javascript"> writeEvenOddTRTag(); </script><tr class="odd_row">
+            
+            <td>HK4000</td>
+            
+            <td><!-- MKS HTML --><p>Upon initialization of the HK Application, HK shall initialize the following data to Zero</p><p>a) Valid Command Counter</p><p>b) Command Rejected Counter</p><p>c) Number of Output Messages Sent</p><p>d) Missing Data CounterZero</p></td>
+            
+            <td>Demonstration</td>
+            
+            <td>Pass</td>
+            
+            <td><!-- MKS HTML -->Tested in procedure hk_gencmds, 
+hk_basichousekeeping, hk_missingdata, hk_stresshousekeeping, 
+hk_stressmissingdata, hk_stresstableload</td>
+            
+            <td>&nbsp;</td>
+            
+            <td>&nbsp;</td>
+            
+        </tr>
+        <!-- blockend ID=4448-->
+
+        </tbody></table>
+    </td>
+</tr>
+
+<tr><td><hr class="hr_default"></td></tr>
+<tr><td>&nbsp;</td></tr>
+<script type="text/javascript"> line_count=0; </script>
+<!-- blockend ID=4448-->
+
+</tbody></table>
+<center class="footer"></center>
+
+</body></html>

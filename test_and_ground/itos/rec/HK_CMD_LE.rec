@@ -1,0 +1,13 @@
+CfeSoftwareCommand FSW_HK_NOOP
+{
+    applicationId {range=0x9A}
+    commandCode {range=0}
+}
+
+CfeSoftwareCommand FSW_HK_RESET_CNTRS
+{
+    applicationId {range=0x9A}
+    commandCode {range=1}
+}
+
+
