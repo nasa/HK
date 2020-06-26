@@ -1,32 +1,29 @@
 /************************************************************************
-** File:
-**   $Id: hk_tbldefs.h 1.2 2015/11/10 16:49:34EST lwalling Exp  $
+** File: hk_tbldefs.h 
 **
-**  Copyright © 2007-2014 United States Government as represented by the 
-**  Administrator of the National Aeronautics and Space Administration. 
-**  All Other Rights Reserved.  
+** NASA Docket No. GSC-16,127-1, and identified as "Core Flight Software System
+** (CFS) Housekeeping Application Version 2” 
 **
-**  This software was created at NASA's Goddard Space Flight Center.
-**  This software is governed by the NASA Open Source Agreement and may be 
-**  used, distributed and modified only pursuant to the terms of that 
-**  agreement.
+** Copyright © 2007-2014 United States Government as represented by the
+** Administrator of the National Aeronautics and Space Administration. All Rights
+** Reserved. 
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+** http://www.apache.org/licenses/LICENSE-2.0 
+** 
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+** limitations under the License. 
 **
 ** Purpose: 
 **  The CFS Housekeeping (HK) Application header file
 **
 ** Notes:
 **
-** $Log: hk_tbldefs.h  $
-** Revision 1.2 2015/11/10 16:49:34EST lwalling 
-** Restore data lost in MKS 2010 from MKS 2009
-** Revision 1.1 2015/07/25 21:31:38EDT rperera 
-** Initial revision
-** Member added to project /CFS-APPs-PROJECT/hk/fsw/src/project.pj
-** Revision 1.2 2015/03/04 14:58:32EST sstrege 
-** Added copyright information
-** Revision 1.1 2008/09/16 09:29:48EDT rjmcgraw 
-** Initial revision
-** Member added to project c:/MKSDATA/MKS-REPOSITORY/CFS-REPOSITORY/hk/fsw/src/project.pj
 **
 *************************************************************************/
 #ifndef _hk_tbldefs_h_

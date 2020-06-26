@@ -1,52 +1,29 @@
 /************************************************************************
-** File:
-**   $Id: hk_events.h 1.2 2015/11/10 16:49:33EST lwalling Exp  $
+** File: hk_events.h 
 **
-**  Copyright © 2007-2014 United States Government as represented by the 
-**  Administrator of the National Aeronautics and Space Administration. 
-**  All Other Rights Reserved.  
+** NASA Docket No. GSC-16,127-1, and identified as "Core Flight Software System
+** (CFS) Housekeeping Application Version 2” 
 **
-**  This software was created at NASA's Goddard Space Flight Center.
-**  This software is governed by the NASA Open Source Agreement and may be 
-**  used, distributed and modified only pursuant to the terms of that 
-**  agreement.
+** Copyright © 2007-2014 United States Government as represented by the
+** Administrator of the National Aeronautics and Space Administration. All Rights
+** Reserved. 
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+** http://www.apache.org/licenses/LICENSE-2.0 
+** 
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+** limitations under the License. 
 **
 ** Purpose: 
 **  The CFS Housekeeping (HK) Application event id header file
 **
 ** Notes:
 **
-** $Log: hk_events.h  $
-** Revision 1.2 2015/11/10 16:49:33EST lwalling 
-** Restore data lost in MKS 2010 from MKS 2009
-** Revision 1.1 2015/07/25 21:31:33EDT rperera 
-** Initial revision
-** Member added to project /CFS-APPs-PROJECT/hk/fsw/src/project.pj
-** Revision 1.12 2015/03/04 15:00:46EST sstrege 
-** Added copyright information
-** Revision 1.11 2014/06/20 15:50:59EDT sjudy 
-** Deleted unused event ID def.
-** Revision 1.10 2012/08/23 17:12:32EDT aschoeni 
-** Made internal commands no longer increment error counters (and changed event message slightly).
-** Revision 1.9 2012/03/23 17:40:57EDT lwalling 
-** Update event message text description for HK_ACCESSING_PAST_PACKET_END_EID
-** Revision 1.8 2011/09/06 14:26:12EDT jmdagost 
-** Updated doxygen comments for init and noop event messages.
-** Revision 1.7 2009/12/03 18:11:15EST jmdagost 
-** Changed the event definitions for no-op received and reset counters received to make them descriptive.
-** Revision 1.6 2009/12/03 15:33:42EST jmdagost 
-** Added event message ID 27 for dump pending status.
-** Revision 1.5 2009/12/03 15:08:32EST jmdagost 
-** Updated the comments for the "No-op received" message to include the version information.
-** Revision 1.4 2009/04/18 12:55:16EDT dkobe 
-** Updates to correct doxygen comments
-** Revision 1.3 2008/06/19 13:23:30EDT rjmcgraw 
-** DCR3052:1 Replaced event id 10 (TABLE_UPDATE) with unexpected GetStat return
-** Revision 1.2 2008/04/09 16:40:59EDT rjmcgraw 
-** Member moved from hk_events.h in project c:/MKSDATA/MKS-REPOSITORY/CFS-REPOSITORY/hk/fsw/public_inc/project.pj to hk_events.h in project c:/MKSDATA/MKS-REPOSITORY/CFS-REPOSITORY/hk/fsw/src/project.pj.
-** Revision 1.1 2008/04/09 15:40:59ACT rjmcgraw 
-** Initial revision
-** Member added to project c:/MKSDATA/MKS-REPOSITORY/CFS-REPOSITORY/hk/fsw/public_inc/project.pj
 **
 *************************************************************************/
 #ifndef _hk_events_h_
@@ -186,7 +163,7 @@
 /** \brief <tt> 'Unexpected CFE_TBL_GetStatus return (0x\%08X) for Copy Table' </tt>
 **  \event <tt> 'Unexpected CFE_TBL_GetStatus return (0x\%08X) for Copy Table' </tt>
 **
-**  \par Type: ERROR
+**  \par Type: CRITICAL
 **
 **  \par Cause:
 **
@@ -418,6 +395,134 @@
 **  with the expected length for its message id.  
 **/
 #define HK_MSG_LEN_ERR_EID 28
+
+
+/** \brief <tt> 'Unexpected CFE_TBL_GetAddress return (0x%08X) for Copy Table' </tt>
+**  \event <tt> 'Unexpected CFE_TBL_GetAddress return (0x%08X) for Copy Table' </tt> 
+**
+**  \par Type: CRITICAL
+**
+**  \par Cause:
+**
+**  This event message is issued when the HK application receives an unexpected 
+**  return value when calling the CFE_TBL_GetAddress API for the copy table during
+**  the check of the table status. This is a critical error (due to unexpected behavior
+**  of a cFE service) and will cause the HK app to exit.
+**/
+#define HK_UNEXPECTED_GETADDR_RET_EID 29
+
+
+/** \brief <tt> 'Unexpected CFE_TBL_Update return (0x%08X) for Copy Table' </tt>
+**  \event <tt> 'Unexpected CFE_TBL_Update return (0x%08X) for Copy Table' </tt> 
+**
+**  \par Type: CRITICAL
+**
+**  \par Cause:
+**
+**  This event message is issued when the HK application receives an unexpected 
+**  return value when calling the CFE_TBL_Update API for the copy table during
+**  the check of the table status. This is a critical error (due to unexpected behavior
+**  of a cFE service) and will cause the HK app to exit.
+**/
+#define HK_UNEXPECTED_TBLUPD_RET_EID 30
+
+
+/** \brief <tt> 'Unexpected CFE_TBL_ReleaseAddress return (0x%08X) for Copy Table' </tt>
+**  \event <tt> 'Unexpected CFE_TBL_ReleaseAddress return (0x%08X) for Copy Table' </tt> 
+**
+**  \par Type: CRITICAL
+**
+**  \par Cause:
+**
+**  This event message is issued when the HK application receives an unexpected 
+**  return value when calling the CFE_TBL_ReleaseAddress API for the copy table during
+**  the check of the table status. This is a critical error (due to unexpected behavior
+**  of a cFE service) and will cause the HK app to exit.
+**/
+#define HK_UNEXPECTED_RELADDR_RET_EID 31
+
+
+/** \brief <tt> 'Unexpected CFE_TBL_Validate return (0x%08X) for Copy Table' </tt>
+**  \event <tt> 'Unexpected CFE_TBL_Validate return (0x%08X) for Copy Table' </tt> 
+**
+**  \par Type: ERROR
+**
+**  \par Cause:
+**
+**  This event message is issued when the HK application receives an unexpected 
+**  return value when calling the CFE_TBL_Validate API for the copy table during
+**  the check of the table status.
+**/
+#define HK_UNEXPECTED_TBLVLD_RET_EID 32
+
+
+/** \brief <tt> 'Unexpected CFE_TBL_DumpToBuffer return (0x%08X) for Runtime Table' </tt>
+**  \event <tt> 'Unexpected CFE_TBL_DumpToBuffer return (0x%08X) for Runtime Table' </tt> 
+**
+**  \par Type: CRITICAL
+**
+**  \par Cause:
+**
+**  This event message is issued when the HK application receives an unexpected 
+**  return value when calling the CFE_TBL_DumpToBuffer API for the runtime table during
+**  the check of the table status.  This is a critical error (due to unexpected behavior
+**  of a cFE service) and will cause the HK app to exit.
+**/
+#define HK_UNEXPECTED_DUMPTOBUFFER_RET_EID 32
+
+
+/** \brief <tt> 'Null pointer detected in new copy tbl processing: CpyTbl = 0x\%08X, RtTbl = 0x\%08X' </tt>
+**  \event <tt> 'Null pointer detected in new copy tbl processing: CpyTbl = 0x\%08X, RtTbl = 0x\%08X' </tt> 
+**
+**  \par Type: ERROR
+**
+**  \par Cause:
+**
+**  This event is issued when at least one of the input arguments for processing a new copy table is NULL.  
+**/
+#define HK_NULL_POINTER_NEWCPY_ERR_EID 33
+
+
+/** \brief <tt> 'Null pointer detected in copy tbl tear down: CpyTbl = 0x\%08X, RtTbl = 0x\%08X' </tt>
+**  \event <tt> 'Null pointer detected in copy tbl tear down: CpyTbl = 0x\%08X, RtTbl = 0x\%08X' </tt> 
+**
+**  \par Type: ERROR
+**
+**  \par Cause:
+**
+**  This event is issued when at least one of the input arguments for tearing down an old copy table is NULL.  
+**/
+#define HK_NULL_POINTER_TEARCPY_ERR_EID 34
+
+
+/** \brief <tt> 'Process New Copy Table Failed, status = 0x\%08X' </tt>
+**  \event <tt> 'Process New Copy Table Failed, status = 0x\%08X' </tt> 
+**
+**  \par Type: CRITICAL
+**
+**  \par Cause:
+**
+**  This event is issued when an error occurs while processing a new copy table during housekeeping processing.
+**  The probable reason for a failure is that a NULL pointer was used as an argument in the called routine (a status
+**  value of 0xFFFFFFFF indicates a NULL pointer was detected).
+**  In this case (as opposed to during initialization), the event is critical.   
+**/
+#define HK_NEWCPYTBL_HK_FAILED_EID 35
+
+
+/** \brief <tt> 'Process New Copy Table Failed, status = 0x\%08X' </tt>
+**  \event <tt> 'Process New Copy Table Failed, status = 0x\%08X' </tt> 
+**
+**  \par Type: ERROR
+**
+**  \par Cause:
+**
+**  This event is issued when an error occurs while processing a new copy table during app initialization.
+**  The probable reason for a failure is that a NULL pointer was used as an argument in the called routine (a status
+**  value of 0xFFFFFFFF indicates a NULL pointer was detected).
+**  In this case (as opposed to during housekeeping processing), the event is an error, but not critical.   
+**/
+#define HK_NEWCPYTBL_INIT_FAILED_EID 36
 
 
 #endif /* _hk_events_h_ */

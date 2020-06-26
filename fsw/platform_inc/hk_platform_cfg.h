@@ -1,44 +1,29 @@
 /************************************************************************
-** File:
-**   $Id: hk_platform_cfg.h 1.2 2015/11/10 16:49:03EST lwalling Exp  $
+** File: hk_platform_cfg.h
 **
-**  Copyright © 2007-2014 United States Government as represented by the 
-**  Administrator of the National Aeronautics and Space Administration. 
-**  All Other Rights Reserved.  
+** NASA Docket No. GSC-16,127-1, and identified as "Core Flight Software System
+** (CFS) Housekeeping Application Version 2” 
 **
-**  This software was created at NASA's Goddard Space Flight Center.
-**  This software is governed by the NASA Open Source Agreement and may be 
-**  used, distributed and modified only pursuant to the terms of that 
-**  agreement.
+** Copyright © 2007-2014 United States Government as represented by the
+** Administrator of the National Aeronautics and Space Administration. All Rights
+** Reserved. 
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+** http://www.apache.org/licenses/LICENSE-2.0 
+** 
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+** limitations under the License. 
 **
 ** Purpose: 
 **  The CFS Housekeeping (HK) Application platform configuration header file
 **
 ** Notes:
 **
-** $Log: hk_platform_cfg.h  $
-** Revision 1.2 2015/11/10 16:49:03EST lwalling 
-** Restore data lost in MKS 2010 from MKS 2009
-** Revision 1.1 2015/07/25 21:31:16EDT rperera 
-** Initial revision
-** Member added to project /CFS-APPs-PROJECT/hk/fsw/platform_inc/project.pj
-** Revision 1.8 2015/03/04 14:58:29EST sstrege 
-** Added copyright information
-** Revision 1.7 2012/08/15 18:32:39EDT aschoeni 
-** Added ability to discard incomplete combo packets
-** Revision 1.6 2011/06/23 12:00:02EDT jmdagost 
-** Moved HK_MISSION_REV from version header to here.
-** Revision 1.5 2010/05/06 15:32:55EDT jmdagost 
-** Changed location of hk_cpy_tbl.tbl from /cf/ to /cf/apps/
-** Revision 1.4 2009/12/03 16:32:17EST jmdagost 
-** Expanded comment on mempool size definition, corrected copy table filename.
-** Revision 1.3 2009/04/18 12:55:14EDT dkobe 
-** Updates to correct doxygen comments
-** Revision 1.2 2008/05/07 09:55:22EDT rjmcgraw 
-** DCR1647:3 Romoved the Hk from copy table name and runtime table name
-** Revision 1.1 2008/04/09 16:39:33EDT rjmcgraw 
-** Initial revision
-** Member added to project c:/MKSDATA/MKS-REPOSITORY/CFS-REPOSITORY/hk/fsw/platform_inc/project.pj
 **
 *************************************************************************/
 #ifndef _hk_platform_cfg_h_
@@ -141,7 +126,7 @@
 **       the #OS_MAX_PATH_LEN value.
 */
 
-#define HK_COPY_TABLE_FILENAME  "/cf/apps/hk_cpy_tbl.tbl"
+#define HK_COPY_TABLE_FILENAME  "/cf/hk_cpy_tbl.tbl"
 
 /** \hkcfg Mission specific version number for HK application
 **  

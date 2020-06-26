@@ -1,42 +1,29 @@
 /************************************************************************
-** File:
-**   $Id: hk_utils.h 1.2 2015/11/10 16:48:53EST lwalling Exp  $
+** File: hk_utils.h 
 **
-**  Copyright © 2007-2014 United States Government as represented by the 
-**  Administrator of the National Aeronautics and Space Administration. 
-**  All Other Rights Reserved.  
+** NASA Docket No. GSC-16,127-1, and identified as "Core Flight Software System
+** (CFS) Housekeeping Application Version 2” 
 **
-**  This software was created at NASA's Goddard Space Flight Center.
-**  This software is governed by the NASA Open Source Agreement and may be 
-**  used, distributed and modified only pursuant to the terms of that 
-**  agreement.
+** Copyright © 2007-2014 United States Government as represented by the
+** Administrator of the National Aeronautics and Space Administration. All Rights
+** Reserved. 
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+** http://www.apache.org/licenses/LICENSE-2.0 
+** 
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+** limitations under the License. 
 **
 ** Purpose: 
 **  The CFS Housekeeping (HK) Application header file
 **
 ** Notes:
 **
-** $Log: hk_utils.h  $
-** Revision 1.2 2015/11/10 16:48:53EST lwalling 
-** Restore data lost in MKS 2010 from MKS 2009
-** Revision 1.1 2015/07/25 21:31:42EDT rperera 
-** Initial revision
-** Member added to project /CFS-APPs-PROJECT/hk/fsw/src/project.pj
-** Revision 1.7 2015/03/04 14:58:28EST sstrege 
-** Added copyright information
-** Revision 1.6 2009/04/18 13:10:28EDT dkobe 
-** Correct doxygen comment for return code
-** Revision 1.5 2009/04/18 13:08:31EDT dkobe 
-** Corrections to function prototype doxygen comments
-** Revision 1.4 2009/04/18 13:02:36EDT dkobe 
-** Corrected doxygen comments
-** Revision 1.3 2008/09/11 10:26:37EDT rjmcgraw 
-** DCR4040:1 Replaced #include hk_platform_cfg.h with hk_tbldefs.h and fixed tabs
-** Revision 1.2 2008/06/19 13:26:17EDT rjmcgraw 
-** DCR3052:1 Replaced HandleUpdateToCopyTable proto with CheckStatusOfTables proto
-** Revision 1.1 2008/04/09 16:42:42EDT rjmcgraw 
-** Initial revision
-** Member added to CFS project
 **
 *************************************************************************/
 #ifndef _hk_utils_h_
@@ -53,18 +40,18 @@
 /*************************************************************************
 ** Macro definitions
 **************************************************************************/
-#define HK_INPUTMID_SUBSCRIBED          0xFF  /**< \brief Input MsgId has been subscribed to */
-#define HK_INPUTMID_NOT_SUBSCRIBED      0     /**< \brief Input MsgId is not subscribed */
+#define HK_INPUTMID_SUBSCRIBED          ( 0xFF )  /**< \brief Input MsgId has been subscribed to */
+#define HK_INPUTMID_NOT_SUBSCRIBED      ( 0 )     /**< \brief Input MsgId is not subscribed */
 
-#define HK_DATA_NOT_PRESENT             0     /**< \brief Input MsgId present in output msg */
-#define HK_DATA_PRESENT                 1     /**< \brief Input MsgId not present */
+#define HK_DATA_NOT_PRESENT             ( 0 )     /**< \brief Input MsgId present in output msg */
+#define HK_DATA_PRESENT                 ( 1 )     /**< \brief Input MsgId not present */
 
-#define HK_NO_MISSING_DATA              0     /**< \brief Output Msg has no missing data */
-#define HK_MISSING_DATA_DETECTED        1     /**< \brief Output Msg has missing data */
+#define HK_NO_MISSING_DATA              ( 0 )     /**< \brief Output Msg has no missing data */
+#define HK_MISSING_DATA_DETECTED        ( 1 )     /**< \brief Output Msg has missing data */
 
-#define HK_UNDEFINED_ENTRY              0     /**< \brief Undefined table field entry */
+#define HK_UNDEFINED_ENTRY              ( 0 )     /**< \brief Undefined table field entry */
 
-
+#define HK_NULL_POINTER_DETECTED        ( -1 )    /**< \brief An input table pointer was NULL */
 
 /************************************************************************
 ** Prototypes for functions defined in hk_utils.c
@@ -130,11 +117,16 @@ int32 HK_ValidateHkCopyTable (void * TblPtr);
 **
 ** \param[in]  RtTblPtr     A pointer to the first entry in the run-time table.
 **
+** \returns
+** \retstmt CFE_SUCCESS if the function succeeds \endcode
+** \retstmt HK_NULL_POINTER_DETECTED if at least one input argument was NULL \endcode
+** \endreturns
+**
 ** \sa 
 **
 ******************************************************************************/
-void HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr, 
-                             hk_runtime_tbl_entry_t * RtTblPtr);
+int32 HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr, 
+                              hk_runtime_tbl_entry_t * RtTblPtr);
 
 /*****************************************************************************/
 /**
@@ -151,11 +143,16 @@ void HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr,
 **
 ** \param[in]  RtTblPtr     A pointer to the first entry in the run-time table. 
 **
+** \returns
+** \retstmt CFE_SUCCESS if the function succeeds \endcode
+** \retstmt HK_NULL_POINTER_DETECTED if at least one input argument was NULL \endcode
+** \endreturns
+**
 ** \sa 
 **
 ******************************************************************************/
-void HK_TearDownOldCopyTable (hk_copy_table_entry_t * CpyTblPtr, 
-                              hk_runtime_tbl_entry_t * RtTblPtr);
+int32 HK_TearDownOldCopyTable (hk_copy_table_entry_t * CpyTblPtr, 
+                               hk_runtime_tbl_entry_t * RtTblPtr);
 
 
 /*****************************************************************************/
@@ -190,10 +187,59 @@ void HK_SendCombinedHkPacket (CFE_SB_MsgId_t WhichMidToSend);
 ** \par Assumptions, External Events, and Notes:
 **          None
 **
+** \returns
+** \retcode #HK_SUCCESS  \retdesc \copydoc HK_SUCCESS \endcode
+** \retcode #HK_ERROR    \retdesc \copydoc HK_ERROR \endcode
+** \endreturns
+**
 ** \sa 
 **
 ******************************************************************************/
-void HK_CheckStatusOfTables (void);
+int32 HK_CheckStatusOfTables (void);
+
+
+/*****************************************************************************/
+/**
+** \brief HK_CheckStatusOfCopyTable
+**
+** \par Description
+**        This is a high level routine that controls the actions taken by HK
+**        when a copy table update is detected 
+**
+** \par Assumptions, External Events, and Notes:
+**          None
+**
+** \returns
+** \retcode #HK_SUCCESS  \retdesc \copydoc HK_SUCCESS \endcode
+** \retcode #HK_ERROR    \retdesc \copydoc HK_ERROR \endcode
+** \endreturns
+**
+** \sa 
+**
+******************************************************************************/
+int32 HK_CheckStatusOfCopyTable (void);
+
+
+/*****************************************************************************/
+/**
+** \brief HK_CheckStatusOfDumpTable
+**
+** \par Description
+**        This is a high level routine that controls the actions taken by HK
+**        when a runtime table dump is pending 
+**
+** \par Assumptions, External Events, and Notes:
+**          None
+**
+** \returns
+** \retcode #HK_SUCCESS  \retdesc \copydoc HK_SUCCESS \endcode
+** \retcode #HK_ERROR    \retdesc \copydoc HK_ERROR \endcode
+** \endreturns
+**
+** \sa 
+**
+******************************************************************************/
+int32 HK_CheckStatusOfDumpTable (void);
 
 
 /*****************************************************************************/

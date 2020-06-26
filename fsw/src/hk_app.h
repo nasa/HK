@@ -1,44 +1,29 @@
 /************************************************************************
-** File:
-**   $Id: hk_app.h 1.2 2015/11/10 16:49:05EST lwalling Exp  $
+** File: hk_app.h
 **
-**  Copyright © 2007-2014 United States Government as represented by the 
-**  Administrator of the National Aeronautics and Space Administration. 
-**  All Other Rights Reserved.  
+** NASA Docket No. GSC-16,127-1, and identified as "Core Flight Software System
+** (CFS) Housekeeping Application Version 2” 
 **
-**  This software was created at NASA's Goddard Space Flight Center.
-**  This software is governed by the NASA Open Source Agreement and may be 
-**  used, distributed and modified only pursuant to the terms of that 
-**  agreement.
+** Copyright © 2007-2014 United States Government as represented by the
+** Administrator of the National Aeronautics and Space Administration. All Rights
+** Reserved. 
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+** http://www.apache.org/licenses/LICENSE-2.0 
+** 
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+** limitations under the License. 
 **
 ** Purpose: 
 **  The CFS Housekeeping (HK) Application header file
 **
 ** Notes:
 **
-** $Log: hk_app.h  $
-** Revision 1.2 2015/11/10 16:49:05EST lwalling 
-** Restore data lost in MKS 2010 from MKS 2009
-** Revision 1.1 2015/07/25 21:31:31EDT rperera 
-** Initial revision
-** Member added to project /CFS-APPs-PROJECT/hk/fsw/src/project.pj
-** Revision 1.8 2015/03/04 14:58:30EST sstrege 
-** Added copyright information
-** Revision 1.7 2009/12/03 17:00:17EST jmdagost 
-** Added include of hk_msgdefs.h
-** Revision 1.6 2009/04/18 13:02:36EDT dkobe 
-** Corrected doxygen comments
-** Revision 1.5 2008/09/11 11:41:35EDT rjmcgraw 
-** DCR 4041:1 Added #include hk_platform_cfg.h
-** Revision 1.4 2008/07/15 16:52:49EDT rjmcgraw 
-** DCR4042:1 Removed old #define HK_REV_NUM
-** Revision 1.3 2008/06/19 13:54:39EDT rjmcgraw 
-** DCR3052:1 Table processing fix - changed version number from 0.1 to 0.2
-** Revision 1.2 2008/05/02 12:18:13EDT rjmcgraw 
-** DCR1647:1 Moved performance marker to hk_perfids.h
-** Revision 1.1 2008/04/09 16:41:46EDT rjmcgraw 
-** Initial revision
-** Member added to CFS project
 **
 *************************************************************************/
 #ifndef _hk_app_h_
@@ -86,7 +71,6 @@ typedef struct
     CFE_SB_PipeId_t         CmdPipe;/**< \brief Pipe Id for HK command pipe */    
     uint8					CmdCounter;/**< \brief Number of valid commands received */
     uint8					ErrCounter;/**< \brief Number of invalid commands received */
-    uint8					Spare;/**< \brief Spare byte for alignment */
 
     uint16					MissingDataCtr;/**< \brief Number of times missing data was detected */
     uint16					CombinedPacketsSent;/**< \brief Count of combined output msgs sent */    

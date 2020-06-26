@@ -1,15 +1,23 @@
 /************************************************************************
-** File:
-**   $Id: hk_utils.c 1.4 2016/10/28 16:48:07EDT mdeschu Exp  $
+** File: hk_utils.c 
 **
-**  Copyright © 2007-2014 United States Government as represented by the 
-**  Administrator of the National Aeronautics and Space Administration. 
-**  All Other Rights Reserved.  
+** NASA Docket No. GSC-16,127-1, and identified as "Core Flight Software System
+** (CFS) Housekeeping Application Version 2” 
 **
-**  This software was created at NASA's Goddard Space Flight Center.
-**  This software is governed by the NASA Open Source Agreement and may be 
-**  used, distributed and modified only pursuant to the terms of that 
-**  agreement.
+** Copyright © 2007-2014 United States Government as represented by the
+** Administrator of the National Aeronautics and Space Administration. All Rights
+** Reserved. 
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+** http://www.apache.org/licenses/LICENSE-2.0 
+** 
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+** limitations under the License. 
 **
 ** Purpose: 
 **  The CFS Housekeeping (HK) Application file containing the functions
@@ -17,35 +25,6 @@
 **
 ** Notes:
 **
-** $Log: hk_utils.c  $
-** Revision 1.4 2016/10/28 16:48:07EDT mdeschu 
-** 
-** Revision 1.3 2016/10/28 10:51:14EDT mdeschu 
-** Fix compiler format warnings in calls to CFE_EVS_SendEvent  by casting them appropriately
-** Revision 1.2 2015/11/10 16:48:56EST lwalling 
-** Restore data lost in MKS 2010 from MKS 2009
-** Revision 1.1 2015/07/25 21:31:40EDT rperera 
-** Initial revision
-** Member added to project /CFS-APPs-PROJECT/hk/fsw/src/project.pj
-** Revision 1.9 2015/03/04 15:00:46EST sstrege 
-** Added copyright information
-** Revision 1.8 2014/06/20 15:15:34EDT sjudy 
-** Initialize MessageLength to 0 in HK_ProcessIncomingHkData.
-** Revision 1.7 2012/08/15 18:33:03EDT aschoeni 
-** Added ability to discard incomplete combo packets
-** Revision 1.6 2012/03/23 17:29:26EDT lwalling 
-** Limit error events to one per HK input packet
-** Revision 1.5 2009/12/03 15:34:55EST jmdagost 
-** Uncommented proper code to check the dump pending status of a table.  Commented out the old code (instead of deleting it) for reference.
-** Revision 1.4 2009/06/12 14:16:58EDT rmcgraw 
-** DCR82191:1 Changed OS_Mem function calls to CFE_PSP_Mem
-** Revision 1.3 2008/09/11 10:19:45EDT rjmcgraw 
-** DCR4040:1 Removed tabs and removed #include osapi-hw-core.h
-** Revision 1.2 2008/06/19 13:24:49EDT rjmcgraw 
-** DCR3052:1 Changed Table check logic to call getstatus before processing new copy table
-** Revision 1.1 2008/04/09 16:42:24EDT rjmcgraw 
-** Initial revision
-** Member added to CFS project
 **
 *************************************************************************/
 
@@ -71,17 +50,17 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_ProcessIncomingHkData (CFE_SB_MsgPtr_t MessagePtr)
 {
-    hk_copy_table_entry_t         * StartOfCopyTable;
-    hk_copy_table_entry_t         * CpyTblEntry;
-    hk_runtime_tbl_entry_t        * StartOfRtTable;
-    hk_runtime_tbl_entry_t        * RtTblEntry;
-    uint16                          Loop;
-    CFE_SB_MsgId_t                  MessageID;
-    uint8                         * DestPtr;
-    uint8                         * SrcPtr;
-    int32                           MessageLength=0;
-    int32                           MessageErrors;
-    int32                           LastByteAccessed;
+    hk_copy_table_entry_t         * StartOfCopyTable = NULL;
+    hk_copy_table_entry_t         * CpyTblEntry      = NULL;
+    hk_runtime_tbl_entry_t        * StartOfRtTable   = NULL;
+    hk_runtime_tbl_entry_t        * RtTblEntry       = NULL;
+    uint16                          Loop             = 0;
+    CFE_SB_MsgId_t                  MessageID        = 0xFFFF;
+    uint8                         * DestPtr          = NULL;
+    uint8                         * SrcPtr           = NULL;
+    int32                           MessageLength    = 0;
+    int32                           MessageErrors    = 0;
+    int32                           LastByteAccessed = 0;
 
 
     StartOfCopyTable = (hk_copy_table_entry_t *)  HK_AppData.CopyTablePtr;
@@ -130,8 +109,6 @@ void HK_ProcessIncomingHkData (CFE_SB_MsgPtr_t MessagePtr)
                            MessageID, (int)MessageLength, (int)MessageErrors);
     }
 
-    return;
-
 }   /* end HK_ProcessIncomingHkData */
 
 
@@ -153,22 +130,31 @@ int32 HK_ValidateHkCopyTable (void * TblPtr)
 /* HK process new copy table                                       */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr, 
-                             hk_runtime_tbl_entry_t * RtTblPtr)
+int32 HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr, 
+                              hk_runtime_tbl_entry_t * RtTblPtr)
 {
-    hk_copy_table_entry_t         * StartOfCopyTable;
-    hk_copy_table_entry_t         * OuterCpyEntry;
-    hk_copy_table_entry_t         * InnerDefEntry;
-    hk_runtime_tbl_entry_t        * StartOfRtTable;
-    hk_runtime_tbl_entry_t        * OuterRtEntry;
-    hk_runtime_tbl_entry_t        * InnerRtEntry;
-    int32                           Loop1;
-    int32                           Loop2;
-    CFE_SB_MsgId_t                  MidOfThisPacket;
-    int32                           SizeOfThisPacket;
-    int32                           FurthestByteFromThisEntry;
-    CFE_SB_MsgPtr_t                 NewPacketAddr;
-    int32                           Result = CFE_SUCCESS;
+    hk_copy_table_entry_t         * StartOfCopyTable          = NULL;
+    hk_copy_table_entry_t         * OuterCpyEntry             = NULL;
+    hk_copy_table_entry_t         * InnerDefEntry             = NULL;
+    hk_runtime_tbl_entry_t        * StartOfRtTable            = NULL;
+    hk_runtime_tbl_entry_t        * OuterRtEntry              = NULL;
+    hk_runtime_tbl_entry_t        * InnerRtEntry              = NULL;
+    int32                           Loop1                     = 0;
+    int32                           Loop2                     = 0;
+    CFE_SB_MsgId_t                  MidOfThisPacket           = 0xFFFF;
+    int32                           SizeOfThisPacket          = 0;
+    int32                           FurthestByteFromThisEntry = 0;
+    CFE_SB_MsgPtr_t                 NewPacketAddr             = 0;
+    int32                           Result                    = CFE_SUCCESS;
+
+    /* Ensure that the input arguments are valid */
+    if ( ((void *)CpyTblPtr == NULL) || ((void *)RtTblPtr == NULL) )
+    {
+        CFE_EVS_SendEvent( HK_NULL_POINTER_NEWCPY_ERR_EID, CFE_EVS_DEBUG,
+                           "Null pointer detected in new copy tbl processing: CpyTbl = 0x%08X, RtTbl = 0x%08X",
+                           (int)((void *)CpyTblPtr), (int)((void *)RtTblPtr) );
+        return ( HK_NULL_POINTER_DETECTED );
+    }
      
     StartOfCopyTable = CpyTblPtr;
     StartOfRtTable  = RtTblPtr;
@@ -291,6 +277,8 @@ void HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr,
         }
     }
 
+    return ( CFE_SUCCESS );
+
 }   /* end HK_ProcessNewCopyTable */
 
 
@@ -299,22 +287,31 @@ void HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr,
 /* HK Tear down old copy table                                     */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void HK_TearDownOldCopyTable (hk_copy_table_entry_t * CpyTblPtr, 
-                              hk_runtime_tbl_entry_t * RtTblPtr)
+int32 HK_TearDownOldCopyTable (hk_copy_table_entry_t * CpyTblPtr, 
+                               hk_runtime_tbl_entry_t * RtTblPtr)
 {
-    hk_copy_table_entry_t             * StartOfCopyTable;
-    hk_copy_table_entry_t             * OuterCpyEntry;
-    hk_copy_table_entry_t             * InnerDefEntry;
-    hk_runtime_tbl_entry_t            * StartOfRtTable;
-    hk_runtime_tbl_entry_t            * OuterRtEntry;
-    hk_runtime_tbl_entry_t            * InnerRtEntry;
-    int32                               Loop1;
-    int32                               Loop2;
-    CFE_SB_MsgId_t                      MidOfThisPacket;
-    void                              * OutputPktAddr;
-    void                              * SavedPktAddr;
-    int32                               Result = CFE_SUCCESS;
+    hk_copy_table_entry_t         * StartOfCopyTable = NULL;
+    hk_copy_table_entry_t         * OuterCpyEntry    = NULL;
+    hk_copy_table_entry_t         * InnerDefEntry    = NULL;
+    hk_runtime_tbl_entry_t        * StartOfRtTable   = NULL;
+    hk_runtime_tbl_entry_t        * OuterRtEntry     = NULL;
+    hk_runtime_tbl_entry_t        * InnerRtEntry     = NULL;
+    int32                           Loop1            = 0;
+    int32                           Loop2            = 0;
+    CFE_SB_MsgId_t                  MidOfThisPacket  = 0xFFFF;
+    void                          * OutputPktAddr    = NULL;
+    void                          * SavedPktAddr     = NULL;
+    int32                           Result           = CFE_SUCCESS;
 
+    /* Ensure that the input arguments are valid */
+    if ( ((void *)CpyTblPtr == NULL) || ((void *)RtTblPtr == NULL) )
+    {
+        CFE_EVS_SendEvent( HK_NULL_POINTER_TEARCPY_ERR_EID, CFE_EVS_ERROR,
+                           "Null pointer detected in copy tbl tear down: CpyTbl = 0x%08X, RtTbl = 0x%08X",
+                           (int)((void *)CpyTblPtr), (int)((void *)RtTblPtr) );
+        return ( HK_NULL_POINTER_DETECTED );
+    }
+     
     StartOfCopyTable = CpyTblPtr;
     StartOfRtTable  = RtTblPtr;
    
@@ -380,6 +377,8 @@ void HK_TearDownOldCopyTable (hk_copy_table_entry_t * CpyTblPtr,
 
     }
 
+    return ( CFE_SUCCESS );
+
 }   /* end HK_TearDownOldCopyTable */
 
 
@@ -392,12 +391,12 @@ void HK_TearDownOldCopyTable (hk_copy_table_entry_t * CpyTblPtr,
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_SendCombinedHkPacket (CFE_SB_MsgId_t WhichMidToSend)
 {
-    boolean                         PacketFound = FALSE;
-    hk_runtime_tbl_entry_t        * StartOfRtTable;
-    hk_runtime_tbl_entry_t        * RtTblEntry;
-    int32                           Loop;
-    CFE_SB_MsgId_t                  ThisEntrysOutMid;
-    CFE_SB_MsgId_t                  InputMidMissing;
+    boolean                         PacketFound      = FALSE;
+    hk_runtime_tbl_entry_t        * StartOfRtTable   = NULL;
+    hk_runtime_tbl_entry_t        * RtTblEntry       = NULL;
+    int32                           Loop             = 0;
+    CFE_SB_MsgId_t                  ThisEntrysOutMid = 0xFFFF;
+    CFE_SB_MsgId_t                  InputMidMissing  = 0xFFFF;
 
     StartOfRtTable  = (hk_runtime_tbl_entry_t *)  HK_AppData.RuntimeTablePtr;
 
@@ -454,12 +453,32 @@ void HK_SendCombinedHkPacket (CFE_SB_MsgId_t WhichMidToSend)
 /*                                                                 */
 /* Check the status of HK tables and perform any necessary action. */
 /*                                                                 */
-/*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void HK_CheckStatusOfTables (void)
+int32 HK_CheckStatusOfTables (void)
 {
+    int32   HKStatus = HK_ERROR;  /* Assume failure */
 
-    int32   Status = CFE_SUCCESS;
+    HKStatus = HK_CheckStatusOfCopyTable( );    
+
+    /* Only check the Dump Table if there were no problems with the Copy Table */
+    if ( HKStatus == HK_SUCCESS )
+    {
+        HKStatus = HK_CheckStatusOfDumpTable( );
+    }
+
+    return ( HKStatus );
+}   /* end HK_CheckStatusOfTables */
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*                                                                     */
+/* Check the status of HK Copy table and perform any necessary action. */
+/*                                                                     */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+int32 HK_CheckStatusOfCopyTable (void)
+{
+    int32   Status   = CFE_SUCCESS;
+    int32   HKStatus = HK_ERROR;  /* Assume failure */
 
     /* Determine if the copy table has a validation or update that needs to be performed */
     Status = CFE_TBL_GetStatus(HK_AppData.CopyTableHandle);
@@ -467,54 +486,102 @@ void HK_CheckStatusOfTables (void)
     if (Status == CFE_TBL_INFO_VALIDATION_PENDING)
     {
         /* Validate the specified Table */
-        CFE_TBL_Validate(HK_AppData.CopyTableHandle);
+        Status = CFE_TBL_Validate(HK_AppData.CopyTableHandle);
 
+        if ( Status != CFE_SUCCESS )
+        {
+            CFE_EVS_SendEvent( HK_UNEXPECTED_TBLVLD_RET_EID, CFE_EVS_ERROR, "Unexpected CFE_TBL_Validate return (0x%08X) for Copy Table",
+                              (unsigned int)Status );
+        }
+        HKStatus = HK_SUCCESS; /* This could just be a bad table, so no reason to abort the app */
+        
     }
     else if (Status == CFE_TBL_INFO_UPDATE_PENDING)
     {
         /* Unsubscribe to input msgs and free out pkt buffers */
-        HK_TearDownOldCopyTable (HK_AppData.CopyTablePtr, HK_AppData.RuntimeTablePtr);
+        /* If the copy table pointer is bad, that's okay here because it will be re-allocated later.
+           If the runtime table pointer is bad, the process new copy table call later on will
+           flag the error.  So we can ignore the return status at this point.
+        */
+        Status = HK_TearDownOldCopyTable(HK_AppData.CopyTablePtr, HK_AppData.RuntimeTablePtr);
             
-        /* release address must be called for update to take */
-        CFE_TBL_ReleaseAddress (HK_AppData.CopyTableHandle);
+        /* release address must be called for update to take. */
+        Status = CFE_TBL_ReleaseAddress(HK_AppData.CopyTableHandle);
 
-        /* Update the copy table */
-        CFE_TBL_Update(HK_AppData.CopyTableHandle);
+        /* Releasing the address should only return CFE_SUCCESS at this point since we
+           already had an update-pending response earlier */
+        if ( Status == CFE_SUCCESS )
+        {
+            /* Update the copy table */
+            Status = CFE_TBL_Update(HK_AppData.CopyTableHandle);
 
-        /* Get address of the newly updated copy table */
-        CFE_TBL_GetAddress((void *)(&HK_AppData.CopyTablePtr),
-                                     HK_AppData.CopyTableHandle);
-                   
-        HK_ProcessNewCopyTable(HK_AppData.CopyTablePtr, HK_AppData.RuntimeTablePtr);
-            
+            if ( Status == CFE_SUCCESS )
+            {
+                /* Get address of the newly updated copy table. */
+                Status = CFE_TBL_GetAddress((void *)(&HK_AppData.CopyTablePtr), HK_AppData.CopyTableHandle);
+
+                /* Status should only be CFE_TBL_INFO_UPDATED because we updated it above */
+                if ( Status == CFE_TBL_INFO_UPDATED )
+                {
+                    Status = HK_ProcessNewCopyTable(HK_AppData.CopyTablePtr, HK_AppData.RuntimeTablePtr);
+
+                    if ( Status == CFE_SUCCESS )
+                    {
+                        HKStatus = HK_SUCCESS;
+                    }
+                    else
+                    {
+                        /* If status was not success, then the copy table function received a NULL pointer argument */
+                        CFE_EVS_SendEvent( HK_NEWCPYTBL_HK_FAILED_EID, CFE_EVS_CRITICAL, 
+                                           "Process New Copy Table Failed, status = 0x%08X",
+                                           (unsigned int)Status );
+                    }
+                }
+                else
+                {
+                    CFE_EVS_SendEvent( HK_UNEXPECTED_GETADDR_RET_EID, CFE_EVS_CRITICAL, "Unexpected CFE_TBL_GetAddress return (0x%08X) for Copy Table",
+                                      (unsigned int)Status );
+                }
+            }
+            else
+            {
+                CFE_EVS_SendEvent( HK_UNEXPECTED_TBLUPD_RET_EID, CFE_EVS_CRITICAL, "Unexpected CFE_TBL_Update return (0x%08X) for Copy Table",
+                                  (unsigned int)Status );
+            }
+        }
+        else
+        {
+            CFE_EVS_SendEvent( HK_UNEXPECTED_RELADDR_RET_EID, CFE_EVS_CRITICAL, "Unexpected CFE_TBL_ReleaseAddress return (0x%08X) for Copy Table",
+                              (unsigned int)Status );
+        }
     }
     else if(Status != CFE_SUCCESS)
     {
-            
-        CFE_EVS_SendEvent (HK_UNEXPECTED_GETSTAT_RET_EID, CFE_EVS_ERROR,
+        CFE_EVS_SendEvent (HK_UNEXPECTED_GETSTAT_RET_EID, CFE_EVS_CRITICAL,
                "Unexpected CFE_TBL_GetStatus return (0x%08X) for Copy Table", 
                (unsigned int)Status);
     }
- 
-#if 0
-    /* NOTE: The procedure for dumping tables is different for load-dump  and
-     * dump-only tables. CFE_TBL_DumpToBuffer needs to be called by the owner
-     * app for dump-only tables. For load-dump tables, CFE_TBL_DumpToBuffer is
-     * called by Table Services when a dump cmd is received. Therefore,the owner
-     * app should not call CFE_TBL_DumpToBuffer for load-dump tables. */
-    
-    /* Determine if the runtime table has a dump pending */
-    CFE_TBL_Manage(HK_AppData.RuntimeTableHandle);      
-#endif
+    else
+    {
+        /* Only way to get here is if Status == CFE_SUCCESS */
+        HKStatus = HK_SUCCESS;
+    }
 
-    /* Below is the preferred way of checking for dump pending of the runtime 
-     * table. But CFE_TBL_DumpToBuffer is a private function (in cFE 5.1.0 and 
-     * earlier) and cannot be called by HK. The CFE_TBL_Manage api (used above) 
-     * calls  CFE_TBL_DumpToBuffer but also makes unnecessary calls for 
-     * dump-only tables. Until DumpToBuffer is made public, (see CFE FSW 
-     * DCR3051) the CFE_TBL_Manage api call must be used. CFE_TBL_DumpToBuffer 
-     * was made public in cFE version 5.2.0
-     */
+    return ( HKStatus );
+}   /* end HK_CheckStatusOfCopyTable */
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*                                                                     */
+/* Check the status of HK Dump table and perform any necessary action. */
+/*                                                                     */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+int32 HK_CheckStatusOfDumpTable (void)
+{
+    int32   Status   = CFE_SUCCESS;
+    int32   HKStatus = HK_ERROR;  /* Assume failure */
+
+    HKStatus = HK_ERROR; /* Need to reset for the dump table case */
 
     /* Determine if the runtime table has a dump pending */   
     Status = CFE_TBL_GetStatus(HK_AppData.RuntimeTableHandle);
@@ -522,20 +589,33 @@ void HK_CheckStatusOfTables (void)
     if (Status == CFE_TBL_INFO_DUMP_PENDING)
     {
         /* Dump the specified Table, cfe tbl manager makes copy */
-        CFE_TBL_DumpToBuffer(HK_AppData.RuntimeTableHandle);       
-
+        Status  = CFE_TBL_DumpToBuffer(HK_AppData.RuntimeTableHandle);
+    
+        if ( Status != CFE_SUCCESS )
+        {
+            CFE_EVS_SendEvent( HK_UNEXPECTED_DUMPTOBUFFER_RET_EID, CFE_EVS_CRITICAL, "Unexpected CFE_TBL_DumpToBuffer return (0x%08X) for Runtime Table",
+                              (unsigned int)Status );
+        }
+        else
+        {
+            HKStatus = HK_SUCCESS;
+        }         
     }
-    else if(Status != CFE_SUCCESS)
+    else if (Status != CFE_SUCCESS)
     {
-        
-        CFE_EVS_SendEvent (HK_UNEXPECTED_GETSTAT2_RET_EID, CFE_EVS_ERROR,
+        CFE_EVS_SendEvent (HK_UNEXPECTED_GETSTAT2_RET_EID, CFE_EVS_CRITICAL,
                "Unexpected CFE_TBL_GetStatus return (0x%08X) for Runtime Table", 
                (unsigned int)Status);
     }
-    
-    return;
+    else
+    {
+        /* Only way to get here is if Status == CFE_SUCCESS */
+        HKStatus = HK_SUCCESS;
+    }
+        
+    return ( HKStatus );
+}   /* end HK_CheckStatusOfDumpTable */
 
-}   /* end HK_CheckStatusOfTables */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -544,12 +624,12 @@ void HK_CheckStatusOfTables (void)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *MissingInputMid)
 {
-    int32                         Loop = 0;
-    int32                         Status = HK_NO_MISSING_DATA;
-    hk_copy_table_entry_t       * StartOfCopyTable;
-    hk_copy_table_entry_t       * CpyTblEntry;
-    hk_runtime_tbl_entry_t      * StartOfRtTable;
-    hk_runtime_tbl_entry_t      * RtTblEntry;
+    int32                           Loop             = 0;
+    int32                           Status           = HK_NO_MISSING_DATA;
+    hk_copy_table_entry_t         * StartOfCopyTable = NULL;
+    hk_copy_table_entry_t         * CpyTblEntry      = NULL;
+    hk_runtime_tbl_entry_t        * StartOfRtTable   = NULL;
+    hk_runtime_tbl_entry_t        * RtTblEntry       = NULL;
 
     StartOfCopyTable = (hk_copy_table_entry_t *) HK_AppData.CopyTablePtr;
     StartOfRtTable  = (hk_runtime_tbl_entry_t *)  HK_AppData.RuntimeTablePtr;
@@ -586,11 +666,11 @@ int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *Missi
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_SetFlagsToNotPresent(CFE_SB_MsgId_t OutPkt)
 {
-    int32                           Loop;
-    hk_copy_table_entry_t         * StartOfCopyTable;
-    hk_copy_table_entry_t         * CpyTblEntry;
-    hk_runtime_tbl_entry_t        * StartOfRtTable;
-    hk_runtime_tbl_entry_t        * RtTblEntry;
+    int32                           Loop             = 0;
+    hk_copy_table_entry_t         * StartOfCopyTable = NULL;
+    hk_copy_table_entry_t         * CpyTblEntry      = NULL;
+    hk_runtime_tbl_entry_t        * StartOfRtTable   = NULL;
+    hk_runtime_tbl_entry_t        * RtTblEntry       = NULL;
 
     StartOfCopyTable = (hk_copy_table_entry_t *) HK_AppData.CopyTablePtr;
     StartOfRtTable  = (hk_runtime_tbl_entry_t *)  HK_AppData.RuntimeTablePtr;

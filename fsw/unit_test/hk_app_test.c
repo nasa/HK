@@ -1,6 +1,23 @@
  /*************************************************************************
- ** File:
- **   $Id: hk_app_test.c 1.4 2016/10/28 11:04:15EDT mdeschu Exp  $
+ ** File: hk_app_test.c
+ **
+ ** NASA Docket No. GSC-16,127-1, and identified as "Core Flight Software System
+ ** (CFS) Housekeeping Application Version 2” 
+ **
+ ** Copyright © 2007-2014 United States Government as represented by the
+ ** Administrator of the National Aeronautics and Space Administration. All Rights
+ ** Reserved. 
+ **
+ ** Licensed under the Apache License, Version 2.0 (the "License"); 
+ ** you may not use this file except in compliance with the License. 
+ ** You may obtain a copy of the License at 
+ ** http://www.apache.org/licenses/LICENSE-2.0 
+ ** 
+ ** Unless required by applicable law or agreed to in writing, software 
+ ** distributed under the License is distributed on an "AS IS" BASIS, 
+ ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ ** See the License for the specific language governing permissions and 
+ ** limitations under the License. 
  **
  ** Purpose: 
  **   This file contains unit test cases for the functions contained in the file hk_app.c
@@ -8,18 +25,9 @@
  ** References:
  **   Flight Software Branch C Coding Standard Version 1.2
  **   CFS Development Standards Document
+ **
  ** Notes:
  **
- **   $Log: hk_app_test.c  $
- **   Revision 1.4 2016/10/28 11:04:15EDT mdeschu 
- **   Updates to unit tests for 2.4.1
- **   Revision 1.3 2016/10/18 17:28:58EDT czogby 
- **   Fix test HK_AppInit_Test_Nominal
- **   Revision 1.2 2016/10/07 14:33:14EDT czogby 
- **   Code Walkthrough Updates
- **   Revision 1.1 2016/06/24 14:43:43EDT czogby 
- **   Initial revision
- **   Member added to project /CFS-APPs-PROJECT/hk/fsw/unit_test/project.pj
  *************************************************************************/
 
 /*
@@ -82,6 +90,15 @@ int32 HK_APP_TEST_CFE_TBL_GetAddressHook (void **TblPtr, CFE_TBL_Handle_t TblHan
 void HK_APP_TEST_CFE_ES_ExitAppHook(uint32 ExitStatus)
 {
     HK_AppData.CombinedPacketsSent++;
+}
+
+void *HK_APP_TEST_CFE_SB_GetUserDataHook(CFE_SB_MsgPtr_t MsgPtr)
+{
+    uint8           *BytePtr;
+
+    BytePtr = (uint8 *)MsgPtr;
+
+    return (BytePtr + 8);  // offset for header
 }
 
 void HK_AppMain_Test_Nominal(void)
@@ -206,8 +223,7 @@ void HK_AppMain_Test_RcvMsgError(void)
     UtAssert_True (HK_AppData.RunStatus == CFE_ES_APP_ERROR, "HK_AppData.RunStatus == CFE_ES_APP_ERROR");
 
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_RCV_MSG_ERR_EID, CFE_EVS_ERROR, "HK_APP Exiting due to CFE_SB_RcvMsg error 0xFFFFFFFF"),
+    UtAssert_EventSent(HK_RCV_MSG_ERR_EID, CFE_EVS_ERROR, "HK_APP Exiting due to CFE_SB_RcvMsg error 0xFFFFFFFF",
         "HK_APP Exiting due to CFE_SB_RcvMsg error 0xFFFFFFFF");
 
     /* Generates 1 event message we don't care about in this test */
@@ -250,7 +266,7 @@ void HK_AppInit_Test_Nominal(void)
     
     /* Verify results */
     sprintf(Message, "HK Initialized.  Version %d.%d.%d.%d", HK_MAJOR_VERSION, HK_MINOR_VERSION, HK_REVISION, HK_MISSION_REV);
-    UtAssert_True (Ut_CFE_EVS_EventSent(HK_INIT_EID, CFE_EVS_INFORMATION, Message), Message);
+    UtAssert_EventSent(HK_INIT_EID, CFE_EVS_INFORMATION, Message, Message);
 
     UtAssert_True (HK_AppData.RunStatus == CFE_ES_APP_RUN, "HK_AppData.RunStatus == CFE_ES_APP_RUN");
 
@@ -327,8 +343,7 @@ void HK_AppInit_Test_SBCreatePipeError(void)
     Result = HK_AppInit();
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_CR_PIPE_ERR_EID, CFE_EVS_ERROR, "Error Creating SB Pipe,RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_CR_PIPE_ERR_EID, CFE_EVS_ERROR, "Error Creating SB Pipe,RC=0xFFFFFFFF",
         "Error Creating SB Pipe,RC=0xFFFFFFFF");
 
     UtAssert_True (HK_AppData.RunStatus == CFE_ES_APP_RUN, "HK_AppData.RunStatus == CFE_ES_APP_RUN");
@@ -365,8 +380,7 @@ void HK_AppInit_Test_SBSubscribeHKSendError(void)
     Result = HK_AppInit();
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_SUB_CMB_ERR_EID, CFE_EVS_ERROR, "Error Subscribing to HK Snd Cmb Pkt, MID=0x189C, RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_SUB_CMB_ERR_EID, CFE_EVS_ERROR, "Error Subscribing to HK Snd Cmb Pkt, MID=0x189C, RC=0xFFFFFFFF",
         "Error Subscribing to HK Snd Cmb Pkt, MID=0x189C, RC=0xFFFFFFFF");
 
     UtAssert_True (HK_AppData.RunStatus == CFE_ES_APP_RUN, "HK_AppData.RunStatus == CFE_ES_APP_RUN");
@@ -403,8 +417,7 @@ void HK_AppInit_Test_SBSubscribeHKRequestError(void)
     Result = HK_AppInit();
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_SUB_REQ_ERR_EID, CFE_EVS_ERROR, "Error Subscribing to HK Request, MID=0x189B, RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_SUB_REQ_ERR_EID, CFE_EVS_ERROR, "Error Subscribing to HK Request, MID=0x189B, RC=0xFFFFFFFF",
         "Error Subscribing to HK Request, MID=0x189B, RC=0xFFFFFFFF");
 
     UtAssert_True (HK_AppData.RunStatus == CFE_ES_APP_RUN, "HK_AppData.RunStatus == CFE_ES_APP_RUN");
@@ -441,8 +454,7 @@ void HK_AppInit_Test_SBSubscribeHKGndCmdsError(void)
     Result = HK_AppInit();
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_SUB_CMD_ERR_EID, CFE_EVS_ERROR, "Error Subscribing to HK Gnd Cmds, MID=0x189A, RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_SUB_CMD_ERR_EID, CFE_EVS_ERROR, "Error Subscribing to HK Gnd Cmds, MID=0x189A, RC=0xFFFFFFFF",
         "Error Subscribing to HK Gnd Cmds, MID=0x189A, RC=0xFFFFFFFF");
 
     UtAssert_True (HK_AppData.RunStatus == CFE_ES_APP_RUN, "HK_AppData.RunStatus == CFE_ES_APP_RUN");
@@ -479,8 +491,7 @@ void HK_AppInit_Test_PoolCreateError(void)
     Result = HK_AppInit();
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_CR_POOL_ERR_EID, CFE_EVS_ERROR, "Error Creating Memory Pool,RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_CR_POOL_ERR_EID, CFE_EVS_ERROR, "Error Creating Memory Pool,RC=0xFFFFFFFF",
         "Error Creating Memory Pool,RC=0xFFFFFFFF");
 
     UtAssert_True (HK_AppData.RunStatus == CFE_ES_APP_RUN, "HK_AppData.RunStatus == CFE_ES_APP_RUN");
@@ -517,8 +528,7 @@ void HK_AppInit_Test_TableInitError(void)
     Result = HK_AppInit();
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_CPTBL_REG_ERR_EID, CFE_EVS_ERROR, "Error Registering Copy Table,RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_CPTBL_REG_ERR_EID, CFE_EVS_ERROR, "Error Registering Copy Table,RC=0xFFFFFFFF",
         "Error Registering Copy Table,RC=0xFFFFFFFF");
 
     UtAssert_True (HK_AppData.RunStatus == CFE_ES_APP_RUN, "HK_AppData.RunStatus == CFE_ES_APP_RUN");
@@ -625,8 +635,7 @@ void HK_TableInit_Test_RegisterCopyTableError(void)
     
     /* Verify results */
 
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_CPTBL_REG_ERR_EID, CFE_EVS_ERROR, "Error Registering Copy Table,RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_CPTBL_REG_ERR_EID, CFE_EVS_ERROR, "Error Registering Copy Table,RC=0xFFFFFFFF",
         "Error Registering Copy Table,RC=0xFFFFFFFF");
 
     UtAssert_True (Result == -1, "Result == -1");
@@ -662,8 +671,7 @@ void HK_TableInit_Test_RegisterRuntimeTableError(void)
     
     /* Verify results */
 
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_RTTBL_REG_ERR_EID, CFE_EVS_ERROR, "Error Registering Runtime Table,RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_RTTBL_REG_ERR_EID, CFE_EVS_ERROR, "Error Registering Runtime Table,RC=0xFFFFFFFF",
         "Error Registering Runtime Table,RC=0xFFFFFFFF");
 
     UtAssert_True (Result == -1, "Result == -1");
@@ -696,8 +704,7 @@ void HK_TableInit_Test_LoadCopyTableError(void)
     
     /* Verify results */
 
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_CPTBL_LD_ERR_EID, CFE_EVS_ERROR, "Error Loading Copy Table,RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_CPTBL_LD_ERR_EID, CFE_EVS_ERROR, "Error Loading Copy Table,RC=0xFFFFFFFF",
         "Error Loading Copy Table,RC=0xFFFFFFFF");
 
     UtAssert_True (Result == -1, "Result == -1");
@@ -733,8 +740,7 @@ void HK_TableInit_Test_TableManageCopyTableError(void)
     
     /* Verify results */
 
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_CPTBL_MNG_ERR_EID, CFE_EVS_ERROR, "Error from TBL Manage call for Copy Table,RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_CPTBL_MNG_ERR_EID, CFE_EVS_ERROR, "Error from TBL Manage call for Copy Table,RC=0xFFFFFFFF",
         "Error from TBL Manage call for Copy Table,RC=0xFFFFFFFF");
 
     UtAssert_True (Result == -1, "Result == -1");
@@ -770,8 +776,7 @@ void HK_TableInit_Test_TableManageRuntimeTableError(void)
     
     /* Verify results */
 
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_RTTBL_MNG_ERR_EID, CFE_EVS_ERROR, "Error from TBL Manage call for Runtime Table,RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_RTTBL_MNG_ERR_EID, CFE_EVS_ERROR, "Error from TBL Manage call for Runtime Table,RC=0xFFFFFFFF",
         "Error from TBL Manage call for Runtime Table,RC=0xFFFFFFFF");
 
     UtAssert_True (Result == -1, "Result == -1");
@@ -804,8 +809,7 @@ void HK_TableInit_Test_GetAddressCopyTableError(void)
     
     /* Verify results */
 
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_CPTBL_GADR_ERR_EID, CFE_EVS_ERROR, "Error Getting Adr for Cpy Tbl,RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_CPTBL_GADR_ERR_EID, CFE_EVS_ERROR, "Error Getting Adr for Cpy Tbl,RC=0xFFFFFFFF",
         "Error Getting Adr for Cpy Tbl,RC=0xFFFFFFFF");
 
     UtAssert_True (Result == -1, "Result == -1");
@@ -836,8 +840,7 @@ void HK_TableInit_Test_GetAddressRuntimeTableAddressError(void)
     
     /* Verify results */
 
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_RTTBL_GADR_ERR_EID, CFE_EVS_ERROR, "Error Getting Adr for Runtime Table,RC=0xFFFFFFFF"),
+    UtAssert_EventSent(HK_RTTBL_GADR_ERR_EID, CFE_EVS_ERROR, "Error Getting Adr for Runtime Table,RC=0xFFFFFFFF",
         "Error Getting Adr for Runtime Table,RC=0xFFFFFFFF");
 
     UtAssert_True (Result == -1, "Result == -1");
@@ -846,18 +849,68 @@ void HK_TableInit_Test_GetAddressRuntimeTableAddressError(void)
 
 } /* end HK_TableInit_Test_GetAddressRuntimeTableAddressError */
 
+void HK_TableInit_Test_ProcessNewCopyTableError(void)
+{
+    int32 Result;
+    char  Message1[125];
+    char  Message2[125];
+
+    hk_runtime_tbl_entry_t   RuntimeTable;
+    
+    HK_AppData.CopyTablePtr = (hk_copy_table_entry_t *)NULL;
+    HK_AppData.RuntimeTablePtr = &RuntimeTable;
+
+    /* Set to prevent segmentation fault */
+    Ut_CFE_SB_SetFunctionHook(UT_CFE_SB_INITMSG_INDEX, &HK_APP_TEST_CFE_SB_InitMsgHook);
+
+    /* Set to *prevent* error message HK_CPTBL_LD_ERR_EID */
+    Ut_CFE_TBL_SetReturnCode(UT_CFE_TBL_LOAD_INDEX, CFE_SUCCESS, 1);
+
+    /* Set to prevent error message */
+    Ut_CFE_TBL_SetReturnCode(UT_CFE_TBL_GETADDRESS_INDEX, CFE_TBL_INFO_UPDATED, 1);
+
+    /* Execute the function being tested */
+    Result = HK_TableInit();
+    
+    /* Build the event messages we're going to test */
+    /* Set AFTER we call the tested function because the RunTimeTable address is updated in the function */
+    sprintf( Message1, "Null pointer detected in new copy tbl processing: CpyTbl = 0x00000000, RtTbl = 0x%08X", (int)(HK_AppData.RuntimeTablePtr) );
+    sprintf( Message2, "Process New Copy Table Failed, status = 0x%08X", (int)(HK_NULL_POINTER_DETECTED) );
+
+    /* Verify results */
+
+    UtAssert_EventSent( HK_NULL_POINTER_NEWCPY_ERR_EID, CFE_EVS_DEBUG, Message1, Message1 );
+
+    UtAssert_EventSent( HK_NEWCPYTBL_INIT_FAILED_EID, CFE_EVS_ERROR, Message2, Message2 );
+
+    UtAssert_True( Result == HK_NULL_POINTER_DETECTED, "Result == HK_NULL_POINTER_DETECTED" );
+
+    UtAssert_True( Ut_CFE_EVS_GetEventQueueDepth() == 2, "Ut_CFE_EVS_GetEventQueueDepth() == 2" );
+
+} /* end HK_TableInit_Test_ProcessNewCopyTableError */
+
 void HK_AppPipe_Test_SendCombinedPktNominal(void)
 {
     HK_Send_Out_Msg_t   CmdPacket;
 
-    hk_copy_table_entry_t    CopyTable;
-    hk_runtime_tbl_entry_t   RuntimeTable;
-    
-    HK_AppData.CopyTablePtr = &CopyTable;
-    HK_AppData.RuntimeTablePtr = &RuntimeTable;
+    hk_copy_table_entry_t    CopyTable[HK_COPY_TABLE_ENTRIES];
+    hk_runtime_tbl_entry_t   RuntimeTable[HK_COPY_TABLE_ENTRIES];
+
+    /* Initialize the table structures */
+    CFE_PSP_MemSet(&(CopyTable[0]), 0, (sizeof(hk_copy_table_entry_t) * HK_COPY_TABLE_ENTRIES));
+    CFE_PSP_MemSet(&(RuntimeTable[0]), 0, (sizeof(hk_runtime_tbl_entry_t) * HK_COPY_TABLE_ENTRIES));
+
+    HK_AppData.CopyTablePtr = &(CopyTable[0]);
+    HK_AppData.RuntimeTablePtr = &(RuntimeTable[0]);
+
+    /* Set up hooks */
+    Ut_CFE_SB_SetFunctionHook(UT_CFE_SB_GETUSERDATA_INDEX, *HK_APP_TEST_CFE_SB_GetUserDataHook);
 
     /* Set to reach case HK_SEND_COMBINED_PKT_MID */
     CFE_SB_InitMsg (&CmdPacket, HK_SEND_COMBINED_PKT_MID, sizeof(HK_Send_Out_Msg_t), TRUE);
+
+    /* Initialize command packet user data */
+    CmdPacket.OutMsgToSend = 0x0FFF;  /* Set to non-zero value */
 
     /* Set to reach case HK_SEND_COMBINED_PKT_MID (and prevent segmentation fault) */
     Ut_CFE_SB_SetReturnCode(UT_CFE_SB_GETMSGID_INDEX, HK_SEND_COMBINED_PKT_MID, 1);
@@ -896,8 +949,7 @@ void HK_AppPipe_Test_SendCombinedPktError(void)
     HK_AppPipe((CFE_SB_MsgPtr_t)(&CmdPacket));
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_MSG_LEN_ERR_EID, CFE_EVS_ERROR, "Msg with Bad length Rcvd: ID = 0x189C, Exp Len = 10, Len = 1"),
+    UtAssert_EventSent(HK_MSG_LEN_ERR_EID, CFE_EVS_ERROR, "Msg with Bad length Rcvd: ID = 0x189C, Exp Len = 10, Len = 1",
         "Msg with Bad length Rcvd: ID = 0x189C, Exp Len = 10, Len = 1");
 
     UtAssert_True (Ut_CFE_EVS_GetEventQueueDepth() == 1, "Ut_CFE_EVS_GetEventQueueDepth() == 1");
@@ -914,6 +966,8 @@ void HK_AppPipe_Test_SendHKNominal(void)
     HK_AppData.CopyTablePtr = &CopyTable;
     HK_AppData.RuntimeTablePtr = &RuntimeTable;
 
+    HK_AppData.RunStatus = CFE_ES_APP_RUN; /* to verify no change */
+
     /* Set to reach case HK_SEND_HK_MID */
     CFE_SB_InitMsg (&CmdPacket, HK_SEND_HK_MID, CFE_SB_CMD_HDR_SIZE, TRUE);
 
@@ -925,6 +979,7 @@ void HK_AppPipe_Test_SendHKNominal(void)
     HK_AppPipe((CFE_SB_MsgPtr_t)(&CmdPacket));
     
     /* Verify results */
+    UtAssert_True (HK_AppData.RunStatus == CFE_ES_APP_RUN, "HK_AppData.RunStatus == CFE_ES_APP_RUN");
     UtAssert_True (Ut_CFE_EVS_GetEventQueueDepth() == 0, "Ut_CFE_EVS_GetEventQueueDepth() == 0");
 
 } /* end HK_AppPipe_Test_SendHKNominal */
@@ -950,13 +1005,44 @@ void HK_AppPipe_Test_SendHKError(void)
     HK_AppPipe((CFE_SB_MsgPtr_t)(&CmdPacket));
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_MSG_LEN_ERR_EID, CFE_EVS_ERROR, "Msg with Bad length Rcvd: ID = 0x189B, Exp Len = 8, Len = 1"),
+    UtAssert_EventSent(HK_MSG_LEN_ERR_EID, CFE_EVS_ERROR, "Msg with Bad length Rcvd: ID = 0x189B, Exp Len = 8, Len = 1",
         "Msg with Bad length Rcvd: ID = 0x189B, Exp Len = 8, Len = 1");
 
     UtAssert_True (Ut_CFE_EVS_GetEventQueueDepth() == 1, "Ut_CFE_EVS_GetEventQueueDepth() == 1");
 
 } /* end HK_AppPipe_Test_SendHKError */
+
+void HK_AppPipe_Test_SendHKTableCheckError(void)
+{
+    HK_Send_Out_Msg_t   CmdPacket;
+
+    hk_copy_table_entry_t    CopyTable;
+    hk_runtime_tbl_entry_t   RuntimeTable;
+    
+    HK_AppData.CopyTablePtr = &CopyTable;
+    HK_AppData.RuntimeTablePtr = &RuntimeTable;
+
+    HK_AppData.RunStatus = CFE_ES_APP_RUN;
+
+    /* Set to reach case HK_SEND_HK_MID */
+    CFE_SB_InitMsg (&CmdPacket, HK_SEND_HK_MID, CFE_SB_CMD_HDR_SIZE, TRUE);
+
+    /* Set TBL status to generate error messages HK_UNEXPECTED_GETSTAT_RET_EID and 
+       HK_UNEXPECTED_GETSTAT2_RET_EID */
+    Ut_CFE_TBL_SetReturnCode(UT_CFE_TBL_GETSTATUS_INDEX, -1, 1);
+    Ut_CFE_TBL_ContinueReturnCodeAfterCountZero(UT_CFE_TBL_GETSTATUS_INDEX);
+
+    /* Execute the function being tested */
+    HK_AppPipe((CFE_SB_MsgPtr_t)(&CmdPacket));
+    
+    /* Verify results */
+    UtAssert_True (HK_AppData.RunStatus == CFE_ES_APP_ERROR, "HK_AppData.RunStatus == CFE_ES_APP_ERROR");
+    UtAssert_EventSent(HK_UNEXPECTED_GETSTAT_RET_EID, CFE_EVS_CRITICAL, "Unexpected CFE_TBL_GetStatus return (0xFFFFFFFF) for Copy Table",
+        "Unexpected CFE_TBL_GetStatus return (0xFFFFFFFF) for Copy Table");
+
+    UtAssert_True (Ut_CFE_EVS_GetEventQueueDepth() == 1, "Ut_CFE_EVS_GetEventQueueDepth() == 1");
+
+} /* end HK_AppPipe_Test_SendHKTableCheckError */
 
 void HK_AppPipe_Test_Noop(void)
 {
@@ -978,8 +1064,7 @@ void HK_AppPipe_Test_Noop(void)
     HK_AppPipe((CFE_SB_MsgPtr_t)(&CmdPacket));
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_NOOP_CMD_EID, CFE_EVS_INFORMATION, "HK No-op command, Version 2.4.1.0"),
+    UtAssert_EventSent(HK_NOOP_CMD_EID, CFE_EVS_INFORMATION, "HK No-op command, Version 2.4.1.0",
         "HK No-op command, Version 2.4.1.0");
     /* Note: This message is generated in subfunction HK_NoopCmd.  It is tested here to verify that the subfunction is reached. */
 
@@ -1007,8 +1092,7 @@ void HK_AppPipe_Test_Reset(void)
     HK_AppPipe((CFE_SB_MsgPtr_t)(&CmdPacket));
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_RESET_CNTRS_CMD_EID, CFE_EVS_DEBUG, "HK Reset Counters command received"),
+    UtAssert_EventSent(HK_RESET_CNTRS_CMD_EID, CFE_EVS_DEBUG, "HK Reset Counters command received",
         "HK Reset Counters command received");
     /* Note: This message is generated in subfunction HK_ResetCtrsCmd.  It is tested here to verify that the subfunction is reached. */
 
@@ -1036,8 +1120,7 @@ void HK_AppPipe_Test_InvalidCommandCode(void)
     HK_AppPipe((CFE_SB_MsgPtr_t)(&CmdPacket));
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_CC_ERR_EID, CFE_EVS_ERROR, "Cmd Msg with Invalid command code Rcvd -- ID = 0x189A, CC = 99"),
+    UtAssert_EventSent(HK_CC_ERR_EID, CFE_EVS_ERROR, "Cmd Msg with Invalid command code Rcvd -- ID = 0x189A, CC = 99",
         "Cmd Msg with Invalid command code Rcvd -- ID = 0x189A, CC = 99");
 
     UtAssert_True (HK_AppData.ErrCounter == 1, "HK_AppData.ErrCounter == 1");
@@ -1112,8 +1195,7 @@ void HK_NoopCmd_Test_Nominal(void)
     HK_NoopCmd((CFE_SB_MsgPtr_t)(&CmdPacket));
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_NOOP_CMD_EID, CFE_EVS_INFORMATION, "HK No-op command, Version 2.4.1.0"),
+    UtAssert_EventSent(HK_NOOP_CMD_EID, CFE_EVS_INFORMATION, "HK No-op command, Version 2.4.1.0",
         "HK No-op command, Version 2.4.1.0");
 
     UtAssert_True (HK_AppData.CmdCounter == 1, "HK_AppData.CmdCounter == 1");
@@ -1164,8 +1246,7 @@ void HK_ResetCtrsCmd_Test_Nominal(void)
     HK_ResetCtrsCmd((CFE_SB_MsgPtr_t)(&CmdPacket));
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_RESET_CNTRS_CMD_EID, CFE_EVS_DEBUG, "HK Reset Counters command received"),
+    UtAssert_EventSent(HK_RESET_CNTRS_CMD_EID, CFE_EVS_DEBUG, "HK Reset Counters command received",
         "HK Reset Counters command received");
 
     UtAssert_True (Ut_CFE_EVS_GetEventQueueDepth() == 1, "Ut_CFE_EVS_GetEventQueueDepth() == 1");
@@ -1261,8 +1342,7 @@ void HK_VerifyCmdLength_Test_BadMsgLength(void)
     Result = HK_VerifyCmdLength((CFE_SB_MsgPtr_t)(&CmdPacket), ExpectedLength);
     
     /* Verify results */
-    UtAssert_True
-        (Ut_CFE_EVS_EventSent(HK_CMD_LEN_ERR_EID, CFE_EVS_ERROR, "Cmd Msg with Bad length Rcvd: ID = 0x189A, CC = 1, Exp Len = 99, Len = 8"),
+    UtAssert_EventSent(HK_CMD_LEN_ERR_EID, CFE_EVS_ERROR, "Cmd Msg with Bad length Rcvd: ID = 0x189A, CC = 1, Exp Len = 99, Len = 8",
         "Cmd Msg with Bad length Rcvd: ID = 0x189A, CC = 1, Exp Len = 99, Len = 8");
 
     UtAssert_True (Result == HK_BAD_MSG_LENGTH_RC, "Result == HK_BAD_MSG_LENGTH_RC");
@@ -1297,11 +1377,13 @@ void HK_App_Test_AddTestCases(void)
     UtTest_Add(HK_TableInit_Test_TableManageRuntimeTableError, HK_Test_Setup, HK_Test_TearDown, "HK_TableInit_Test_TableManageRuntimeTableError");
     UtTest_Add(HK_TableInit_Test_GetAddressCopyTableError, HK_Test_Setup, HK_Test_TearDown, "HK_TableInit_Test_GetAddressCopyTableError");
     UtTest_Add(HK_TableInit_Test_GetAddressRuntimeTableAddressError, HK_Test_Setup, HK_Test_TearDown, "HK_TableInit_Test_GetAddressRuntimeTableAddressError");
+    UtTest_Add(HK_TableInit_Test_ProcessNewCopyTableError, HK_Test_Setup, HK_Test_TearDown, "HK_TableInit_Test_ProcessNewCopyTableError");
 
     UtTest_Add(HK_AppPipe_Test_SendCombinedPktNominal, HK_Test_Setup, HK_Test_TearDown, "HK_AppPipe_Test_SendCombinedPktNominal");
     UtTest_Add(HK_AppPipe_Test_SendCombinedPktError, HK_Test_Setup, HK_Test_TearDown, "HK_AppPipe_Test_SendCombinedPktError");
     UtTest_Add(HK_AppPipe_Test_SendHKNominal, HK_Test_Setup, HK_Test_TearDown, "HK_AppPipe_Test_SendHKNominal");
     UtTest_Add(HK_AppPipe_Test_SendHKError, HK_Test_Setup, HK_Test_TearDown, "HK_AppPipe_Test_SendHKError");
+    UtTest_Add(HK_AppPipe_Test_SendHKTableCheckError, HK_Test_Setup, HK_Test_TearDown, "HK_AppPipe_Test_SendHKTableCheckError");
     UtTest_Add(HK_AppPipe_Test_Noop, HK_Test_Setup, HK_Test_TearDown, "HK_AppPipe_Test_Noop");
     UtTest_Add(HK_AppPipe_Test_Reset, HK_Test_Setup, HK_Test_TearDown, "HK_AppPipe_Test_Reset");
     UtTest_Add(HK_AppPipe_Test_InvalidCommandCode, HK_Test_Setup, HK_Test_TearDown, "HK_AppPipe_Test_InvalidCommandCode");

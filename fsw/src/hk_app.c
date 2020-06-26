@@ -1,15 +1,23 @@
 /************************************************************************
-** File:
-**   $Id: hk_app.c 1.3 2016/10/28 10:51:14EDT mdeschu Exp  $
+** File: hk_app.c 
 **
-**  Copyright © 2007-2014 United States Government as represented by the 
-**  Administrator of the National Aeronautics and Space Administration. 
-**  All Other Rights Reserved.  
+** NASA Docket No. GSC-16,127-1, and identified as "Core Flight Software System
+** (CFS) Housekeeping Application Version 2” 
 **
-**  This software was created at NASA's Goddard Space Flight Center.
-**  This software is governed by the NASA Open Source Agreement and may be 
-**  used, distributed and modified only pursuant to the terms of that 
-**  agreement.
+** Copyright © 2007-2014 United States Government as represented by the
+** Administrator of the National Aeronautics and Space Administration. All Rights
+** Reserved. 
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+** http://www.apache.org/licenses/LICENSE-2.0 
+** 
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+** limitations under the License. 
 **
 ** Purpose:
 **  The CFS Housekeeping (HK) Application file containing the application
@@ -17,50 +25,6 @@
 **
 ** Notes:
 **
-** $Log: hk_app.c  $
-** Revision 1.3 2016/10/28 10:51:14EDT mdeschu 
-** Fix compiler format warnings in calls to CFE_EVS_SendEvent  by casting them appropriately
-** Revision 1.2 2015/11/10 16:49:05EST lwalling 
-** Restore data lost in MKS 2010 from MKS 2009
-** Revision 1.1 2015/07/25 21:31:29EDT rperera 
-** Initial revision
-** Member added to project /CFS-APPs-PROJECT/hk/fsw/src/project.pj
-** Revision 1.17 2015/03/04 14:58:32EST sstrege 
-** Added copyright information
-** Revision 1.16 2012/08/23 17:12:31EDT aschoeni 
-** Made internal commands no longer increment error counters (and changed event message slightly).
-** Revision 1.15 2011/11/30 16:03:05EST jmdagost 
-** Added new-line character to syslog call.
-** Revision 1.14 2011/06/23 11:57:54EDT jmdagost 
-** Removed error counter increment in housekeeping request command error (per guidelines)
-** Revision 1.13 2010/06/09 12:00:49EDT jmdagost 
-** Update subscription error messages in HK Init.
-** Revision 1.12 2009/12/03 18:11:47EST jmdagost 
-** Modified event message arguments to use updated event definitions.
-** Revision 1.11 2009/12/03 15:24:57EST jmdagost 
-** Modified the error logic to include an else-block that processes the message.  Also added a call to syslog.
-** Revision 1.10 2009/12/03 15:14:49EST jmdagost 
-** Replaced event message call with a call to syslog as requested.
-** Revision 1.9 2008/09/17 15:52:18EDT rjmcgraw 
-** DCR4040:1 Added spaces to align text
-** Revision 1.8 2008/09/11 11:42:43EDT rjmcgraw 
-** DCR4041:1 Added hk_version.h and hk_platform_cfg.h to #include list
-** Revision 1.7 2008/08/08 14:34:58EDT rjmcgraw 
-** DCR4209:1 Added #include hk_verify.h
-** Revision 1.6 2008/07/16 10:01:12EDT rjmcgraw 
-** DCR4042:1 Displaying app version number in init event and no-op event
-** Revision 1.5 2008/06/19 13:21:35EDT rjmcgraw
-** DCR3052:1 Call to CheckStatusOfTables instead of HandleUpdateToCopyTable 
-**   during HK Req
-** Revision 1.4 2008/05/15 09:33:25EDT rjmcgraw
-** DCR1647:1 Fixed problem with zeroed out telemetry
-** Revision 1.3 2008/05/07 10:00:07EDT rjmcgraw
-** DCR1647:4 Removed the _CMD from HK_SEND_HK_CMD_MID
-** Revision 1.2 2008/05/02 12:50:57EDT rjmcgraw
-** DCR1647:1 Added #include hk_perfids.h
-** Revision 1.1 2008/04/09 16:41:22EDT rjmcgraw
-** Initial revision
-** Member added to project cfs/hk/fsw/src/project.pj
 **
 *************************************************************************/
 
@@ -90,7 +54,7 @@ HK_AppData_t        HK_AppData;
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_AppMain(void)
 {
-   int32 Status;
+   int32 Status = CFE_SUCCESS;
 
    /*
    ** Register the Application with Executive Services
@@ -225,7 +189,7 @@ int32 HK_AppInit(void)
 
 
     /* Create a memory pool for combined output messages */
-    Status = CFE_ES_PoolCreate (&HK_AppData.MemPoolHandle,
+    Status = CFE_ES_PoolCreate ((CFE_ES_MemHandle_t *)(&HK_AppData.MemPoolHandle),
                                  HK_AppData.MemPoolBuffer,
                                  sizeof (HK_AppData.MemPoolBuffer) );
     if (Status != CFE_SUCCESS)
@@ -354,7 +318,17 @@ int32 HK_TableInit (void)
         return (Status);
      }
 
-    HK_ProcessNewCopyTable(HK_AppData.CopyTablePtr,HK_AppData.RuntimeTablePtr);
+    Status = HK_ProcessNewCopyTable( HK_AppData.CopyTablePtr, HK_AppData.RuntimeTablePtr );
+
+    if ( Status != CFE_SUCCESS )
+    {
+        /* If status was not success, then the copy table function received a NULL pointer argument */
+        CFE_EVS_SendEvent( HK_NEWCPYTBL_INIT_FAILED_EID, CFE_EVS_ERROR, 
+                           "Process New Copy Table Failed, status = 0x%08X",
+                           (unsigned int)Status );
+
+        return ( Status );
+    }
 
     return CFE_SUCCESS;
 
@@ -369,8 +343,8 @@ int32 HK_TableInit (void)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_AppPipe (CFE_SB_MsgPtr_t MessagePtr)
 {
-    CFE_SB_MsgId_t  MessageID;
-    uint16          CommandCode;
+    CFE_SB_MsgId_t  MessageID   = 0xFFFF; /* Init to invalid value */
+    uint16          CommandCode = 0xFFFF; /* Init to invalid value */
 
     MessageID = CFE_SB_GetMsgId (MessagePtr);
     switch (MessageID)
@@ -407,7 +381,10 @@ void HK_AppPipe (CFE_SB_MsgPtr_t MessagePtr)
                 HK_HousekeepingCmd(MessagePtr);
             }
             /* Check for copy table load and runtime dump request */
-            HK_CheckStatusOfTables();
+            if ( HK_CheckStatusOfTables() != HK_SUCCESS )
+            {
+                HK_AppData.RunStatus = CFE_ES_APP_ERROR;
+            }
             break;
 
         /* HK ground commands   */
@@ -441,8 +418,6 @@ void HK_AppPipe (CFE_SB_MsgPtr_t MessagePtr)
             break;
     }
 
-    return;
-
 } /* End of HK_AppPipe() */
 
 
@@ -453,12 +428,10 @@ void HK_AppPipe (CFE_SB_MsgPtr_t MessagePtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_SendCombinedHKCmd (CFE_SB_MsgPtr_t MessagePtr)
 {
-    CFE_SB_MsgId_t  WhichCombinedPacket;
+    CFE_SB_MsgId_t  WhichCombinedPacket = 0xFFFF;  /* Init to invalid value */
 
     WhichCombinedPacket = *((uint16 *)CFE_SB_GetUserData(MessagePtr));
     HK_SendCombinedHkPacket (WhichCombinedPacket);
-
-    return;
 
 } /* end of HK_SendCombinedHKCmd() */
 
@@ -481,8 +454,6 @@ void HK_HousekeepingCmd (CFE_SB_MsgPtr_t MessagePtr)
     /* Send housekeeping telemetry packet...        */
     CFE_SB_TimeStampMsg((CFE_SB_Msg_t *) &HK_AppData.HkPacket);
     CFE_SB_SendMsg((CFE_SB_Msg_t *) &HK_AppData.HkPacket);
-
-    return;
 
 } /* End of HK_HousekeepingCmd() */
 
@@ -512,8 +483,6 @@ void HK_NoopCmd (CFE_SB_MsgPtr_t MessagePtr)
         HK_AppData.CmdCounter++;
     }
 
-    return;
-
 } /* End of HK_NoopCmd() */
 
 
@@ -536,8 +505,6 @@ void HK_ResetCtrsCmd (CFE_SB_MsgPtr_t MessagePtr)
                            "HK Reset Counters command received");
     }
 
-    return;
-
 } /* End of HK_ResetCtrsCmd() */
 
 
@@ -548,11 +515,10 @@ void HK_ResetCtrsCmd (CFE_SB_MsgPtr_t MessagePtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_ResetHkData (void)
 {
-    HK_AppData.CmdCounter = 0;
-    HK_AppData.ErrCounter = 0;
+    HK_AppData.CmdCounter          = 0;
+    HK_AppData.ErrCounter          = 0;
     HK_AppData.CombinedPacketsSent = 0;
     HK_AppData.MissingDataCtr      = 0;
-    return;
 
 } /* End of HK_ResetHkData () */
 
@@ -564,10 +530,10 @@ void HK_ResetHkData (void)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 int32 HK_VerifyCmdLength (CFE_SB_MsgPtr_t MessagePtr,uint32 ExpectedLength)
 {
-    int32               Status = HK_SUCCESS;
-    CFE_SB_MsgId_t      MessageID;
-    uint16              CommandCode;
-    uint16              ActualLength;
+    int32               Status       = HK_SUCCESS;
+    CFE_SB_MsgId_t      MessageID    = 0xFFFF;
+    uint16              CommandCode  = 0xFFFF;
+    uint16              ActualLength = 0;
 
     ActualLength  = CFE_SB_GetTotalMsgLength (MessagePtr);
 

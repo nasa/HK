@@ -50,6 +50,7 @@ INCLUDES := -I.
 INCLUDES += -I$(UT_ASSERT_SRC)/inc
 INCLUDES += -I$(CFS_MISSION)/build/pc-linux/inc
 INCLUDES += -I$(APP_DIR)/cfs_lib/fsw/public_inc
+INCLUDES += -I$(CFE_DIR)/fsw/cfe-core/os/inc
 INCLUDES += -I$(CFE_DIR)/fsw/cfe-core/src/inc
 INCLUDES += -I$(CFE_DIR)/fsw/cfe-core/src/time
 INCLUDES += -I$(CFE_DIR)/fsw/cfe-core/src/sb
@@ -60,9 +61,8 @@ INCLUDES += -I$(CFE_DIR)/fsw/cfe-core/src/tbl
 INCLUDES += -I$(CFE_DIR)/fsw/mission_inc
 INCLUDES += -I$(CFE_DIR)/fsw/platform_inc/cpu1
 INCLUDES += -I$(OSAL_DIR)/src/os/inc
-INCLUDES += -I$(OSAL_DIR)/build/inc
+INCLUDES += -I$(OSAL_DIR)/src/bsp/pc-linux/config
 INCLUDES += -I$(PSP_DIR)/fsw/inc
-INCLUDES += -I$(PSP_DIR)/fsw/pc-linux/inc
 INCLUDES += -I$(PSP_DIR)/fsw/pc-linux/inc
 INCLUDES += -I$(HK_PATH)/fsw/src
 INCLUDES += -I$(HK_PATH)/fsw/mission_inc
@@ -125,7 +125,7 @@ GCOV_LOPT = -pg -p -fprofile-arcs -ftest-coverage -lgcov -lm
 WARNINGS = -Wall -std=c99 -Wstrict-prototypes -Wundef
 DEBUGGER = -g
 
-COPT = $(WARNINGS) $(DEBUGGER) $(GCOV_COPT) -DSOFTWARE_LITTLE_BIT_ORDER -D_EL -D_ix86_ -DUT_VERBOSE -DOSAPI_NO_SPECIAL_ATTRIBS
+COPT = $(WARNINGS) $(DEBUGGER) $(GCOV_COPT) -DSOFTWARE_LITTLE_BIT_ORDER -D_EL -DUT_VERBOSE -DOSAPI_NO_SPECIAL_ATTRIBS
 
 LOPT = $(GCOV_LOPT)
 
