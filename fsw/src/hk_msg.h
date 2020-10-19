@@ -1,18 +1,16 @@
 /************************************************************************
 ** File: hk_msg.h 
 **
-** NASA Docket No. GSC-16,127-1, and identified as "Core Flight Software System
-** (CFS) Housekeeping Application Version 2” 
+** NASA Docket No. GSC-18449-1, and identified as "Core Flight System (cFS)
+** Housekeeping (HK) Application version 2.4.3” 
 **
-** Copyright © 2007-2014 United States Government as represented by the
-** Administrator of the National Aeronautics and Space Administration. All Rights
-** Reserved. 
+** Copyright © 2019 United States Government as represented by the Administrator of
+** the National Aeronautics and Space Administration.  All Rights Reserved. 
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
 ** You may obtain a copy of the License at 
 ** http://www.apache.org/licenses/LICENSE-2.0 
-** 
 ** Unless required by applicable law or agreed to in writing, software 
 ** distributed under the License is distributed on an "AS IS" BASIS, 
 ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
@@ -64,7 +62,7 @@ typedef struct
 */
 typedef struct
 {
-    uint8   TlmHeader[CFE_SB_TLM_HDR_SIZE];/**< \brief cFE Software Bus Telemetry Message Header */
+    CFE_SB_TlmHdr_t  TlmHeader; /**< \brief cFE Software Bus Telemetry Message Header */
  
     uint8   CmdCounter;         /**< \hktlmmnemonic \HK_CMDPC
                                 \brief Count of valid commands received */
@@ -76,8 +74,8 @@ typedef struct
                                 \brief Count of combined tlm pkts sent */
     uint16  MissingDataCtr;     /**< \hktlmmnemonic \HK_MISSDATACTR
                                 \brief Number of times missing data was detected */ 
-    uint32  MemPoolHandle;      /**< \hktlmmnemonic \HK_MEMPOOLHNDL
-                                \brief Memory pool handle used to get mempool diags */
+    CFE_ES_MemHandle_t  MemPoolHandle;      /**< \hktlmmnemonic \HK_MEMPOOLHNDL
+                                            \brief Memory pool handle used to get mempool diags */
 
 } HK_HkPacket_t;
 

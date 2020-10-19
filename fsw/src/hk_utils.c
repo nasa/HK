@@ -1,18 +1,16 @@
 /************************************************************************
 ** File: hk_utils.c 
 **
-** NASA Docket No. GSC-16,127-1, and identified as "Core Flight Software System
-** (CFS) Housekeeping Application Version 2” 
+** NASA Docket No. GSC-18449-1, and identified as "Core Flight System (cFS)
+** Housekeeping (HK) Application version 2.4.3” 
 **
-** Copyright © 2007-2014 United States Government as represented by the
-** Administrator of the National Aeronautics and Space Administration. All Rights
-** Reserved. 
+** Copyright © 2019 United States Government as represented by the Administrator of
+** the National Aeronautics and Space Administration.  All Rights Reserved. 
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
 ** You may obtain a copy of the License at 
 ** http://www.apache.org/licenses/LICENSE-2.0 
-** 
 ** Unless required by applicable law or agreed to in writing, software 
 ** distributed under the License is distributed on an "AS IS" BASIS, 
 ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
@@ -104,7 +102,7 @@ void HK_ProcessIncomingHkData (CFE_SB_MsgPtr_t MessagePtr)
     /* Send, at most, one error event per input packet */
     if (MessageErrors != 0)
     {
-        CFE_EVS_SendEvent (HK_ACCESSING_PAST_PACKET_END_EID, CFE_EVS_ERROR,
+        CFE_EVS_SendEvent (HK_ACCESSING_PAST_PACKET_END_EID, CFE_EVS_EventType_ERROR,
                            "HK table definition exceeds packet length. MID:0x%04X, Length:%d, Count:%d",
                            MessageID, (int)MessageLength, (int)MessageErrors);
     }
@@ -150,9 +148,9 @@ int32 HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr,
     /* Ensure that the input arguments are valid */
     if ( ((void *)CpyTblPtr == NULL) || ((void *)RtTblPtr == NULL) )
     {
-        CFE_EVS_SendEvent( HK_NULL_POINTER_NEWCPY_ERR_EID, CFE_EVS_DEBUG,
-                           "Null pointer detected in new copy tbl processing: CpyTbl = 0x%08X, RtTbl = 0x%08X",
-                           (int)((void *)CpyTblPtr), (int)((void *)RtTblPtr) );
+        CFE_EVS_SendEvent( HK_NULL_POINTER_NEWCPY_ERR_EID, CFE_EVS_EventType_DEBUG,
+                           "Null pointer detected in new copy tbl processing: CpyTbl = %p, RtTbl = %p",
+                           (void*)CpyTblPtr, (void*)RtTblPtr );
         return ( HK_NULL_POINTER_DETECTED );
     }
      
@@ -234,12 +232,12 @@ int32 HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr,
                     }
 
                     /* Init the SB Packet only once regardless of how many times its in the table */
-                    CFE_SB_InitMsg (NewPacketAddr, MidOfThisPacket, SizeOfThisPacket, TRUE);                    
+                    CFE_SB_InitMsg (NewPacketAddr, MidOfThisPacket, SizeOfThisPacket, true);                    
                     
                 }
                 else
                 {
-                    CFE_EVS_SendEvent (HK_MEM_POOL_MALLOC_FAILED_EID, CFE_EVS_ERROR,
+                    CFE_EVS_SendEvent (HK_MEM_POOL_MALLOC_FAILED_EID, CFE_EVS_EventType_ERROR,
                                        "HK Processing New Table: ES_GetPoolBuf for size %d returned 0x%04X",
                                        (int)SizeOfThisPacket, (unsigned int)Result);
                 }
@@ -270,7 +268,7 @@ int32 HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr,
             }
             else
             {
-                CFE_EVS_SendEvent (HK_CANT_SUBSCRIBE_TO_SB_PKT_EID, CFE_EVS_ERROR,
+                CFE_EVS_SendEvent (HK_CANT_SUBSCRIBE_TO_SB_PKT_EID, CFE_EVS_EventType_ERROR,
                                    "HK Processing New Table:SB_Subscribe for Mid 0x%04X returned 0x%04X",
                                    OuterCpyEntry->InputMid, (unsigned int)Result);
             }
@@ -306,9 +304,9 @@ int32 HK_TearDownOldCopyTable (hk_copy_table_entry_t * CpyTblPtr,
     /* Ensure that the input arguments are valid */
     if ( ((void *)CpyTblPtr == NULL) || ((void *)RtTblPtr == NULL) )
     {
-        CFE_EVS_SendEvent( HK_NULL_POINTER_TEARCPY_ERR_EID, CFE_EVS_ERROR,
-                           "Null pointer detected in copy tbl tear down: CpyTbl = 0x%08X, RtTbl = 0x%08X",
-                           (int)((void *)CpyTblPtr), (int)((void *)RtTblPtr) );
+        CFE_EVS_SendEvent( HK_NULL_POINTER_TEARCPY_ERR_EID, CFE_EVS_EventType_ERROR,
+                           "Null pointer detected in copy tbl tear down: CpyTbl = %p, RtTbl = %p",
+                           (void*)CpyTblPtr, (void*)RtTblPtr );
         return ( HK_NULL_POINTER_DETECTED );
     }
      
@@ -347,7 +345,7 @@ int32 HK_TearDownOldCopyTable (hk_copy_table_entry_t * CpyTblPtr,
             }
             else
             {
-                CFE_EVS_SendEvent (HK_MEM_POOL_FREE_FAILED_EID, CFE_EVS_ERROR,
+                CFE_EVS_SendEvent (HK_MEM_POOL_FREE_FAILED_EID, CFE_EVS_EventType_ERROR,
                                    "HK TearDown: ES_putPoolBuf Err pkt:0x%08lX ret 0x%04X, hdl 0x%08lx",
                                    (unsigned long)SavedPktAddr, (unsigned int)Result, (unsigned long)HK_AppData.MemPoolHandle);
 
@@ -391,7 +389,7 @@ int32 HK_TearDownOldCopyTable (hk_copy_table_entry_t * CpyTblPtr,
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_SendCombinedHkPacket (CFE_SB_MsgId_t WhichMidToSend)
 {
-    boolean                         PacketFound      = FALSE;
+    bool                         PacketFound      = false;
     hk_runtime_tbl_entry_t        * StartOfRtTable   = NULL;
     hk_runtime_tbl_entry_t        * RtTblEntry       = NULL;
     int32                           Loop             = 0;
@@ -401,7 +399,7 @@ void HK_SendCombinedHkPacket (CFE_SB_MsgId_t WhichMidToSend)
     StartOfRtTable  = (hk_runtime_tbl_entry_t *)  HK_AppData.RuntimeTablePtr;
 
     /* Look thru each item in this Table, but only send this packet once, at most */
-    for (Loop = 0; ( (Loop < HK_COPY_TABLE_ENTRIES) && (PacketFound == FALSE) ); Loop++)
+    for (Loop = 0; ( (Loop < HK_COPY_TABLE_ENTRIES) && (PacketFound == false) ); Loop++)
     {
         RtTblEntry  = & StartOfRtTable [Loop];
 
@@ -415,7 +413,7 @@ void HK_SendCombinedHkPacket (CFE_SB_MsgId_t WhichMidToSend)
                 {
                     HK_AppData.MissingDataCtr++;
                     
-                    CFE_EVS_SendEvent (HK_OUTPKT_MISSING_DATA_EID, CFE_EVS_DEBUG,
+                    CFE_EVS_SendEvent (HK_OUTPKT_MISSING_DATA_EID, CFE_EVS_EventType_DEBUG,
                        "Combined Packet 0x%04X missing data from Input Pkt 0x%04X", 
                        ThisEntrysOutMid,InputMidMissing);
                     
@@ -433,15 +431,15 @@ void HK_SendCombinedHkPacket (CFE_SB_MsgId_t WhichMidToSend)
 
                 HK_SetFlagsToNotPresent(ThisEntrysOutMid);               
                 
-                PacketFound = TRUE;
+                PacketFound = true;
                 
             }
         }
     }
 
-    if (PacketFound == FALSE)
+    if (PacketFound == false)
     {
-        CFE_EVS_SendEvent (HK_UNKNOWN_COMBINED_PACKET_EID, CFE_EVS_INFORMATION,
+        CFE_EVS_SendEvent (HK_UNKNOWN_COMBINED_PACKET_EID, CFE_EVS_EventType_INFORMATION,
                          "Combined HK Packet 0x%04X is not found in current HK Copy Table", 
                          WhichMidToSend);
     }
@@ -490,7 +488,7 @@ int32 HK_CheckStatusOfCopyTable (void)
 
         if ( Status != CFE_SUCCESS )
         {
-            CFE_EVS_SendEvent( HK_UNEXPECTED_TBLVLD_RET_EID, CFE_EVS_ERROR, "Unexpected CFE_TBL_Validate return (0x%08X) for Copy Table",
+            CFE_EVS_SendEvent( HK_UNEXPECTED_TBLVLD_RET_EID, CFE_EVS_EventType_ERROR, "Unexpected CFE_TBL_Validate return (0x%08X) for Copy Table",
                               (unsigned int)Status );
         }
         HKStatus = HK_SUCCESS; /* This could just be a bad table, so no reason to abort the app */
@@ -532,32 +530,32 @@ int32 HK_CheckStatusOfCopyTable (void)
                     else
                     {
                         /* If status was not success, then the copy table function received a NULL pointer argument */
-                        CFE_EVS_SendEvent( HK_NEWCPYTBL_HK_FAILED_EID, CFE_EVS_CRITICAL, 
+                        CFE_EVS_SendEvent( HK_NEWCPYTBL_HK_FAILED_EID, CFE_EVS_EventType_CRITICAL, 
                                            "Process New Copy Table Failed, status = 0x%08X",
                                            (unsigned int)Status );
                     }
                 }
                 else
                 {
-                    CFE_EVS_SendEvent( HK_UNEXPECTED_GETADDR_RET_EID, CFE_EVS_CRITICAL, "Unexpected CFE_TBL_GetAddress return (0x%08X) for Copy Table",
+                    CFE_EVS_SendEvent( HK_UNEXPECTED_GETADDR_RET_EID, CFE_EVS_EventType_CRITICAL, "Unexpected CFE_TBL_GetAddress return (0x%08X) for Copy Table",
                                       (unsigned int)Status );
                 }
             }
             else
             {
-                CFE_EVS_SendEvent( HK_UNEXPECTED_TBLUPD_RET_EID, CFE_EVS_CRITICAL, "Unexpected CFE_TBL_Update return (0x%08X) for Copy Table",
+                CFE_EVS_SendEvent( HK_UNEXPECTED_TBLUPD_RET_EID, CFE_EVS_EventType_CRITICAL, "Unexpected CFE_TBL_Update return (0x%08X) for Copy Table",
                                   (unsigned int)Status );
             }
         }
         else
         {
-            CFE_EVS_SendEvent( HK_UNEXPECTED_RELADDR_RET_EID, CFE_EVS_CRITICAL, "Unexpected CFE_TBL_ReleaseAddress return (0x%08X) for Copy Table",
+            CFE_EVS_SendEvent( HK_UNEXPECTED_RELADDR_RET_EID, CFE_EVS_EventType_CRITICAL, "Unexpected CFE_TBL_ReleaseAddress return (0x%08X) for Copy Table",
                               (unsigned int)Status );
         }
     }
     else if(Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent (HK_UNEXPECTED_GETSTAT_RET_EID, CFE_EVS_CRITICAL,
+        CFE_EVS_SendEvent (HK_UNEXPECTED_GETSTAT_RET_EID, CFE_EVS_EventType_CRITICAL,
                "Unexpected CFE_TBL_GetStatus return (0x%08X) for Copy Table", 
                (unsigned int)Status);
     }
@@ -593,7 +591,7 @@ int32 HK_CheckStatusOfDumpTable (void)
     
         if ( Status != CFE_SUCCESS )
         {
-            CFE_EVS_SendEvent( HK_UNEXPECTED_DUMPTOBUFFER_RET_EID, CFE_EVS_CRITICAL, "Unexpected CFE_TBL_DumpToBuffer return (0x%08X) for Runtime Table",
+            CFE_EVS_SendEvent( HK_UNEXPECTED_DUMPTOBUFFER_RET_EID, CFE_EVS_EventType_CRITICAL, "Unexpected CFE_TBL_DumpToBuffer return (0x%08X) for Runtime Table",
                               (unsigned int)Status );
         }
         else
@@ -603,7 +601,7 @@ int32 HK_CheckStatusOfDumpTable (void)
     }
     else if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent (HK_UNEXPECTED_GETSTAT2_RET_EID, CFE_EVS_CRITICAL,
+        CFE_EVS_SendEvent (HK_UNEXPECTED_GETSTAT2_RET_EID, CFE_EVS_EventType_CRITICAL,
                "Unexpected CFE_TBL_GetStatus return (0x%08X) for Runtime Table", 
                (unsigned int)Status);
     }

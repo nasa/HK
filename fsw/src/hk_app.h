@@ -1,18 +1,16 @@
 /************************************************************************
 ** File: hk_app.h
 **
-** NASA Docket No. GSC-16,127-1, and identified as "Core Flight Software System
-** (CFS) Housekeeping Application Version 2” 
+** NASA Docket No. GSC-18449-1, and identified as "Core Flight System (cFS)
+** Housekeeping (HK) Application version 2.4.3” 
 **
-** Copyright © 2007-2014 United States Government as represented by the
-** Administrator of the National Aeronautics and Space Administration. All Rights
-** Reserved. 
+** Copyright © 2019 United States Government as represented by the Administrator of
+** the National Aeronautics and Space Administration.  All Rights Reserved. 
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
 ** You may obtain a copy of the License at 
 ** http://www.apache.org/licenses/LICENSE-2.0 
-** 
 ** Unless required by applicable law or agreed to in writing, software 
 ** distributed under the License is distributed on an "AS IS" BASIS, 
 ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
@@ -75,7 +73,7 @@ typedef struct
     uint16					MissingDataCtr;/**< \brief Number of times missing data was detected */
     uint16					CombinedPacketsSent;/**< \brief Count of combined output msgs sent */    
 
-    uint32                  MemPoolHandle;/**< \brief HK mempool handle for output pkts */
+    CFE_ES_MemHandle_t      MemPoolHandle;/**< \brief HK mempool handle for output pkts */
     uint32                  RunStatus;/**< \brief HK App run status */
         
     CFE_TBL_Handle_t        CopyTableHandle;/**< \brief Copy Table handle */
