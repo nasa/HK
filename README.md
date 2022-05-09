@@ -4,9 +4,9 @@ core Flight System (cFS) Housekeeping Application (HK)
 Open Source Release Readme
 ==========================
 
-HK Release 2.4.3
+HK Release 2.5.0
 
-Date: 10/8/2020
+Date: 08/27/2021
 
 Introduction
 -------------
@@ -26,26 +26,23 @@ Introduction
 
   The HK application is written in C and depends on the cFS Operating System
   Abstraction Layer (OSAL) and cFE components.  There is additional HK application
-  specific configuration information contained in the application user's guide
-  available in https://github.com/nasa/HK/tree/master/docs/users_guide
+  specific configuration information contained in the application user's guide.
+  
+  Developer's guide information can be generated using Doxygen:
+  doxygen hk_doxygen_config.txt
 
-  This software is licensed under the Apache 2.0 license. 
-
+ 
 
 Software Included
 ------------------
 
-  Housekeeping application (HK) 2.4.3
+  Housekeeping application (HK) 2.5.0
 
 
 Software Required
 ------------------
 
- Operating System Abstraction Layer 5.0 or higher can be
- obtained at https://github.com/nasa/osal
-
- core Flight Executive 6.8.0 or higher can be obtained at
- https://github.com/nasa/cfe
+ cFS Caelum
 
  Note: An integrated bundle including the cFE, OSAL, and PSP can
  be obtained at https://github.com/nasa/cfs

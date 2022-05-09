@@ -61,6 +61,8 @@ PROC scx_cpu1_hk_basichousekeeping
 ;					proper host IP address.
 ;	11/09/16	Walt Moleski	Added use of global requirements array
 ;					that was removed previously
+;	05/11/21	Walt Moleski	Added 4 bytes of data to each raw cmd
+;					since Caelum has a 16 byte CCSDS header
 ;
 ;  Arguments
 ;	None.
@@ -181,7 +183,7 @@ wait 5
 
 ;; Display the pages
 page SCX_CPU1_HK_HK
-page SCX_CPU1_TST_HK_HK
+;page SCX_CPU1_TST_HK_HK
 page SCX_CPU1_HK_COMBINED_PKT1
 page SCX_CPU1_HK_COMBINED_PKT2
 page SCX_CPU1_HK_COMBINED_PKT3
@@ -206,11 +208,15 @@ write "==> Default Copy Table filename = '",tableFileName,"'"
 
 s ftp_file("CF:0", "hk_cpy_tbl.tbl", tableFileName, hostCPU, "P")
 
+; Restart the HK application in order to use the copy table generated above
+/SCX_CPU1_ES_RestartApp Application="HK"
+wait 5
+
 write ";*********************************************************************"
 write ";  Step 1.3:  Start the Housekeeping (HK) and Test Applications"
 write ";********************************************************************"
-s scx_cpu1_hk_start_apps("1.3")
-wait 5
+;s scx_cpu1_hk_start_apps("1.3")
+;wait 5
 
 write ";*********************************************************************"
 write ";  Step 1.4: Verify that the HK Housekeeping telemetry items are "
@@ -281,71 +287,17 @@ InputPacket18 = 0x998
 InputPacket19 = 0x999
 InputPacket20 = 0x99a
 
-if ("CPU1" = "CPU2") then
-   appid = 0xfc4
-   OutputPacket1 = 0x99c  
-   OutputPacket2 = 0x99d
-   OutputPacket3 = 0x99e
-   ;; Use CPU3 IDs
-   InputPacket1 = 0xa87
-   InputPacket2 = 0xa88
-   InputPacket3 = 0xa89
-   InputPacket4 = 0xa8a
-   InputPacket5 = 0xa8b
-   InputPacket6 = 0xa8c
-   InputPacket7 = 0xa8d
-   InputPacket8 = 0xa8e
-   InputPacket9 = 0xa8f
-   InputPacket10 = 0xa90
-   InputPacket11 = 0xa91
-   InputPacket12 = 0xa92
-   InputPacket13 = 0xa93
-   InputPacket14 = 0xa94
-   InputPacket15 = 0xa95
-   InputPacket16 = 0xa96
-   InputPacket17 = 0xa97
-   InputPacket18 = 0xa98
-   InputPacket19 = 0xa99
-   InputPacket20 = 0xa9a
-elseif ("CPU1" = "CPU3") then
-   appid = 0xfe4
-   OutputPacket1 = 0xa9c  
-   OutputPacket2 = 0xa9d
-   OutputPacket3 = 0xa9e
-   ;; Use CPU1 IDs
-   InputPacket1 = 0x887
-   InputPacket2 = 0x888
-   InputPacket3 = 0x889
-   InputPacket4 = 0x88a
-   InputPacket5 = 0x88b
-   InputPacket6 = 0x88c
-   InputPacket7 = 0x88d
-   InputPacket8 = 0x88e
-   InputPacket9 = 0x88f
-   InputPacket10 = 0x890
-   InputPacket11 = 0x891
-   InputPacket12 = 0x892
-   InputPacket13 = 0x893
-   InputPacket14 = 0x894
-   InputPacket15 = 0x895
-   InputPacket16 = 0x896
-   InputPacket17 = 0x897
-   InputPacket18 = 0x898
-   InputPacket19 = 0x899
-   InputPacket20 = 0x89a
-endif 
-
-/SCX_CPU1_TO_ADDPACKET Stream=OutputPacket1 Pkt_Size=x'0' Priority=x'0' Reliability=x'1' Buflimit=x'4'
-/SCX_CPU1_TO_ADDPACKET Stream=OutputPacket2 Pkt_Size=x'0' Priority=x'0' Reliability=x'1' Buflimit=x'4'
-/SCX_CPU1_TO_ADDPACKET Stream=OutputPacket3 Pkt_Size=x'0' Priority=x'0' Reliability=x'1' Buflimit=x'4'
+;/SCX_CPU1_TO_ADDPACKET Stream=OutputPacket1 Pkt_Size=x'0' Priority=x'0' Reliability=x'1' Buflimit=x'4'
+;/SCX_CPU1_TO_ADDPACKET Stream=OutputPacket2 Pkt_Size=x'0' Priority=x'0' Reliability=x'1' Buflimit=x'4'
+;/SCX_CPU1_TO_ADDPACKET Stream=OutputPacket3 Pkt_Size=x'0' Priority=x'0' Reliability=x'1' Buflimit=x'4'
 
 local size, pktLen
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket1 DataSize=4 DataPattern =0x01234567
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 4
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket1,4) & "C000" & %hex(pktLen,4) & "00000000000001234567"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket1,4) & "C000" & %hex(pktLen,4) & "0000000000000000000001234567"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
@@ -353,8 +305,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket2 DataSize=8 DataPattern =0x12345678
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 8
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket2,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket2,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "12345678"
 enddo
@@ -365,8 +317,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket3 DataSize=16 DataPattern =0x23456789
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 16
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket3,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket3,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "23456789"
 enddo
@@ -377,8 +329,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket4 DataSize=32 DataPattern =0x3456789a
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 32
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket4,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket4,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "3456789a"
 enddo
@@ -388,7 +340,7 @@ wait 1
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket5 DataSize=32 DataPattern =0x456789ab
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
-rawCmd = %hex(InputPacket5,4) & "C000" & %hex(pktLen,4) & "000000000000"
+rawCmd = %hex(InputPacket5,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "456789ab"
 enddo
@@ -399,8 +351,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket6 DataSize=16 DataPattern =0x56789abc
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 16
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket6,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket6,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "56789abc"
 enddo
@@ -411,8 +363,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket7 DataSize=8 DataPattern =0x6789abcd
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 8
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket7,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket7,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "6789abcd"
 enddo
@@ -423,15 +375,15 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket8 DataSize=4 DataPattern =0x789abcde
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 4
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket8,4) & "C000" & %hex(pktLen,4) & "000000000000789abcde"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket8,4) & "C000" & %hex(pktLen,4) & "00000000000000000000789abcde"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket9 DataSize=4 DataPattern =0x89abcdef
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
-rawCmd = %hex(InputPacket9,4) & "C000" & %hex(pktLen,4) & "00000000000089abcdef"
+rawCmd = %hex(InputPacket9,4) & "C000" & %hex(pktLen,4) & "0000000000000000000089abcdef"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
@@ -439,8 +391,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket10 DataSize=8 DataPattern =0x9abcdef0
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 8
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket10,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket10,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "9abcdef0"
 enddo
@@ -450,7 +402,7 @@ wait 1
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket11 DataSize=8 DataPattern =0xabcdef01
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
-rawCmd = %hex(InputPacket11,4) & "C000" & %hex(pktLen,4) & "000000000000"
+rawCmd = %hex(InputPacket11,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "abcdef01"
 enddo
@@ -461,15 +413,15 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket12 DataSize=4 DataPattern =0xbcdef012
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 4
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket12,4) & "C000" & %hex(pktLen,4) & "000000000000bcdef012"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket12,4) & "C000" & %hex(pktLen,4) & "00000000000000000000bcdef012"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket13 DataSize=4 DataPattern =0xcdef0123
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
-rawCmd = %hex(InputPacket13,4) & "C000" & %hex(pktLen,4) & "000000000000cdef0123"
+rawCmd = %hex(InputPacket13,4) & "C000" & %hex(pktLen,4) & "00000000000000000000cdef0123"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
@@ -477,8 +429,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket14 DataSize=8 DataPattern =0xdef01234
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 8
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket14,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket14,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "def01234"
 enddo
@@ -489,8 +441,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket15 DataSize=16 DataPattern =0xef012345
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 16
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket15,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket15,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "ef012345"
 enddo
@@ -501,8 +453,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket16 DataSize=32 DataPattern =0xf0123456
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 32
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket16,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket16,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "f0123456"
 enddo
@@ -512,7 +464,7 @@ wait 1
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket17 DataSize=32 DataPattern =0x76543210
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
-rawCmd = %hex(InputPacket17,4) & "C000" & %hex(pktLen,4) & "000000000000"
+rawCmd = %hex(InputPacket17,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "76543210"
 enddo
@@ -523,8 +475,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket18 DataSize=16 DataPattern =0x87654321
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 16
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket18,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket18,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "87654321"
 enddo
@@ -535,8 +487,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket19 DataSize=8 DataPattern =0x98765432
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 8
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket19,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket19,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "98765432"
 enddo
@@ -547,8 +499,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket20 DataSize=4 DataPattern =0xa9876543
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 4
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket20,4) & "C000" & %hex(pktLen,4) & "000000000000a9876543"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket20,4) & "C000" & %hex(pktLen,4) & "00000000000000000000a9876543"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
@@ -745,22 +697,14 @@ write ";*********************************************************************"
 OutputPacket4 = 0x89f
 InputPacket21 = 0x9a2
 
-if ("CPU1" = "CPU2") then
-   OutputPacket4 = 0x99f
-   InputPacket21 = 0xaa2
-elseif ("CPU1" = "CPU3") then
-   OutputPacket4 = 0xa9f
-   InputPacket21 = 0x8a2
-endif 
-
 ;; Already did Pkts 1 & 2 in Step 2.1
-/SCX_CPU1_TO_ADDPACKET Stream=OutputPacket4 Pkt_Size=x'0' Priority=x'0' Reliability=x'1' Buflimit=x'4'
+;/SCX_CPU1_TO_ADDPACKET Stream=OutputPacket4 Pkt_Size=x'0' Priority=x'0' Reliability=x'1' Buflimit=x'4'
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket1 DataSize=4 DataPattern =0x11111111
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 4
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket1,4) & "C000" & %hex(pktLen,4) & "00000000000011111111"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket1,4) & "C000" & %hex(pktLen,4) & "0000000000000000000011111111"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
@@ -768,8 +712,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket2 DataSize=8 DataPattern =0x22222222
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 8
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket2,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket2,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "22222222"
 enddo
@@ -780,8 +724,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket3 DataSize=16 DataPattern =0x33333333
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 16
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket3,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket3,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "33333333"
 enddo
@@ -792,8 +736,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket4 DataSize=32 DataPattern =0x44444444
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 32
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket4,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket4,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "44444444"
 enddo
@@ -803,7 +747,7 @@ wait 1
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket5 DataSize=32 DataPattern =0x55555555
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
-rawCmd = %hex(InputPacket5,4) & "C000" & %hex(pktLen,4) & "000000000000"
+rawCmd = %hex(InputPacket5,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "55555555"
 enddo
@@ -814,8 +758,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket6 DataSize=16 DataPattern =0x66666666
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 16
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket6,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket6,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "66666666"
 enddo
@@ -826,8 +770,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket7 DataSize=8 DataPattern =0x77777777
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 8
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket7,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket7,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "77777777"
 enddo
@@ -838,15 +782,15 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket8 DataSize=4 DataPattern =0x88888888
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 4
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket8,4) & "C000" & %hex(pktLen,4) & "00000000000088888888"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket8,4) & "C000" & %hex(pktLen,4) & "0000000000000000000088888888"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket9 DataSize=4 DataPattern =0x99999999
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
-rawCmd = %hex(InputPacket9,4) & "C000" & %hex(pktLen,4) & "00000000000099999999"
+rawCmd = %hex(InputPacket9,4) & "C000" & %hex(pktLen,4) & "0000000000000000000099999999"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
@@ -854,8 +798,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket10 DataSize=8 DataPattern =0xaaaaaaaa
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 8
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket10,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket10,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "aaaaaaaa"
 enddo
@@ -865,7 +809,7 @@ wait 1
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket11 DataSize=8 DataPattern =0xbbbbbbbb
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
-rawCmd = %hex(InputPacket11,4) & "C000" & %hex(pktLen,4) & "000000000000"
+rawCmd = %hex(InputPacket11,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "bbbbbbbb"
 enddo
@@ -876,15 +820,15 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket12 DataSize=4 DataPattern =0xcccccccc
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 4
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket12,4) & "C000" & %hex(pktLen,4) & "000000000000cccccccc"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket12,4) & "C000" & %hex(pktLen,4) & "00000000000000000000cccccccc"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket13 DataSize=4 DataPattern =0xdddddddd
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
-rawCmd = %hex(InputPacket13,4) & "C000" & %hex(pktLen,4) & "000000000000dddddddd"
+rawCmd = %hex(InputPacket13,4) & "C000" & %hex(pktLen,4) & "00000000000000000000dddddddd"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
@@ -892,8 +836,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket14 DataSize=8 DataPattern =0xeeeeeeee
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 8
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket14,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket14,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "eeeeeeee"
 enddo
@@ -904,8 +848,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket15 DataSize=16 DataPattern =0x12345678
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 16
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket15,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket15,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "12345678"
 enddo
@@ -916,8 +860,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket16 DataSize=32 DataPattern =0x16161616
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 32
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket16,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket16,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "16161616"
 enddo
@@ -927,7 +871,7 @@ wait 1
 
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket17 DataSize=32 DataPattern =0x17171717
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
-rawCmd = %hex(InputPacket17,4) & "C000" & %hex(pktLen,4) & "000000000000"
+rawCmd = %hex(InputPacket17,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "17171717"
 enddo
@@ -938,8 +882,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket18 DataSize=16 DataPattern =0x18181818
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 16
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket18,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket18,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "18181818"
 enddo
@@ -950,8 +894,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket19 DataSize=8 DataPattern =0x19191919
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 8
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket19,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket19,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "19191919"
 enddo
@@ -962,8 +906,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket20 DataSize=4 DataPattern =0x20202020
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 4
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket20,4) & "C000" & %hex(pktLen,4) & "00000000000020202020"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket20,4) & "C000" & %hex(pktLen,4) & "0000000000000000000020202020"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 wait 1
@@ -971,8 +915,8 @@ wait 1
 ;;/SCX_CPU1_TST_HK_SENDINMSG MsgId=InputPacket21 DataSize=16 DataPattern =0xffffffff
 ;;ut_tlmupdate SCX_CPU1_TST_HK_CMDPC
 size = 16
-pktLen = (12 + size) - 7
-rawCmd = %hex(InputPacket21,4) & "C000" & %hex(pktLen,4) & "000000000000"
+pktLen = (16 + size) - 7
+rawCmd = %hex(InputPacket21,4) & "C000" & %hex(pktLen,4) & "00000000000000000000"
 for i = 1 to size/4 do
   rawCmd = rawCmd & "ffffffff"
 enddo

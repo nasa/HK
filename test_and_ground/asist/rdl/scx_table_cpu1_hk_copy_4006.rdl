@@ -1,0 +1,50 @@
+!==============================================================================
+!
+!                Originator: B. Medina
+!                Responsible SC:  
+!                Responsible CSE: 
+!                Rev:  Last Change: Jan 04 2012
+
+!
+!                    Telemetry Packet #4006  (dec)
+!                 =================================
+!
+!       Packet Application ID: 4006 (Hex '0FA6')
+!       Packet Title:  SCX CPU1 TST TBL App table 1 & 2
+!       Packet Length:  ?? Bytes (Including ?? Bytes Of Header)
+!	Collect             Frequency:         SEC
+!  
+!       REFERENCES:
+!
+!       NOTES:
+!
+!       HISTORY: 
+!  	2008/04/28:  B. Medina  initial release
+!       2012/01/04 WFM  : Removed VARYING from Packet definition
+!	2012/01/04	: Created from template 'template_table_HK_COPY_TBL.rdl'
+!	with parameters spacecraft='SCX' and processor='CPU1'.
+!==============================================================================
+!
+TYPES
+   RECORD SCX_CPU1_HK_CopyTableEntry  DESC="SCX CPU1 HK Copy Table Entry Type"
+!      SB_MSGID_T  InputMid	DESC="Input message id"
+      ULI       InputMid	DESC="Input message id"
+      ui        InputOffset	DESC="Offset in input message to copy data from"
+      ui        Spare		DESC="Alignment bytes"
+!      SB_MSGID_T  OutputMid	DESC="Output message id"
+      ULI       OutputMid	DESC="Output message id"
+      ui        OutputOffset	DESC="Offset in output message to write data to"
+      ui        NumBytes	DESC="Number of bytes to copy"
+   END
+END_TYPES
+
+! HK Copy Table
+PACKET P0FA6 APID=4006, DESC="SCX CPU1 HK Copy Table"
+!
+#include "cfe_file_header.rdl"
+#include "cfe_tbl_header.rdl" 
+!
+SCX_CPU1_HK_CopyTableEntry SCX_CPU1_HK_CopyTable[128]  DESC="SCX CPU1 HK Copy Table"
+!
+END
+

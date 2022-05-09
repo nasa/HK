@@ -42,7 +42,7 @@ start get_file_to_cvt (ramDir, "cfe_es_app_info.log", "scx_cpu1_es_app_info.log"
 found_app1 = FALSE
 found_app2 = FALSE
 
-;Loop thru the table looking for the CS and TST_CS
+;Loop thru the table looking for the HK and TST_HK
 for file_index = 1 to CFE_ES_MAX_APPLICATIONS do
   if (SCX_CPU1_ES_ALE[file_index].ES_AL_AppName = HKAppName) then
     found_app1 = TRUE
@@ -89,12 +89,6 @@ if (found_app1 = FALSE) then
   ;; Set CPU1 as the default
   stream1 = x'089B'
 
-  if ("CPU1" = "CPU2") then
-     stream1 = x'099B'
-  elseif ("CPU1" = "CPU3") then
-     stream1 = x'0A9B'
-  endif
-
   /SCX_CPU1_TO_ADDPACKET STREAM=stream1 PKT_SIZE=X'0' PRIORITY=X'0' RELIABILITY=X'0' BUFLIMIT=x'4'
   wait 10
 
@@ -126,12 +120,6 @@ if (found_app2 = FALSE) then
 
   ;; Set CPU1 as the default
   stream2 = x'092A'
-
-  if ("CPU1" = "CPU2") then
-     stream2 = x'0A2A'
-  elseif ("CPU1" = "CPU3") then
-     stream2 = x'0B2A'
-  endif
 
   /SCX_CPU1_TO_ADDPACKET STREAM=stream2 PKT_SIZE=X'0' PRIORITY=X'0' RELIABILITY=X'0' BUFLIMIT=x'4'
   wait 10

@@ -1,23 +1,23 @@
 /************************************************************************
-** File: hk_utils.h 
+** File: hk_utils.h
 **
 ** NASA Docket No. GSC-18449-1, and identified as "Core Flight System (cFS)
-** Housekeeping (HK) Application version 2.4.3” 
+** Housekeeping (HK) Application version 2.4.3”
 **
 ** Copyright © 2019 United States Government as represented by the Administrator of
-** the National Aeronautics and Space Administration.  All Rights Reserved. 
+** the National Aeronautics and Space Administration.  All Rights Reserved.
 **
-** Licensed under the Apache License, Version 2.0 (the "License"); 
-** you may not use this file except in compliance with the License. 
-** You may obtain a copy of the License at 
-** http://www.apache.org/licenses/LICENSE-2.0 
-** Unless required by applicable law or agreed to in writing, software 
-** distributed under the License is distributed on an "AS IS" BASIS, 
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-** See the License for the specific language governing permissions and 
-** limitations under the License. 
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+** http://www.apache.org/licenses/LICENSE-2.0
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
 **
-** Purpose: 
+** Purpose:
 **  The CFS Housekeeping (HK) Application header file
 **
 ** Notes:
@@ -27,29 +27,27 @@
 #ifndef _hk_utils_h_
 #define _hk_utils_h_
 
-
 /************************************************************************
 ** Includes
 *************************************************************************/
 #include "cfe.h"
 #include "hk_tbldefs.h"
 
-
 /*************************************************************************
 ** Macro definitions
 **************************************************************************/
-#define HK_INPUTMID_SUBSCRIBED          ( 0xFF )  /**< \brief Input MsgId has been subscribed to */
-#define HK_INPUTMID_NOT_SUBSCRIBED      ( 0 )     /**< \brief Input MsgId is not subscribed */
+#define HK_INPUTMID_SUBSCRIBED     (0xFF) /**< \brief Input MsgId has been subscribed to */
+#define HK_INPUTMID_NOT_SUBSCRIBED (0)    /**< \brief Input MsgId is not subscribed */
 
-#define HK_DATA_NOT_PRESENT             ( 0 )     /**< \brief Input MsgId present in output msg */
-#define HK_DATA_PRESENT                 ( 1 )     /**< \brief Input MsgId not present */
+#define HK_DATA_NOT_PRESENT (0) /**< \brief Input MsgId present in output msg */
+#define HK_DATA_PRESENT     (1) /**< \brief Input MsgId not present */
 
-#define HK_NO_MISSING_DATA              ( 0 )     /**< \brief Output Msg has no missing data */
-#define HK_MISSING_DATA_DETECTED        ( 1 )     /**< \brief Output Msg has missing data */
+#define HK_NO_MISSING_DATA       (0) /**< \brief Output Msg has no missing data */
+#define HK_MISSING_DATA_DETECTED (1) /**< \brief Output Msg has missing data */
 
-#define HK_UNDEFINED_ENTRY              ( 0 )     /**< \brief Undefined table field entry */
+#define HK_UNDEFINED_ENTRY (0) /**< \brief Undefined table field entry */
 
-#define HK_NULL_POINTER_DETECTED        ( -1 )    /**< \brief An input table pointer was NULL */
+#define HK_NULL_POINTER_DETECTED (-1) /**< \brief An input table pointer was NULL */
 
 /************************************************************************
 ** Prototypes for functions defined in hk_utils.c
@@ -61,21 +59,20 @@
 **
 ** \par Description
 **        This routine examines each entry in the table and determines whether
-**        its field comprises a legal entry.  If so, a portion of the input 
+**        its field comprises a legal entry.  If so, a portion of the input
 **        packet is copied to the appropriate combined output packet.
 **
 ** \par Assumptions, External Events, and Notes:
-**        Currently the combined telemetry packets are not initialized after 
-**        they are sent so values will repeat if no housekeeping update is 
+**        Currently the combined telemetry packets are not initialized after
+**        they are sent so values will repeat if no housekeeping update is
 **        received.
 **
-** \param[in]  MessagePtr    A pointer to the input message. 
+** \param[in]  BufPtr    A pointer to the input message.
 **
 ** \sa #HK_AppPipe
 **
 ******************************************************************************/
-void HK_ProcessIncomingHkData (CFE_SB_MsgPtr_t MessagePtr);
-
+void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr);
 
 /*****************************************************************************/
 /**
@@ -88,7 +85,7 @@ void HK_ProcessIncomingHkData (CFE_SB_MsgPtr_t MessagePtr);
 ** \par Assumptions, External Events, and Notes:
 **          None
 **
-** \param[in]  TblPtr    A pointer to the new table data. 
+** \param[in]  TblPtr    A pointer to the new table data.
 **
 ** \returns
 ** \retstmt Zero indicates acceptable table, non-zero indicates unacceptable table \endcode
@@ -97,8 +94,7 @@ void HK_ProcessIncomingHkData (CFE_SB_MsgPtr_t MessagePtr);
 ** \sa #HK_TableInit
 **
 ******************************************************************************/
-int32 HK_ValidateHkCopyTable (void * TblPtr);
-
+int32 HK_ValidateHkCopyTable(void *TblPtr);
 
 /*****************************************************************************/
 /**
@@ -106,7 +102,7 @@ int32 HK_ValidateHkCopyTable (void * TblPtr);
 **
 ** \par Description
 **        Upon the arrival of a new HK Copy Table, this routine will
-**        handle whatever is necessary to make this new data functional.       
+**        handle whatever is necessary to make this new data functional.
 **
 ** \par Assumptions, External Events, and Notes:
 **          None
@@ -120,11 +116,10 @@ int32 HK_ValidateHkCopyTable (void * TblPtr);
 ** \retstmt HK_NULL_POINTER_DETECTED if at least one input argument was NULL \endcode
 ** \endreturns
 **
-** \sa 
+** \sa
 **
 ******************************************************************************/
-int32 HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr, 
-                              hk_runtime_tbl_entry_t * RtTblPtr);
+int32 HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr);
 
 /*****************************************************************************/
 /**
@@ -139,39 +134,36 @@ int32 HK_ProcessNewCopyTable (hk_copy_table_entry_t * CpyTblPtr,
 **
 ** \param[in]  CpyTblPtr    A pointer to the first entry in the copy table.
 **
-** \param[in]  RtTblPtr     A pointer to the first entry in the run-time table. 
+** \param[in]  RtTblPtr     A pointer to the first entry in the run-time table.
 **
 ** \returns
 ** \retstmt CFE_SUCCESS if the function succeeds \endcode
 ** \retstmt HK_NULL_POINTER_DETECTED if at least one input argument was NULL \endcode
 ** \endreturns
 **
-** \sa 
+** \sa
 **
 ******************************************************************************/
-int32 HK_TearDownOldCopyTable (hk_copy_table_entry_t * CpyTblPtr, 
-                               hk_runtime_tbl_entry_t * RtTblPtr);
-
+int32 HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr);
 
 /*****************************************************************************/
 /**
 ** \brief Send combined output message
 **
 ** \par Description
-**        This routine searches for the combined HK that contains the specified 
-**        MID.  Once found, the packet is sent.  If not found, an event is 
+**        This routine searches for the combined HK that contains the specified
+**        MID.  Once found, the packet is sent.  If not found, an event is
 **        generated. Also sets the data pieces for this output pkt
 **
 ** \par Assumptions, External Events, and Notes:
 **          None
 **
-** \param[in]  WhichMidToSend - the MsgId of the combined output message to send 
+** \param[in]  WhichMidToSend - the MsgId of the combined output message to send
 **
-** \sa 
+** \sa
 **
 ******************************************************************************/
-void HK_SendCombinedHkPacket (CFE_SB_MsgId_t WhichMidToSend);
-
+void HK_SendCombinedHkPacket(CFE_SB_MsgId_t WhichMidToSend);
 
 /*****************************************************************************/
 /**
@@ -179,8 +171,8 @@ void HK_SendCombinedHkPacket (CFE_SB_MsgId_t WhichMidToSend);
 **
 ** \par Description
 **        This is a high level routine that controls the actions taken by HK
-**        when a copy table update is detected or a runtime table dump is 
-**        pending 
+**        when a copy table update is detected or a runtime table dump is
+**        pending
 **
 ** \par Assumptions, External Events, and Notes:
 **          None
@@ -190,11 +182,10 @@ void HK_SendCombinedHkPacket (CFE_SB_MsgId_t WhichMidToSend);
 ** \retcode #HK_ERROR    \retdesc \copydoc HK_ERROR \endcode
 ** \endreturns
 **
-** \sa 
+** \sa
 **
 ******************************************************************************/
-int32 HK_CheckStatusOfTables (void);
-
+int32 HK_CheckStatusOfTables(void);
 
 /*****************************************************************************/
 /**
@@ -202,7 +193,7 @@ int32 HK_CheckStatusOfTables (void);
 **
 ** \par Description
 **        This is a high level routine that controls the actions taken by HK
-**        when a copy table update is detected 
+**        when a copy table update is detected
 **
 ** \par Assumptions, External Events, and Notes:
 **          None
@@ -212,11 +203,10 @@ int32 HK_CheckStatusOfTables (void);
 ** \retcode #HK_ERROR    \retdesc \copydoc HK_ERROR \endcode
 ** \endreturns
 **
-** \sa 
+** \sa
 **
 ******************************************************************************/
-int32 HK_CheckStatusOfCopyTable (void);
-
+int32 HK_CheckStatusOfCopyTable(void);
 
 /*****************************************************************************/
 /**
@@ -224,7 +214,7 @@ int32 HK_CheckStatusOfCopyTable (void);
 **
 ** \par Description
 **        This is a high level routine that controls the actions taken by HK
-**        when a runtime table dump is pending 
+**        when a runtime table dump is pending
 **
 ** \par Assumptions, External Events, and Notes:
 **          None
@@ -234,11 +224,10 @@ int32 HK_CheckStatusOfCopyTable (void);
 ** \retcode #HK_ERROR    \retdesc \copydoc HK_ERROR \endcode
 ** \endreturns
 **
-** \sa 
+** \sa
 **
 ******************************************************************************/
-int32 HK_CheckStatusOfDumpTable (void);
-
+int32 HK_CheckStatusOfDumpTable(void);
 
 /*****************************************************************************/
 /**
@@ -257,7 +246,7 @@ int32 HK_CheckStatusOfDumpTable (void);
 **
 ** \param[in]  MissingInputMid   A pointer to the caller provided MsgId variable
 **
-** \param[out] *MissingInputMid  The value of the missing input MsgId  
+** \param[out] *MissingInputMid  The value of the missing input MsgId
 **
 ** \returns
 ** \retcode #HK_MISSING_DATA_DETECTED  \retdesc \copydoc HK_MISSING_DATA_DETECTED \endcode
@@ -267,30 +256,50 @@ int32 HK_CheckStatusOfDumpTable (void);
 ** \sa
 **
 ******************************************************************************/
-int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, 
-                             CFE_SB_MsgId_t *MissingInputMid);
-
+int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *MissingInputMid);
 
 /*****************************************************************************/
 /**
 ** \brief Set Data Present Flags to 'Not Present'
 **
 ** \par Description
-**        This routine will set the data present flags to data-not-present for 
+**        This routine will set the data present flags to data-not-present for
 **        given combined output message
-**  
+**
 ** \par Assumptions, External Events, and Notes:
 **          None
 **
-** \param[in]  OutPkt    The MsgId whose data present flags will be set. 
+** \param[in]  OutPkt    The MsgId whose data present flags will be set.
 **
-** \sa 
+** \sa
 **
 ******************************************************************************/
 void HK_SetFlagsToNotPresent(CFE_SB_MsgId_t OutPkt);
 
+/************************************************************************/
+/** \brief  Verify length of HK commands
+**
+**  \par Description
+**       Function called when an HK command is received.
+**
+**  \par Assumptions, External Events, and Notes:
+**       None
+**
+**  \param [in]   BufPtr   A #CFE_SB_Buffer_t* pointer that
+**                             references the software bus message
+**  \param [in]   ExpectedLength   The expected lenght of the command
+**
+**  \returns
+**  \retcode #HK_SUCCESS  if actual cmd length is same as expected
+**  \retcode #HK_BAD_MSG_LENGTH_RC if actual cmd length is not as expected
+**  \endreturns
+**
+**  \sa
+**
+*************************************************************************/
+int32 HK_VerifyCmdLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength);
 
-#endif      /* _hk_utils_h_ */
+#endif /* _hk_utils_h_ */
 
 /************************/
 /*  End of File Comment */

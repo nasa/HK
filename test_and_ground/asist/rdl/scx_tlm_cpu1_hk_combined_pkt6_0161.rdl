@@ -1,0 +1,39 @@
+!==============================================================================
+!
+!                Originator: W. Moleski
+!                Responsible SC:  
+!                Responsible CSE: 
+!                Rev:  Last Change: Oct 25 2017
+
+!
+!                    Telemetry Packet # 0161 (dec)
+!                 =================================
+!
+!       Packet Application ID: 0161 (Hex '00A1')
+!       Packet Title:  SCX CPU1 HK Output Packet 6 for Copy Table
+!       Packet Length:  ?? Bytes (Including 12 Bytes Of Header)
+!	Collect             Frequency:         SEC
+!
+!       REFERENCES:
+!
+!       NOTES:
+!
+!       HISTORY: 
+!
+!  2008/04/23  BBM	: Initial
+!
+!	2017/10/25	: Created from template 'template_tlm_HK_COMBINED_PKT6_TLM.rdl'
+!	with parameters spacecraft='SCX' and processor='CPU1'.
+!==============================================================================
+!
+
+PACKET P00A1 APID=0161, DESC="SCX CPU1 HK Copy Table Output Packet 6",
+                        STALE = 36, VARYING
+#include "ccsds_header.rdl"
+!
+  UB   SCX_CPU1_HK_Tab1Pkt6Data[80]       DESC="SCX CPU1 HK Output Packet 6 Data"
+!
+!
+!  END                !END APPEND RECORD FUNCTION
+!
+END

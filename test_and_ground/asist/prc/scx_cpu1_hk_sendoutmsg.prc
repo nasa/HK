@@ -7,7 +7,7 @@ PROC scx_cpu1_hk_sendoutmsg(OutputPktID, DataBytePattern[], PktNo, Checking, Sta
 ;  Test Description
 ;       The procedure is used by all tests that need to receive and validate
 ;       HK Combined Output Packets.  It sends a request to TST_HK to send 
-;       a specific output packet and the verifies that the data is as expected.
+;       a specific output packet and then verifies that the data is as expected.
 ;
 ;  Change History
 ;       
@@ -46,7 +46,7 @@ ut_setupevents "SCX","CPU1",{HKAppName},HK_OUTPKT_MISSING_DATA_EID,"DEBUG", 1
 ;;send output packet request to test app
 ;;/SCX_CPU1_TST_HK_SENDOUTMSG MsgId=OutputPktID Pad=0
 ;;NOTE: If the MID for the request is changed, this will not work
-local rawCmd = "189cc00000030000" & %hex(OutputPktID,4)
+local rawCmd = "189cc000000500000000" & %hex(OutputPktID,4) & "00000000"
 write ">> RawCmd = '",rawCmd,"'"
 /RAW {rawCmd}
 
@@ -88,6 +88,8 @@ entry = 1
 berror=0
 while (entry < 81) do
   if (Data[entry] = DataBytePattern[entry]) then
+;;    write "Byte............",entry
+;;    write "Received........", %hex(Data[entry],2)
     entry = entry + 1
   else
     write "<!> Failed (2000;2001) - Output packet received but data not as expected"

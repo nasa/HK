@@ -1,0 +1,306 @@
+21-225-12:29:34.816 00     SPR-I:OPRO         ****************** FSW Configuration ******************
+21-225-12:29:34.816 00     SPR-I:OPRO                 Checksum:    29237
+21-225-12:29:34.816 00     SPR-I:OPRO                 cFE Version: 6.7.99.0
+21-225-12:29:34.817 00     SPR-I:OPRO                 OS Version:  5.0.0.255
+21-225-12:29:34.817 00     SPR-I:OPRO          
+21-225-12:29:34.817 00     SPR-I:OPRO                 Connection Status
+21-225-12:29:34.817 00     SPR-I:OPRO                 -----------------
+21-225-12:29:34.817 00     SPR-I:OPRO                 CFDP: DOWN
+21-225-12:29:34.817 00     SPR-I:OPRO                 UDP:  UP 
+21-225-12:29:34.817 00     SPR-I:OPRO                 SWTS:  UNK
+21-225-12:29:34.817 00     SPR-I:OPRO         
+21-225-12:29:34.817 00     SPR-I:OPRO                 CMD / TLM Path
+21-225-12:29:34.817 00     SPR-I:OPRO                 --------------
+21-225-12:29:34.818 00     SPR-I:OPRO                 UDP
+21-225-12:29:34.818 00     SPR-I:OPRO                 
+21-225-12:29:34.818 00     SPR-I:OPRO         
+21-225-12:29:34.818 00     SPR-I:OPRO                 ASIST / GDS Configuration
+21-225-12:29:34.818 00     SPR-I:OPRO                 -------------------------
+21-225-12:29:34.825 00     SPR-I:OPRO                 Workstation: GS582CFSLAB4
+21-225-12:29:34.825 00     SPR-I:OPRO                 Account: cfs_test
+21-225-12:29:34.825 00     SPR-I:OPRO                 Version: 21.0.7
+21-225-12:29:34.825 00     SPR-I:OPRO                 Tlm DB:  Version: 1.983  Date: 07-13-21  Time: 10:22:58 AM.
+21-225-12:29:34.825 00     SPR-I:OPRO                 Cmd DB:  Version: 1.51  Date: 05-21-21  Time: 08:24:49 AM.EDT
+21-225-12:29:34.825 00     SPR-I:OPRO         
+21-225-12:29:34.825 00     SPR-I:OPRO                 Telemetry Info
+21-225-12:29:34.826 00     SPR-I:OPRO                 --------------
+21-225-12:29:34.826 00     SPR-I:OPRO                 Pkt Loss Count: N/A
+21-225-12:29:34.826 00     SPR-I:OPRO         ****************  End FSW Configuration ***************
+21-225-12:29:34.826 00     SPR-I:OPRO         Starting Procedure.... scx_cpu1_hk_gencmds
+21-225-12:29:34.953 00     SPR-I:OPRI     --> start scx_cpu1_hk_gencmds
+21-225-12:29:34.953 00     SPR-W:STS          "/s/opr/accounts/cfs_test/prc/scx_cpu1_hk_gencmds.prc" has been modified since last compile
+21-225-12:29:34.953 00     SPR-I:STS          Source file modification date: 21/08/13 12:25:25.000
+21-225-12:29:34.953 00     SPR-I:STS          Compiled file creation date  : 21/08/13 12:20:17.000
+21-225-12:29:34.953 00     SPR-I:OPRO         Recompile it? (Y/N) 
+21-225-12:29:38.252 00     SPR-I:OPRI     --> y
+21-225-12:29:39.489 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_gencmds.i
+21-225-12:29:39.497 00     SPR-I:STS          Procedure SCX_CPU1_HK_GENCMDS started
+21-225-12:29:39.562 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:29:39.562 00     SPR-I:OPRO         ;  Step 1.0:  Initialize the CPU for this test. 
+21-225-12:29:39.562 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:29:39.562 00     SPR-I:OPRO         ;  Step 1.1:  Command a Power-On Reset on CPU1. 
+21-225-12:29:39.562 00     SPR-I:OPRO         ;********************************************************************
+21-225-12:29:39.573 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:29:49.583 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/clear_spacecraft_status.i
+21-225-12:29:49.584 00     SPR-I:STS          Procedure CLEAR_SPACECRAFT_STATUS started
+21-225-12:29:49.597 00     SPR-I:STS          Procedure CLEAR_SPACECRAFT_STATUS completed
+21-225-12:29:49.645 00     SPR-I:STTE         Wait mode - waiting 60 seconds ...
+21-225-12:30:49.711 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:30:59.722 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:30:59.793 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/send_that_to_command.i
+21-225-12:30:59.794 00     SPR-I:STS          Procedure SEND_THAT_TO_COMMAND started
+21-225-12:30:59.798 00     SPR-I:OPRO         Sending: /SCX_CPU1_TO_OUTPUT_ENA gs582cfslab4
+21-225-12:30:59.852 00     SPR-I:STS          Procedure SEND_THAT_TO_COMMAND completed
+21-225-12:30:59.852 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:31:01.031 00    TLMH-I:STS          58-012-14:03:49.450 INFO CPU=CPU1 APPNAME=TO_LAB_APP EVENT ID=3 TO telemetry output enabled for IP 192.168.1.101
+21-225-12:31:03.856 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:03.857 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/fill_in_spacecraft_status.i
+21-225-12:31:03.858 00     SPR-I:STS          Procedure FILL_IN_SPACECRAFT_STATUS started
+21-225-12:31:03.863 00     SPR-I:STS          Procedure FILL_IN_SPACECRAFT_STATUS completed
+21-225-12:31:03.863 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:31:08.966 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:08.966 00     SPR-I:OPRO         ;  Step 1.2: Creating the copy table used for testing and upload it
+21-225-12:31:08.966 00     SPR-I:OPRO         ;********************************************************************
+21-225-12:31:08.966 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_copytable1.i
+21-225-12:31:08.969 00     SPR-I:STS          Procedure SCX_CPU1_HK_COPYTABLE1 started
+21-225-12:31:08.990 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:08.990 00     SPR-I:OPRO         ;  define local variables 
+21-225-12:31:08.990 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:08.991 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:08.991 00     SPR-I:OPRO         ;  Step 1.0:  Define Copy Table 1. 
+21-225-12:31:08.991 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:09.036 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/create_tbl_file_from_cvt.i
+21-225-12:31:09.036 00     SPR-I:STS          Procedure CREATE_TBL_FILE_FROM_CVT started
+21-225-12:31:09.037 00     SPR-I:OPRO         **********  hk_cpy_tbl.tbl  **********
+21-225-12:31:09.037 00     SPR-I:OPRO         
+21-225-12:31:09.037 00     SPR-I:OPRO                Content Type: cFE1
+21-225-12:31:09.037 00     SPR-I:OPRO                    Sub Type: 8
+21-225-12:31:09.037 00     SPR-I:OPRO                      Length: 12
+21-225-12:31:09.038 00     SPR-I:OPRO               Spacecraft Id: SCX
+21-225-12:31:09.038 00     SPR-I:OPRO                Processor Id: CPU3
+21-225-12:31:09.038 00     SPR-I:OPRO              Application Id: 4006
+21-225-12:31:09.038 00     SPR-I:OPRO            Create Time Secs: 1628857869
+21-225-12:31:09.038 00     SPR-I:OPRO         Create Time Subsecs: 0
+21-225-12:31:09.038 00     SPR-I:OPRO            File Description: Copy Table 1
+21-225-12:31:09.038 00     SPR-I:OPRO         
+21-225-12:31:09.038 00     SPR-I:OPRO         **********  HK.CopyTable  **********
+21-225-12:31:09.038 00     SPR-I:OPRO         
+21-225-12:31:09.038 00     SPR-I:OPRO              Start Mnemonic: SCX_CPU1_HK_CopyTable[1].InputMid
+21-225-12:31:09.038 00     SPR-I:OPRO                 Byte Offset: 0
+21-225-12:31:09.038 00     SPR-I:OPRO                End Mnemonic: SCX_CPU1_HK_CopyTable[128].NumBytes
+21-225-12:31:09.038 00     SPR-I:OPRO             Number of Bytes: 2048
+21-225-12:31:09.038 00     SPR-I:OPRO         
+21-225-12:31:09.043 00     SPR-I:STS          Loading file /s/opr/accounts/global/prc/partial_cvt_to_file_beta.i
+21-225-12:31:09.043 00     SPR-I:STS          Procedure PARTIAL_CVT_TO_FILE_BETA started
+21-225-12:31:09.043 00     SPR-I:OPRO         The unix command is cd /s/opr/accounts/cfs_test/image;cvt2file  -s 116 -e 2163 P0FA6 hk.copytable
+21-225-12:31:09.048 00     SPR-I:STS          Procedure PARTIAL_CVT_TO_FILE_BETA completed
+21-225-12:31:09.049 00     SPR-I:OPRO         cd /s/opr/accounts/cfs_test/image;cat hk_cpy_tbl.tbl.tmp hk.copytable > hk_cpy_tbl.tbl
+21-225-12:31:09.052 00     SPR-I:OPRO         cd /s/opr/accounts/cfs_test/image;rm hk.copytable hk_cpy_tbl.tbl.tmp
+21-225-12:31:09.060 00     SPR-I:STS          Procedure CREATE_TBL_FILE_FROM_CVT completed
+21-225-12:31:09.060 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:09.060 00     SPR-I:OPRO         ;  End procedure scx_cpu1_hk_copytable1                               
+21-225-12:31:09.060 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:09.060 00     SPR-I:STS          Procedure SCX_CPU1_HK_COPYTABLE1 completed
+21-225-12:31:09.061 00     SPR-I:OPRO         ==> Default Copy Table filename = 'hk_cpy_tbl.tbl'
+21-225-12:31:09.061 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/ftp_file.i
+21-225-12:31:09.061 00     SPR-I:STS          Procedure FTP_FILE started
+21-225-12:31:09.335 00     SPR-I:OPRO         Return code from ftp_file.pl: 0
+21-225-12:31:09.335 00     SPR-I:STS          Procedure FTP_FILE completed
+21-225-12:31:09.335 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:09.335 00     SPR-I:OPRO         ;  Step 1.3:  Start the Housekeeping (HK) Application and 
+21-225-12:31:09.335 00     SPR-I:OPRO         ;  add any required subscriptions.  
+21-225-12:31:09.335 00     SPR-I:OPRO         ;********************************************************************
+21-225-12:31:09.335 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:09.335 00     SPR-I:OPRO         ;  Step 1.4: Verify that the HK Housekeeping telemetry items are 
+21-225-12:31:09.336 00     SPR-I:OPRO         ;  initialized to zero (0). 
+21-225-12:31:09.336 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:09.336 00     SPR-I:OPRO         <*> Passed (4000) - Housekeeping telemetry initialized properly.
+21-225-12:31:09.336 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:31:14.340 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:14.340 00     SPR-I:OPRO         ;  Step 1.5: Enable DEBUG Event Messages 
+21-225-12:31:14.340 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:14.368 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:31:16.374 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:16.376 00     SPR-I:OPRO         <*> Passed - Enable Debug events command sent properly.
+21-225-12:31:16.376 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:16.376 00     SPR-I:OPRO         ;  Step 2.0: HK General Commanding tests.
+21-225-12:31:16.376 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:16.376 00     SPR-I:OPRO         ;  Step 2.1: Send a valid No-Op command.
+21-225-12:31:16.376 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:16.380 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:31:16.380 00     SPR-I:OPRO         ; Setup event 1 with HK INFO 4
+21-225-12:31:16.380 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:31:16.384 00     SPR-I:OPRO         Sending command:  SCX_CPU1_HK_NOOP
+21-225-12:31:16.398 00     SPR-I:OPRO          ; Telemetry update will wait a maximum of 24 seconds
+21-225-12:31:16.400 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:31:17.040 00    TLMH-I:STS          58-012-14:04:05.500 INFO CPU=CPU1 APPNAME=HK EVENT ID=4 HK No-op command, Version 2.5.0.0
+21-225-12:31:20.404 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:20.408 00     SPR-I:OPRO         <*> Passed (1000;1003;3000) - NOOP command sent properly.
+21-225-12:31:20.413 00     SPR-I:OPRO         <*> Passed (1000;1003) - Event message 4 received
+21-225-12:31:20.414 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:31:25.419 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:25.419 00     SPR-I:OPRO         ;  Step 2.2: Send a No-Op command with an invalid command length.
+21-225-12:31:25.419 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:25.422 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:31:25.422 00     SPR-I:OPRO         ; Setup event 1 with HK ERROR 3
+21-225-12:31:25.422 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:31:25.427 00     SPR-I:OPRO         Sending:  189ac000000200BD
+21-225-12:31:25.448 00     SPR-I:OPRO          ; Telemetry update will wait a maximum of 24 seconds
+21-225-12:31:25.448 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:31:26.039 00    TLMH-I:STS          58-012-14:04:14.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=3 Cmd Msg with Bad length Rcvd: ID = 0x0000189A, CC = 0, Exp Len = 8, Len = 9
+21-225-12:31:28.452 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:28.460 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:28.460 00     SPR-I:OPRO         <*> Passed (1002;1004;3000) - Command Rejected Counter incremented.
+21-225-12:31:28.461 00     SPR-I:OPRO         <*> Passed (1004) - Event message 3 received
+21-225-12:31:28.462 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:31:33.467 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:33.467 00     SPR-I:OPRO         ;  Step 2.3: Send a valid ResetCtrs command.
+21-225-12:31:33.467 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:33.469 00     SPR-I:OPRO         >> RawCmd = '189cc00000030000089C'
+21-225-12:31:33.483 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:31:34.030 00    TLMH-I:STS          58-012-14:04:22.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=28 Msg with Bad length Rcvd: ID = 0x0000189C, Exp Len = 12, Len = 10
+21-225-12:31:38.492 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:31:38.492 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 5
+21-225-12:31:38.492 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:31:38.504 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:31:39.031 00    TLMH-I:STS          58-012-14:04:27.500 DEBUG CPU=CPU1 APPNAME=HK EVENT ID=5 HK Reset Counters command received
+21-225-12:31:43.512 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:43.512 00     SPR-I:OPRO         <*> Passed (1001;1003;3000) - Valid Command Counter was reset.
+21-225-12:31:43.517 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:43.517 00     SPR-I:OPRO         <*> Passed (1001;3000) - Command Rejected Counter was reset.
+21-225-12:31:43.518 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:43.518 00     SPR-I:OPRO         ;    CmbPktsSent may not be 0, not sure what it will be 
+21-225-12:31:43.518 00     SPR-I:OPRO         ;    If step fails add check to see if it's less than before 
+21-225-12:31:43.518 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:43.521 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:43.522 00     SPR-I:OPRO         <*> Passed (1001;3000) - Combined packets sent counter was reset.
+21-225-12:31:43.525 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:43.526 00     SPR-I:OPRO         <*> Passed (1001;3000) - Missing Data Counter was reset.
+21-225-12:31:43.527 00     SPR-I:OPRO         <*> Passed (1001) - Event message 5 received
+21-225-12:31:43.527 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:31:48.531 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:48.531 00     SPR-I:OPRO         ;  Step 2.4: Send a ResetCtrs command with an invalid command length.
+21-225-12:31:48.531 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:48.533 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:31:48.533 00     SPR-I:OPRO         ; Setup event 1 with HK ERROR 3
+21-225-12:31:48.533 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:31:48.537 00     SPR-I:OPRO         Sending:  189ac000000201BC
+21-225-12:31:48.551 00     SPR-I:OPRO          ; Telemetry update will wait a maximum of 24 seconds
+21-225-12:31:48.552 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:31:49.037 00    TLMH-I:STS          58-012-14:04:37.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=3 Cmd Msg with Bad length Rcvd: ID = 0x0000189A, CC = 1, Exp Len = 8, Len = 9
+21-225-12:31:51.555 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:51.569 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:51.571 00     SPR-I:OPRO         <*> Passed (1002;1004;3000) - Command Rejected Counter incremented.
+21-225-12:31:51.572 00     SPR-I:OPRO         <*> Passed (1004) - Event message 3 received
+21-225-12:31:51.573 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:31:56.578 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:56.578 00     SPR-I:OPRO         ;  Step 2.5: Send a Send Housekeeping command with an invalid length.
+21-225-12:31:56.578 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:31:56.586 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:31:56.587 00     SPR-I:OPRO         ; Setup event 1 with HK ERROR 28
+21-225-12:31:56.587 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:31:56.601 00     SPR-I:OPRO         Sending:  189bc00000000000
+21-225-12:31:56.623 00     SPR-I:OPRO          ; Telemetry update will wait a maximum of 24 seconds
+21-225-12:31:56.624 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:31:57.534 00    TLMH-I:STS          58-012-14:04:46.001 ERROR CPU=CPU1 APPNAME=HK EVENT ID=28 Msg with Bad length Rcvd: ID = 0x0000189B, Exp Len = 8, Len = 7
+21-225-12:31:59.626 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:31:59.629 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:00.631 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:01.633 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:02.636 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:03.638 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:04.640 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:05.643 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:06.646 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:07.658 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:32:07.659 00     SPR-I:OPRO         <*> Passed (1002;1004) - Event message 28 received
+21-225-12:32:07.664 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:32:12.669 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:32:12.669 00     SPR-I:OPRO         ;  Step 2.6: Send a Send Combined Packet command with an invalid length.
+21-225-12:32:12.669 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:32:12.675 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:32:12.675 00     SPR-I:OPRO         ; Setup event 1 with HK ERROR 28
+21-225-12:32:12.675 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:32:12.680 00     SPR-I:OPRO         Sending:  189cc00000000000
+21-225-12:32:12.699 00     SPR-I:OPRO          ; Telemetry update will wait a maximum of 24 seconds
+21-225-12:32:12.700 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:32:13.532 00    TLMH-I:STS          58-012-14:05:02.001 ERROR CPU=CPU1 APPNAME=HK EVENT ID=28 Msg with Bad length Rcvd: ID = 0x0000189C, Exp Len = 12, Len = 7
+21-225-12:32:15.704 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:32:15.706 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:16.708 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:17.711 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:18.713 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:19.716 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:20.718 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:21.720 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:22.722 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:32:23.724 00     SPR-I:OPRO         <*> Passed (1004) - Event message 28 received
+21-225-12:32:23.727 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:32:28.731 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:32:28.731 00     SPR-I:OPRO         ;  Step 2.7: Send an invalid HK command.
+21-225-12:32:28.732 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:32:28.737 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:32:28.737 00     SPR-I:OPRO         ; Setup event 1 with HK ERROR 2
+21-225-12:32:28.737 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:32:28.741 00     SPR-I:OPRO         Sending:  189ac0000001aa00
+21-225-12:32:28.758 00     SPR-I:OPRO          ; Telemetry update will wait a maximum of 24 seconds
+21-225-12:32:28.758 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:32:29.536 00    TLMH-I:STS          58-012-14:05:18.001 ERROR CPU=CPU1 APPNAME=HK EVENT ID=2 Cmd Msg with Invalid command code Rcvd -- ID = 0x0000189A, CC = 42
+21-225-12:32:31.762 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:32:31.773 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:32:31.773 00     SPR-I:OPRO         <*> Passed (1004;3000) - Command Rejected Counter incremented.
+21-225-12:32:31.775 00     SPR-I:OPRO         <*> Passed (1004) - Event message 2 received
+21-225-12:32:31.776 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:32:36.781 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:32:36.781 00     SPR-I:OPRO         ;  Step 3.0:  Perform a Power-on Reset to clean-up from this test.
+21-225-12:32:36.781 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:32:36.797 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:32:46.806 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/clear_spacecraft_status.i
+21-225-12:32:46.808 00     SPR-I:STS          Procedure CLEAR_SPACECRAFT_STATUS started
+21-225-12:32:46.822 00     SPR-I:STS          Procedure CLEAR_SPACECRAFT_STATUS completed
+21-225-12:32:46.888 00     SPR-I:STTE         Wait mode - waiting 60 seconds ...
+21-225-12:33:46.952 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:33:56.963 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:33:57.033 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/send_that_to_command.i
+21-225-12:33:57.033 00     SPR-I:STS          Procedure SEND_THAT_TO_COMMAND started
+21-225-12:33:57.034 00     SPR-I:OPRO         Sending: /SCX_CPU1_TO_OUTPUT_ENA gs582cfslab4
+21-225-12:33:57.076 00     SPR-I:STS          Procedure SEND_THAT_TO_COMMAND completed
+21-225-12:33:57.076 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:33:58.422 00    TLMH-I:STS          58-012-14:03:49.416 INFO CPU=CPU1 APPNAME=TO_LAB_APP EVENT ID=3 TO telemetry output enabled for IP 192.168.1.101
+21-225-12:34:01.081 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:34:01.081 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/fill_in_spacecraft_status.i
+21-225-12:34:01.083 00     SPR-I:STS          Procedure FILL_IN_SPACECRAFT_STATUS started
+21-225-12:34:01.087 00     SPR-I:STS          Procedure FILL_IN_SPACECRAFT_STATUS completed
+21-225-12:34:01.087 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:34:06.091 00     SPR-I:OPRO         **** Requirements Status Reporting
+21-225-12:34:06.092 00     SPR-I:OPRO         --------------------------
+21-225-12:34:06.092 00     SPR-I:OPRO            Requirement(s) Report
+21-225-12:34:06.092 00     SPR-I:OPRO         --------------------------
+21-225-12:34:06.093 00     SPR-I:OPRO         FSW Requirement: HK_1000                          P/F: P
+21-225-12:34:06.095 00     SPR-I:OPRO         FSW Requirement: HK_1001                          P/F: P
+21-225-12:34:06.096 00     SPR-I:OPRO         FSW Requirement: HK_1002                          P/F: P
+21-225-12:34:06.097 00     SPR-I:OPRO         FSW Requirement: HK_1003                          P/F: P
+21-225-12:34:06.097 00     SPR-I:OPRO         FSW Requirement: HK_1004                          P/F: P
+21-225-12:34:06.098 00     SPR-I:OPRO         FSW Requirement: HK_3000                          P/F: P
+21-225-12:34:06.098 00     SPR-I:OPRO         FSW Requirement: HK_4000                          P/F: P
+21-225-12:34:06.099 00     SPR-I:STS          Variable "UT_REQUIREMENT" deleted
+21-225-12:34:06.099 00     SPR-I:STS          Variable "UT_REQ_ARRAY_SIZE" deleted
+21-225-12:34:06.099 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:34:06.099 00     SPR-I:OPRO         ;  End procedure scx_cpu1_hk_gencmds                                  
+21-225-12:34:06.099 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:34:06.099 00     SPR-I:STS          Procedure SCX_CPU1_HK_GENCMDS completed
+21-225-12:34:06.100 00     SPR-I:OPRO         *** Telemetry Info ***
+21-225-12:34:06.100 00     SPR-I:OPRO         
+21-225-12:34:06.100 00     SPR-I:OPRO         Pkt Loss Count: N/A
+21-225-12:34:06.100 00     SPR-I:OPRO         
+21-225-12:34:06.100 00     SPR-I:OPRO         ******************
+21-225-12:34:06.100 00     SPR-I:OPRO         
+21-225-12:34:06.100 00     SPR-I:OPRO         Elapsed time:  271.274 seconds
+21-225-12:34:06.101 00     SPR-I:OPRO         Elapsed time:  4.52124 minutes
+21-225-12:34:06.101 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:34:16.110 00     SPR-I:OPRO         Creating filtered log at /s/opr/accounts/cfs_test/test_logs/HK2.5.0/scx_cpu1_hk_gencmds-2021-225-12h29m34s.logf
+21-225-12:34:16.110 00     SPR-I:OPRO         Creating filtered output log at /s/opr/accounts/cfs_test/test_logs/HK2.5.0/scx_cpu1_hk_gencmds-2021-225-12h29m34s.logp
+21-225-12:34:16.111 00     SPR-I:OPRO         Creating filtered output log (without SFDUs) at /s/opr/accounts/cfs_test/test_logs/HK2.5.0/scx_cpu1_hk_gencmds-2021-225-12h29m34s.logs
+21-225-12:34:16.111 00     SPR-I:OPRO         Creating filtered event log at /s/opr/accounts/cfs_test/test_logs/HK2.5.0/scx_cpu1_hk_gencmds-2021-225-12h29m34s.loge
+21-225-12:34:16.111 00     SPR-I:OPRO         Creating filtered requirements log at /s/opr/accounts/cfs_test/test_logs/HK2.5.0/scx_cpu1_hk_gencmds-2021-225-12h29m34s.logr
+21-225-12:34:16.211 00     SPR-I:OPRI     --> newlog scx_cpu1_hk_gencmds-2021-225-12h29m34s.log

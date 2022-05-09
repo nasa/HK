@@ -146,7 +146,7 @@ wait 5
 
 ;; Display the pages
 page SCX_CPU1_HK_HK
-page SCX_CPU1_TST_HK_HK
+;page SCX_CPU1_TST_HK_HK
 
 write ";*********************************************************************"
 write ";  Step 1.2: Creating the copy table used for testing and upload it"
@@ -171,8 +171,8 @@ write ";*********************************************************************"
 write ";  Step 1.3:  Start the Housekeeping (HK) Application and "
 write ";  add any required subscriptions.  "
 write ";********************************************************************"
-s scx_cpu1_hk_start_apps("1.3")
-wait 5
+;s scx_cpu1_hk_start_apps("1.3")
+;wait 5
 
 write ";*********************************************************************"
 write ";  Step 1.4: Verify that the HK Housekeeping telemetry items are "
@@ -437,12 +437,6 @@ ut_setupevents "SCX", "CPU1", {HKAppName}, HK_MSG_LEN_ERR_EID, "ERROR", 1
 ;; CPU1 is the default
 rawcmd = "189bc00000000000"
 
-if ("CPU1" = "CPU2") then
-  rawcmd = "199bc00000000000"
-elseif ("CPU1" = "CPU3") then
-  rawcmd = "1a9bc00000000000"
-endif
-
 ut_sendrawcmd "SCX_CPU1_HK", (rawcmd)
 
 ut_tlmwait SCX_CPU1_find_event[1].num_found_messages, 1
@@ -466,12 +460,6 @@ ut_setupevents "SCX", "CPU1", {HKAppName}, HK_MSG_LEN_ERR_EID, "ERROR", 1
 ;; CPU1 is the default
 rawcmd = "189cc00000000000"
 
-if ("CPU1" = "CPU2") then
-  rawcmd = "199cc00000000000"
-elseif ("CPU1" = "CPU3") then
-  rawcmd = "1a9cc00000000000"
-endif
-
 ut_sendrawcmd "SCX_CPU1_HK", (rawcmd)
 
 if (SCX_CPU1_find_event[1].num_found_messages = 1) THEN
@@ -492,7 +480,7 @@ ut_setupevents "SCX", "CPU1", {HKAppName}, HK_CC_ERR_EID, "ERROR", 1
 errcnt = SCX_CPU1_HK_CMDEC + 1
 
 ;; CPU1 is the default
-rawcmd = "189ac0000001aa"
+rawcmd = "189ac0000001aa00"
 
 if ("CPU1" = "CPU2") then
   rawcmd = "199ac0000001aa"

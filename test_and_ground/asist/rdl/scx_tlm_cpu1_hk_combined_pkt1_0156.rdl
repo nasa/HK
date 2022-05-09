@@ -1,0 +1,39 @@
+!==============================================================================
+!
+!                Originator: B. Medina
+!                Responsible SC:  
+!                Responsible CSE: 
+!                Rev:  Last Change: Oct 25 2017
+
+!
+!                    Telemetry Packet # 0156 (dec)
+!                 =================================
+!
+!       Packet Application ID: 0156 (Hex '009C')
+!       Packet Title:  SCX CPU1 HK Output Packet 1 for Copy Table 1
+!       Packet Length:  ?? Bytes (Including 12 Bytes Of Header)
+!	Collect             Frequency:         SEC
+!
+!       REFERENCES:
+!
+!       NOTES:
+!
+!       HISTORY: 
+!
+!  2008/04/23  BBM	: Initial
+!
+!	2017/10/25	: Created from template 'template_tlm_HK_COMBINED_PKT1_TLM.rdl'
+!	with parameters spacecraft='SCX' and processor='CPU1'.
+!==============================================================================
+!
+
+PACKET P009C APID=0156, DESC="SCX CPU1 HK Copy Table Output Packet",
+                        STALE = 36, VARYING
+#include "ccsds_header.rdl"
+!
+  UB   SCX_CPU1_HK_Tab1Pkt1Data[80]       DESC="SCX CPU1 HK Output Packet 1 Data"
+!
+!
+!  END                !END APPEND RECORD FUNCTION
+!
+END

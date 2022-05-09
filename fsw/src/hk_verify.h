@@ -1,23 +1,23 @@
 /************************************************************************
-** File: hk_verify.h 
+** File: hk_verify.h
 **
 ** NASA Docket No. GSC-18449-1, and identified as "Core Flight System (cFS)
-** Housekeeping (HK) Application version 2.4.3” 
+** Housekeeping (HK) Application version 2.4.3”
 **
 ** Copyright © 2019 United States Government as represented by the Administrator of
-** the National Aeronautics and Space Administration.  All Rights Reserved. 
+** the National Aeronautics and Space Administration.  All Rights Reserved.
 **
-** Licensed under the Apache License, Version 2.0 (the "License"); 
-** you may not use this file except in compliance with the License. 
-** You may obtain a copy of the License at 
-** http://www.apache.org/licenses/LICENSE-2.0 
-** Unless required by applicable law or agreed to in writing, software 
-** distributed under the License is distributed on an "AS IS" BASIS, 
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-** See the License for the specific language governing permissions and 
-** limitations under the License. 
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+** http://www.apache.org/licenses/LICENSE-2.0
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
 **
-** Purpose: 
+** Purpose:
 **  Define the CFS Housekeeping (HK) Application compile-time checks
 **
 ** Notes:
@@ -33,16 +33,16 @@
 
 #include "hk_app.h"
 
-#if HK_DISCARD_INCOMPLETE_COMBO  <  0
-    #error HK_DISCARD_INCOMPLETE_COMBO cannot be less than 0!
-#elif HK_DISCARD_INCOMPLETE_COMBO  >  1
-    #error HK_DISCARD_INCOMPLETE_COMBO cannot be greater than 1!
+#if HK_DISCARD_INCOMPLETE_COMBO < 0
+#error HK_DISCARD_INCOMPLETE_COMBO cannot be less than 0!
+#elif HK_DISCARD_INCOMPLETE_COMBO > 1
+#error HK_DISCARD_INCOMPLETE_COMBO cannot be greater than 1!
 #endif
 
 #ifndef HK_PIPE_DEPTH
-    #error HK_PIPE_DEPTH must be defined!
-#elif (HK_PIPE_DEPTH  <  1)
-    #error HK_PIPE_DEPTH cannot be less than 1!
+#error HK_PIPE_DEPTH must be defined!
+#elif (HK_PIPE_DEPTH < 1)
+#error HK_PIPE_DEPTH cannot be less than 1!
 #endif
 /*
  * JPH 2015-06-29 - Removed check of:
@@ -54,15 +54,15 @@
  */
 
 #ifndef HK_COPY_TABLE_ENTRIES
-    #error HK_COPY_TABLE_ENTRIES must be defined!
-#elif (HK_COPY_TABLE_ENTRIES  <  1)
-    #error HK_COPY_TABLE_ENTRIES cannot be less than 1!
-#elif (HK_COPY_TABLE_ENTRIES  >  8192)
-    #error HK_COPY_TABLE_ENTRIES cannot be greater than 8192!
+#error HK_COPY_TABLE_ENTRIES must be defined!
+#elif (HK_COPY_TABLE_ENTRIES < 1)
+#error HK_COPY_TABLE_ENTRIES cannot be less than 1!
+#elif (HK_COPY_TABLE_ENTRIES > 8192)
+#error HK_COPY_TABLE_ENTRIES cannot be greater than 8192!
 #endif
 
 #ifndef HK_NUM_BYTES_IN_MEM_POOL
-    #error HK_NUM_BYTES_IN_MEM_POOL must be defined!
+#error HK_NUM_BYTES_IN_MEM_POOL must be defined!
 #endif
 
 #endif /* _hk_verify_h_ */

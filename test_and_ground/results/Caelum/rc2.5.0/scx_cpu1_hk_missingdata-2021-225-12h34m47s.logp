@@ -1,0 +1,846 @@
+21-225-12:34:47.352 00     SPR-I:OPRO         ****************** FSW Configuration ******************
+21-225-12:34:47.352 00     SPR-I:OPRO                 Checksum:    29237
+21-225-12:34:47.353 00     SPR-I:OPRO                 cFE Version: 6.7.99.0
+21-225-12:34:47.353 00     SPR-I:OPRO                 OS Version:  5.0.0.255
+21-225-12:34:47.353 00     SPR-I:OPRO          
+21-225-12:34:47.354 00     SPR-I:OPRO                 Connection Status
+21-225-12:34:47.354 00     SPR-I:OPRO                 -----------------
+21-225-12:34:47.354 00     SPR-I:OPRO                 CFDP: DOWN
+21-225-12:34:47.354 00     SPR-I:OPRO                 UDP:  UP 
+21-225-12:34:47.354 00     SPR-I:OPRO                 SWTS:  UNK
+21-225-12:34:47.354 00     SPR-I:OPRO         
+21-225-12:34:47.355 00     SPR-I:OPRO                 CMD / TLM Path
+21-225-12:34:47.355 00     SPR-I:OPRO                 --------------
+21-225-12:34:47.355 00     SPR-I:OPRO                 UDP
+21-225-12:34:47.355 00     SPR-I:OPRO                 
+21-225-12:34:47.355 00     SPR-I:OPRO         
+21-225-12:34:47.366 00     SPR-I:OPRO                 ASIST / GDS Configuration
+21-225-12:34:47.367 00     SPR-I:OPRO                 -------------------------
+21-225-12:34:47.368 00     SPR-I:OPRO                 Workstation: GS582CFSLAB4
+21-225-12:34:47.368 00     SPR-I:OPRO                 Account: cfs_test
+21-225-12:34:47.368 00     SPR-I:OPRO                 Version: 21.0.7
+21-225-12:34:47.368 00     SPR-I:OPRO                 Tlm DB:  Version: 1.983  Date: 07-13-21  Time: 10:22:58 AM.
+21-225-12:34:47.368 00     SPR-I:OPRO                 Cmd DB:  Version: 1.51  Date: 05-21-21  Time: 08:24:49 AM.EDT
+21-225-12:34:47.368 00     SPR-I:OPRO         
+21-225-12:34:47.368 00     SPR-I:OPRO                 Telemetry Info
+21-225-12:34:47.368 00     SPR-I:OPRO                 --------------
+21-225-12:34:47.369 00     SPR-I:OPRO                 Pkt Loss Count: N/A
+21-225-12:34:47.369 00     SPR-I:OPRO         ****************  End FSW Configuration ***************
+21-225-12:34:47.369 00     SPR-I:OPRO         Starting Procedure.... scx_cpu1_hk_missingdata
+21-225-12:34:47.457 00     SPR-I:OPRI     --> start scx_cpu1_hk_missingdata
+21-225-12:34:47.458 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_missingdata.i
+21-225-12:34:47.463 00     SPR-I:STS          Procedure SCX_CPU1_HK_MISSINGDATA started
+21-225-12:34:47.500 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:34:47.500 00     SPR-I:OPRO         ;  Step 1.0:  Initialize the CPU for this test. 
+21-225-12:34:47.500 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:34:47.500 00     SPR-I:OPRO         ;  Step 1.1:  Command a Power-On Reset on CPU1. 
+21-225-12:34:47.500 00     SPR-I:OPRO         ;********************************************************************
+21-225-12:34:47.500 00     CMH-I:CMD              Command is /SCX_CPU1_ES_POWERONRESET  ;;; (SCX CPU1 ES Power-On Reset command code)
+21-225-12:34:47.500 00     CMH-I:CMD             Command SFDU received:<1806C000000302220002> from gs582cfslab4:SPR
+21-225-12:34:47.511 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:34:57.521 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/clear_spacecraft_status.i
+21-225-12:34:57.523 00     SPR-I:STS          Procedure CLEAR_SPACECRAFT_STATUS started
+21-225-12:34:57.529 00     SPR-I:STS          Procedure CLEAR_SPACECRAFT_STATUS completed
+21-225-12:34:57.543 00     SPR-I:STTE         Wait mode - waiting 60 seconds ...
+21-225-12:35:57.607 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:36:03.570 00     CMH-I:STS          Connected to FEDS:FEDS for commanding (internal ID 0). 
+21-225-12:36:07.618 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:36:07.620 00     CMH-I:CMD              SFDU is /DDIR  DATA="open udp_read C%03X 1235 packet_only" ;;; ( )
+21-225-12:36:07.633 00     CMH-I:CMD              SFDU is /DDIR  DATA="open udp_write CPKT cpu3 1234 ascii_pkt" ;;; ( )
+21-225-12:36:07.684 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/send_that_to_command.i
+21-225-12:36:07.685 00     SPR-I:STS          Procedure SEND_THAT_TO_COMMAND started
+21-225-12:36:07.686 00     SPR-I:OPRO         Sending: /SCX_CPU1_TO_OUTPUT_ENA gs582cfslab4
+21-225-12:36:07.687 00     CMH-I:CMD              Command is /SCX_CPU1_TO_OUTPUT_ENA   GS582CFSLAB4 ;;; (SCX CPU1 Enables TO output)
+21-225-12:36:07.687 00     CMH-I:CMD             Command SFDU received:<1880C0000011069A3139322E3136382E312E313031000000> from gs582cfslab4:SPR
+21-225-12:36:07.738 00     SPR-I:STS          Procedure SEND_THAT_TO_COMMAND completed
+21-225-12:36:07.738 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:36:09.108 00    TLMH-I:STS          58-012-14:03:48.950 INFO CPU=CPU1 APPNAME=TO_LAB_APP EVENT ID=3 TO telemetry output enabled for IP 192.168.1.101
+21-225-12:36:12.744 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:36:12.745 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/fill_in_spacecraft_status.i
+21-225-12:36:12.747 00     SPR-I:STS          Procedure FILL_IN_SPACECRAFT_STATUS started
+21-225-12:36:12.750 00     SPR-I:STS          Procedure FILL_IN_SPACECRAFT_STATUS completed
+21-225-12:36:12.751 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:36:17.884 00     DPD-I:STS          Page SCX_CPU1_HK_HK added (cid:1).
+21-225-12:36:17.946 00     DPD-I:STS          Page SCX_CPU1_HK_COMBINED_PKT1 added (cid:1).
+21-225-12:36:18.017 00     DPD-I:STS          Page SCX_CPU1_HK_COMBINED_PKT2 added (cid:1).
+21-225-12:36:18.126 00     DPD-I:STS          Page SCX_CPU1_HK_COMBINED_PKT3 added (cid:1).
+21-225-12:36:18.266 00     DPD-I:STS          Page SCX_CPU1_HK_COMBINED_PKT4 added (cid:1).
+21-225-12:36:18.276 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:18.276 00     SPR-I:OPRO         ;  Step 1.2: Creating the copy table used for testing and upload it
+21-225-12:36:18.276 00     SPR-I:OPRO         ;********************************************************************
+21-225-12:36:18.276 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_copytable1.i
+21-225-12:36:18.281 00     SPR-I:STS          Procedure SCX_CPU1_HK_COPYTABLE1 started
+21-225-12:36:18.311 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:18.312 00     SPR-I:OPRO         ;  define local variables 
+21-225-12:36:18.313 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:18.315 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:18.315 00     SPR-I:OPRO         ;  Step 1.0:  Define Copy Table 1. 
+21-225-12:36:18.316 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:18.375 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/create_tbl_file_from_cvt.i
+21-225-12:36:18.376 00     SPR-I:STS          Procedure CREATE_TBL_FILE_FROM_CVT started
+21-225-12:36:18.379 00     SPR-I:OPRO         **********  hk_cpy_tbl.tbl  **********
+21-225-12:36:18.379 00     SPR-I:OPRO         
+21-225-12:36:18.381 00     SPR-I:OPRO                Content Type: cFE1
+21-225-12:36:18.382 00     SPR-I:OPRO                    Sub Type: 8
+21-225-12:36:18.383 00     SPR-I:OPRO                      Length: 12
+21-225-12:36:18.384 00     SPR-I:OPRO               Spacecraft Id: SCX
+21-225-12:36:18.384 00     SPR-I:OPRO                Processor Id: CPU3
+21-225-12:36:18.385 00     SPR-I:OPRO              Application Id: 4006
+21-225-12:36:18.385 00     SPR-I:OPRO            Create Time Secs: 1628858178
+21-225-12:36:18.386 00     SPR-I:OPRO         Create Time Subsecs: 0
+21-225-12:36:18.386 00     SPR-I:OPRO            File Description: Copy Table 1
+21-225-12:36:18.388 00     SPR-I:OPRO         
+21-225-12:36:18.388 00     SPR-I:OPRO         **********  HK.CopyTable  **********
+21-225-12:36:18.389 00     SPR-I:OPRO         
+21-225-12:36:18.389 00     SPR-I:OPRO              Start Mnemonic: SCX_CPU1_HK_CopyTable[1].InputMid
+21-225-12:36:18.390 00     SPR-I:OPRO                 Byte Offset: 0
+21-225-12:36:18.391 00     SPR-I:OPRO                End Mnemonic: SCX_CPU1_HK_CopyTable[128].NumBytes
+21-225-12:36:18.391 00     SPR-I:OPRO             Number of Bytes: 2048
+21-225-12:36:18.391 00     SPR-I:OPRO         
+21-225-12:36:18.402 00     SPR-I:STS          Loading file /s/opr/accounts/global/prc/partial_cvt_to_file_beta.i
+21-225-12:36:18.403 00     SPR-I:STS          Procedure PARTIAL_CVT_TO_FILE_BETA started
+21-225-12:36:18.403 00     SPR-I:OPRO         The unix command is cd /s/opr/accounts/cfs_test/image;cvt2file  -s 116 -e 2163 P0FA6 hk.copytable
+21-225-12:36:18.418 00     SPR-I:STS          Procedure PARTIAL_CVT_TO_FILE_BETA completed
+21-225-12:36:18.418 00     SPR-I:OPRO         cd /s/opr/accounts/cfs_test/image;cat hk_cpy_tbl.tbl.tmp hk.copytable > hk_cpy_tbl.tbl
+21-225-12:36:18.425 00     SPR-I:OPRO         cd /s/opr/accounts/cfs_test/image;rm hk.copytable hk_cpy_tbl.tbl.tmp
+21-225-12:36:18.431 00     SPR-I:STS          Procedure CREATE_TBL_FILE_FROM_CVT completed
+21-225-12:36:18.432 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:18.432 00     SPR-I:OPRO         ;  End procedure scx_cpu1_hk_copytable1                               
+21-225-12:36:18.432 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:18.432 00     SPR-I:STS          Procedure SCX_CPU1_HK_COPYTABLE1 completed
+21-225-12:36:18.433 00     SPR-I:OPRO         ==> Default Copy Table filename = 'hk_cpy_tbl.tbl'
+21-225-12:36:18.433 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/ftp_file.i
+21-225-12:36:18.433 00     SPR-I:STS          Procedure FTP_FILE started
+21-225-12:36:18.719 00     SPR-I:OPRO         Return code from ftp_file.pl: 0
+21-225-12:36:18.720 00     SPR-I:STS          Procedure FTP_FILE completed
+21-225-12:36:18.720 00     CMH-I:CMD              Command is /SCX_CPU1_ES_RESTARTAPP  APPLICATION="HK" ;;; (SCX CPU1 ES Restart Application command code)
+21-225-12:36:18.720 00     CMH-I:CMD             Command SFDU received:<1806C00000150631484B000000000000000000000000000000000000> from gs582cfslab4:SPR
+21-225-12:36:18.732 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:36:23.735 00     SPR-I:OPRO         ; Skipping Step 1.3 since HK is already running and the test app is no longer needed.
+21-225-12:36:23.735 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:23.735 00     SPR-I:OPRO         ;  Step 1.3:  Start the Housekeeping (HK) and Test Applications. 
+21-225-12:36:23.735 00     SPR-I:OPRO         ;********************************************************************
+21-225-12:36:23.736 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:23.736 00     SPR-I:OPRO         ;  Step 1.4: Verify that the HK Housekeeping telemetry items are 
+21-225-12:36:23.736 00     SPR-I:OPRO         ;  initialized to zero (0). 
+21-225-12:36:23.736 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:23.736 00     SPR-I:OPRO         <*> Passed (9000) - Housekeeping telemetry initialized properly.
+21-225-12:36:23.739 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:36:25.104 00    TLMH-I:STS          58-012-14:04:05.321 INFO CPU=CPU1 APPNAME=CFE_ES EVENT ID=10 Restart Application HK Completed, AppID=1114125
+21-225-12:36:25.105 00    TLMH-I:STS          58-012-14:04:05.402 INFO CPU=CPU1 APPNAME=HK EVENT ID=1 HK Initialized.  Version 2.5.0.0
+21-225-12:36:28.742 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:28.742 00     SPR-I:OPRO         ;  Step 1.5: Enable DEBUG Event Messages 
+21-225-12:36:28.742 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:28.743 00     CMH-I:CMD              Command is /SCX_CPU1_EVS_ENAAPPEVTTYPE  APPLICATION="HK"  DEBUG ;;; (SCX CPU1 EVS Enable Event Type for the App)
+21-225-12:36:28.743 00     CMH-I:CMD          Or  Command is /SCX_CPU1_EVS_ENAAPPEVTTYPEMASK  APPLICATION="HK" BITMASK= 1 (x1) ;;; (SCX CPU1 EVS Enable Event Type for the App (mask))
+21-225-12:36:28.743 00     CMH-I:CMD             Command SFDU received:<1801C00000170536484B0000000000000000000000000000000000000100> from gs582cfslab4:SPR
+21-225-12:36:28.757 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:36:32.762 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:36:32.763 00     SPR-I:OPRO         <*> Passed - Enable Debug events command sent properly.
+21-225-12:36:32.764 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:32.764 00     SPR-I:OPRO         ;  Step 2.0: Basic housekeeping collection and output message sending.
+21-225-12:36:32.764 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:32.764 00     SPR-I:OPRO         ;  Step 2.1: Send 20 input messages as per the copy table.
+21-225-12:36:32.764 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:32.767 00     SPR-I:OPRO         >> RawCmd = '0987C000000D0000000000000000000001234567'
+21-225-12:36:32.770 00     CMH-I:CMD             Command SFDU received:<0987C000000D0000000000000000000001234567> from gs582cfslab4:SPR
+21-225-12:36:32.785 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:33.796 00     SPR-I:OPRO         >> RawCmd = '0988C0000011000000000000000000001234567812345678'
+21-225-12:36:33.800 00     CMH-I:CMD             Command SFDU received:<0988C0000011000000000000000000001234567812345678> from gs582cfslab4:SPR
+21-225-12:36:33.813 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:34.817 00     SPR-I:OPRO         >> RawCmd = '0989C00000190000000000000000000023456789234567892345678923456789'
+21-225-12:36:34.821 00     CMH-I:CMD             Command SFDU received:<0989C00000190000000000000000000023456789234567892345678923456789> from gs582cfslab4:SPR
+21-225-12:36:34.834 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:35.840 00     SPR-I:OPRO         >> RawCmd = '098AC0000029000000000000000000003456789a3456789a3456789a3456789a3456789a3456789a3456789a3456789a'
+21-225-12:36:35.844 00     CMH-I:CMD             Command SFDU received:<098AC0000029000000000000000000003456789A3456789A3456789A3456789A3456789A3456789A3456789A3456789A> from gs582cfslab4:SPR
+21-225-12:36:35.857 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:36.863 00     SPR-I:OPRO         >> RawCmd = '098BC000002900000000000000000000456789ab456789ab456789ab456789ab456789ab456789ab456789ab456789ab'
+21-225-12:36:36.866 00     CMH-I:CMD             Command SFDU received:<098BC000002900000000000000000000456789AB456789AB456789AB456789AB456789AB456789AB456789AB456789AB> from gs582cfslab4:SPR
+21-225-12:36:36.879 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:37.886 00     SPR-I:OPRO         >> RawCmd = '098CC00000190000000000000000000056789abc56789abc56789abc56789abc'
+21-225-12:36:37.889 00     CMH-I:CMD             Command SFDU received:<098CC00000190000000000000000000056789ABC56789ABC56789ABC56789ABC> from gs582cfslab4:SPR
+21-225-12:36:37.903 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:38.906 00     SPR-I:OPRO         >> RawCmd = '098DC0000011000000000000000000006789abcd6789abcd'
+21-225-12:36:38.910 00     CMH-I:CMD             Command SFDU received:<098DC0000011000000000000000000006789ABCD6789ABCD> from gs582cfslab4:SPR
+21-225-12:36:38.923 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:39.924 00     SPR-I:OPRO         >> RawCmd = '098EC000000D00000000000000000000789abcde'
+21-225-12:36:39.925 00     CMH-I:CMD             Command SFDU received:<098EC000000D00000000000000000000789ABCDE> from gs582cfslab4:SPR
+21-225-12:36:39.936 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:40.937 00     SPR-I:OPRO         >> RawCmd = '098FC000000D0000000000000000000089abcdef'
+21-225-12:36:40.941 00     CMH-I:CMD             Command SFDU received:<098FC000000D0000000000000000000089ABCDEF> from gs582cfslab4:SPR
+21-225-12:36:40.945 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:41.947 00     SPR-I:OPRO         >> RawCmd = '0990C0000011000000000000000000009abcdef09abcdef0'
+21-225-12:36:41.950 00     CMH-I:CMD             Command SFDU received:<0990C0000011000000000000000000009ABCDEF09ABCDEF0> from gs582cfslab4:SPR
+21-225-12:36:41.965 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:42.968 00     SPR-I:OPRO         >> RawCmd = '0991C000001100000000000000000000abcdef01abcdef01'
+21-225-12:36:42.972 00     CMH-I:CMD             Command SFDU received:<0991C000001100000000000000000000ABCDEF01ABCDEF01> from gs582cfslab4:SPR
+21-225-12:36:42.985 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:43.989 00     SPR-I:OPRO         >> RawCmd = '0992C000000D00000000000000000000bcdef012'
+21-225-12:36:43.992 00     CMH-I:CMD             Command SFDU received:<0992C000000D00000000000000000000BCDEF012> from gs582cfslab4:SPR
+21-225-12:36:44.006 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:45.007 00     SPR-I:OPRO         >> RawCmd = '0993C000000D00000000000000000000cdef0123'
+21-225-12:36:45.007 00     CMH-I:CMD             Command SFDU received:<0993C000000D00000000000000000000CDEF0123> from gs582cfslab4:SPR
+21-225-12:36:45.018 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:46.020 00     SPR-I:OPRO         >> RawCmd = '0994C000001100000000000000000000def01234def01234'
+21-225-12:36:46.023 00     CMH-I:CMD             Command SFDU received:<0994C000001100000000000000000000DEF01234DEF01234> from gs582cfslab4:SPR
+21-225-12:36:46.036 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:47.039 00     SPR-I:OPRO         >> RawCmd = '0995C000001900000000000000000000ef012345ef012345ef012345ef012345'
+21-225-12:36:47.044 00     CMH-I:CMD             Command SFDU received:<0995C000001900000000000000000000EF012345EF012345EF012345EF012345> from gs582cfslab4:SPR
+21-225-12:36:47.046 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:48.052 00     SPR-I:OPRO         >> RawCmd = '0996C000002900000000000000000000f0123456f0123456f0123456f0123456f0123456f0123456f0123456f0123456'
+21-225-12:36:48.058 00     CMH-I:CMD             Command SFDU received:<0996C000002900000000000000000000F0123456F0123456F0123456F0123456F0123456F0123456F0123456F0123456> from gs582cfslab4:SPR
+21-225-12:36:48.072 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:49.077 00     SPR-I:OPRO         >> RawCmd = '0997C0000029000000000000000000007654321076543210765432107654321076543210765432107654321076543210'
+21-225-12:36:49.081 00     CMH-I:CMD             Command SFDU received:<0997C0000029000000000000000000007654321076543210765432107654321076543210765432107654321076543210> from gs582cfslab4:SPR
+21-225-12:36:49.096 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:50.099 00     SPR-I:OPRO         >> RawCmd = '0998C00000190000000000000000000087654321876543218765432187654321'
+21-225-12:36:50.103 00     CMH-I:CMD             Command SFDU received:<0998C00000190000000000000000000087654321876543218765432187654321> from gs582cfslab4:SPR
+21-225-12:36:50.116 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:51.119 00     SPR-I:OPRO         >> RawCmd = '0999C0000011000000000000000000009876543298765432'
+21-225-12:36:51.123 00     CMH-I:CMD             Command SFDU received:<0999C0000011000000000000000000009876543298765432> from gs582cfslab4:SPR
+21-225-12:36:51.136 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:52.138 00     SPR-I:OPRO         >> RawCmd = '099AC000000D00000000000000000000a9876543'
+21-225-12:36:52.141 00     CMH-I:CMD             Command SFDU received:<099AC000000D00000000000000000000A9876543> from gs582cfslab4:SPR
+21-225-12:36:52.153 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:36:53.154 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:53.154 00     SPR-I:OPRO         ;  Step 2.2: Send Output Message 1 command and check data
+21-225-12:36:53.154 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:36:53.165 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:36:53.168 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:36:53.189 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:36:58.201 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:36:58.202 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:36:58.202 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:36:58.202 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089C00000000'
+21-225-12:36:58.206 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089C00000000> from gs582cfslab4:SPR
+21-225-12:36:58.218 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:37:08.251 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:37:08.252 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:37:13.255 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:37:13.256 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:13.256 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:37:13.256 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:13.256 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:37:13.256 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:13.256 00     SPR-I:OPRO         ;  Step 2.3: Send Output Message 2 command and check data
+21-225-12:37:13.256 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:13.262 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:37:13.262 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:37:13.266 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:37:18.274 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:37:18.277 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:37:18.277 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:37:18.277 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089D00000000'
+21-225-12:37:18.280 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089D00000000> from gs582cfslab4:SPR
+21-225-12:37:18.292 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:37:28.320 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:37:28.321 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:37:33.325 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:37:33.326 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:33.326 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:37:33.326 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:33.326 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:37:33.326 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:33.326 00     SPR-I:OPRO         ;  Step 2.4: Send Output Message 3 command and check data
+21-225-12:37:33.327 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:33.333 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:37:33.334 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:37:33.338 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:37:38.347 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:37:38.347 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:37:38.347 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:37:38.348 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089E00000000'
+21-225-12:37:38.351 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089E00000000> from gs582cfslab4:SPR
+21-225-12:37:38.364 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:37:48.399 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:37:48.400 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:37:53.404 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:37:53.406 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:53.407 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:37:53.407 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:53.407 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:37:53.407 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:53.407 00     SPR-I:OPRO         ;  Step 3.0: Turn off 1 input packet.
+21-225-12:37:53.407 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:53.407 00     SPR-I:OPRO         ;  Step 3.1: Send 19 input messages as per the copy table.
+21-225-12:37:53.407 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:37:53.408 00     SPR-I:OPRO         >> RawCmd = '0987C000000D00000000000000000000a9876543'
+21-225-12:37:53.411 00     CMH-I:CMD             Command SFDU received:<0987C000000D00000000000000000000A9876543> from gs582cfslab4:SPR
+21-225-12:37:53.424 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:37:54.426 00     SPR-I:OPRO         >> RawCmd = '0988C0000011000000000000000000009876543298765432'
+21-225-12:37:54.430 00     CMH-I:CMD             Command SFDU received:<0988C0000011000000000000000000009876543298765432> from gs582cfslab4:SPR
+21-225-12:37:54.444 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:37:55.447 00     SPR-I:OPRO         >> RawCmd = '0989C00000190000000000000000000087654321876543218765432187654321'
+21-225-12:37:55.451 00     CMH-I:CMD             Command SFDU received:<0989C00000190000000000000000000087654321876543218765432187654321> from gs582cfslab4:SPR
+21-225-12:37:55.464 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:37:56.470 00     SPR-I:OPRO         >> RawCmd = '098AC0000029000000000000000000007654321076543210765432107654321076543210765432107654321076543210'
+21-225-12:37:56.473 00     CMH-I:CMD             Command SFDU received:<098AC0000029000000000000000000007654321076543210765432107654321076543210765432107654321076543210> from gs582cfslab4:SPR
+21-225-12:37:56.487 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:37:57.492 00     SPR-I:OPRO         >> RawCmd = '098BC000002900000000000000000000f0123456f0123456f0123456f0123456f0123456f0123456f0123456f0123456'
+21-225-12:37:57.496 00     CMH-I:CMD             Command SFDU received:<098BC000002900000000000000000000F0123456F0123456F0123456F0123456F0123456F0123456F0123456F0123456> from gs582cfslab4:SPR
+21-225-12:37:57.509 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:37:58.513 00     SPR-I:OPRO         >> RawCmd = '098CC000001900000000000000000000ef012345ef012345ef012345ef012345'
+21-225-12:37:58.517 00     CMH-I:CMD             Command SFDU received:<098CC000001900000000000000000000EF012345EF012345EF012345EF012345> from gs582cfslab4:SPR
+21-225-12:37:58.530 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:37:59.532 00     SPR-I:OPRO         >> RawCmd = '098DC000001100000000000000000000def01234def01234'
+21-225-12:37:59.536 00     CMH-I:CMD             Command SFDU received:<098DC000001100000000000000000000DEF01234DEF01234> from gs582cfslab4:SPR
+21-225-12:37:59.550 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:00.551 00     SPR-I:OPRO         >> RawCmd = '098EC000000D00000000000000000000cdef0123'
+21-225-12:38:00.553 00     CMH-I:CMD             Command SFDU received:<098EC000000D00000000000000000000CDEF0123> from gs582cfslab4:SPR
+21-225-12:38:00.566 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:01.567 00     SPR-I:OPRO         >> RawCmd = '098FC000000D00000000000000000000bcdef012'
+21-225-12:38:01.571 00     CMH-I:CMD             Command SFDU received:<098FC000000D00000000000000000000BCDEF012> from gs582cfslab4:SPR
+21-225-12:38:01.575 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:02.576 00     SPR-I:OPRO         >> RawCmd = '0990C000001100000000000000000000abcdef01abcdef01'
+21-225-12:38:02.577 00     CMH-I:CMD             Command SFDU received:<0990C000001100000000000000000000ABCDEF01ABCDEF01> from gs582cfslab4:SPR
+21-225-12:38:02.589 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:03.590 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:38:03.591 00     SPR-I:OPRO         ;  Don't send InputPacket11 so there will be missing data
+21-225-12:38:03.591 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:38:03.591 00     SPR-I:OPRO         >> RawCmd = '0992C000000D0000000000000000000089abcdef'
+21-225-12:38:03.595 00     CMH-I:CMD             Command SFDU received:<0992C000000D0000000000000000000089ABCDEF> from gs582cfslab4:SPR
+21-225-12:38:03.608 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:04.610 00     SPR-I:OPRO         >> RawCmd = '0993C000000D00000000000000000000789abcde'
+21-225-12:38:04.613 00     CMH-I:CMD             Command SFDU received:<0993C000000D00000000000000000000789ABCDE> from gs582cfslab4:SPR
+21-225-12:38:04.627 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:05.630 00     SPR-I:OPRO         >> RawCmd = '0994C0000011000000000000000000006789abcd6789abcd'
+21-225-12:38:05.633 00     CMH-I:CMD             Command SFDU received:<0994C0000011000000000000000000006789ABCD6789ABCD> from gs582cfslab4:SPR
+21-225-12:38:05.647 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:06.651 00     SPR-I:OPRO         >> RawCmd = '0995C00000190000000000000000000056789abc56789abc56789abc56789abc'
+21-225-12:38:06.655 00     CMH-I:CMD             Command SFDU received:<0995C00000190000000000000000000056789ABC56789ABC56789ABC56789ABC> from gs582cfslab4:SPR
+21-225-12:38:06.669 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:07.671 00     SPR-I:OPRO         >> RawCmd = '0996C000002900000000000000000000456789ab456789ab456789ab456789ab456789ab456789ab456789ab456789ab'
+21-225-12:38:07.672 00     CMH-I:CMD             Command SFDU received:<0996C000002900000000000000000000456789AB456789AB456789AB456789AB456789AB456789AB456789AB456789AB> from gs582cfslab4:SPR
+21-225-12:38:07.683 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:08.685 00     SPR-I:OPRO         >> RawCmd = '0997C0000029000000000000000000003456789a3456789a3456789a3456789a3456789a3456789a3456789a3456789a'
+21-225-12:38:08.686 00     CMH-I:CMD             Command SFDU received:<0997C0000029000000000000000000003456789A3456789A3456789A3456789A3456789A3456789A3456789A3456789A> from gs582cfslab4:SPR
+21-225-12:38:08.697 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:09.698 00     SPR-I:OPRO         >> RawCmd = '0998C00000190000000000000000000023456789234567892345678923456789'
+21-225-12:38:09.700 00     CMH-I:CMD             Command SFDU received:<0998C00000190000000000000000000023456789234567892345678923456789> from gs582cfslab4:SPR
+21-225-12:38:09.713 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:10.714 00     SPR-I:OPRO         >> RawCmd = '0999C0000011000000000000000000001234567812345678'
+21-225-12:38:10.714 00     CMH-I:CMD             Command SFDU received:<0999C0000011000000000000000000001234567812345678> from gs582cfslab4:SPR
+21-225-12:38:10.725 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:11.727 00     SPR-I:OPRO         >> RawCmd = '099AC000000D0000000000000000000001234567'
+21-225-12:38:11.728 00     CMH-I:CMD             Command SFDU received:<099AC000000D0000000000000000000001234567> from gs582cfslab4:SPR
+21-225-12:38:11.738 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:38:12.739 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:38:12.739 00     SPR-I:OPRO         ;  Step 3.2: Send Output Message 1 command.
+21-225-12:38:12.739 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:38:12.742 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:38:12.743 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:38:12.751 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:38:17.759 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:38:17.760 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:38:17.760 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:38:17.760 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089C00000000'
+21-225-12:38:17.764 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089C00000000> from gs582cfslab4:SPR
+21-225-12:38:17.769 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:38:18.603 00    TLMH-I:STS          58-012-14:05:58.500 DEBUG CPU=CPU1 APPNAME=HK EVENT ID=12 Combined Packet 0x0000089C missing data from Input Pkt 0x00000991
+21-225-12:38:27.829 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:38:27.830 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:38:32.835 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:38:32.837 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:38:37.841 00     SPR-I:OPRO         <*> Passed (2001.3) - Missing Data Counter Updated as expected
+21-225-12:38:37.845 00     SPR-I:OPRO         <*> Passed (2001.3) - Event message 12 received
+21-225-12:38:37.847 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:38:37.847 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:38:37.847 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:38:37.847 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:38:37.848 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:38:37.848 00     SPR-I:OPRO         ;  Step 3.3: Send Output Message 2 command.
+21-225-12:38:37.848 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:38:37.873 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:38:37.875 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:38:37.886 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:38:42.896 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:38:42.897 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:38:42.897 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:38:42.898 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089D00000000'
+21-225-12:38:42.901 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089D00000000> from gs582cfslab4:SPR
+21-225-12:38:42.915 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:38:43.602 00    TLMH-I:STS          58-012-14:06:23.500 DEBUG CPU=CPU1 APPNAME=HK EVENT ID=12 Combined Packet 0x0000089D missing data from Input Pkt 0x00000991
+21-225-12:38:52.979 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:38:52.981 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:38:57.985 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:38:57.988 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:39:02.991 00     SPR-I:OPRO         <*> Passed (2001.3) - Missing Data Counter Updated as expected
+21-225-12:39:02.994 00     SPR-I:OPRO         <*> Passed (2001.3) - Event message 12 received
+21-225-12:39:02.997 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:39:02.997 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:39:02.997 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:39:02.997 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:39:02.998 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:39:02.998 00     SPR-I:OPRO         ;  Step 3.4: Send Output Message 3 command.
+21-225-12:39:02.998 00     SPR-I:OPRO         ;********************************************************************
+21-225-12:39:03.027 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:39:03.029 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:39:03.037 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:39:08.047 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:39:08.047 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:39:08.048 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:39:08.048 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089E00000000'
+21-225-12:39:08.052 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089E00000000> from gs582cfslab4:SPR
+21-225-12:39:08.065 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:39:08.604 00    TLMH-I:STS          58-012-14:06:48.500 DEBUG CPU=CPU1 APPNAME=HK EVENT ID=12 Combined Packet 0x0000089E missing data from Input Pkt 0x00000991
+21-225-12:39:18.103 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:39:18.105 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:39:23.110 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:39:23.113 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:39:28.117 00     SPR-I:OPRO         <*> Passed (2001.3) - Missing Data Counter Updated as expected
+21-225-12:39:28.120 00     SPR-I:OPRO         <*> Passed (2001.3) - Event message 12 received
+21-225-12:39:28.122 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:39:28.122 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:39:28.122 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:39:28.122 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:39:28.122 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:39:28.122 00     SPR-I:OPRO         ;  Step 4.0: Turn all input packets back on.
+21-225-12:39:28.122 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:39:28.122 00     SPR-I:OPRO         ;  Step 4.1: Send 20 input messages as per the copy table.
+21-225-12:39:28.122 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:39:28.123 00     SPR-I:OPRO         >> RawCmd = '0987C000000D0000000000000000000011111111'
+21-225-12:39:28.124 00     CMH-I:CMD             Command SFDU received:<0987C000000D0000000000000000000011111111> from gs582cfslab4:SPR
+21-225-12:39:28.135 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:29.138 00     SPR-I:OPRO         >> RawCmd = '0988C0000011000000000000000000001212121212121212'
+21-225-12:39:29.141 00     CMH-I:CMD             Command SFDU received:<0988C0000011000000000000000000001212121212121212> from gs582cfslab4:SPR
+21-225-12:39:29.154 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:30.158 00     SPR-I:OPRO         >> RawCmd = '0989C00000190000000000000000000013131313131313131313131313131313'
+21-225-12:39:30.161 00     CMH-I:CMD             Command SFDU received:<0989C00000190000000000000000000013131313131313131313131313131313> from gs582cfslab4:SPR
+21-225-12:39:30.174 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:31.180 00     SPR-I:OPRO         >> RawCmd = '098AC0000029000000000000000000001414141414141414141414141414141414141414141414141414141414141414'
+21-225-12:39:31.181 00     CMH-I:CMD             Command SFDU received:<098AC0000029000000000000000000001414141414141414141414141414141414141414141414141414141414141414> from gs582cfslab4:SPR
+21-225-12:39:31.193 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:32.199 00     SPR-I:OPRO         >> RawCmd = '098BC0000029000000000000000000001515151515151515151515151515151515151515151515151515151515151515'
+21-225-12:39:32.200 00     CMH-I:CMD             Command SFDU received:<098BC0000029000000000000000000001515151515151515151515151515151515151515151515151515151515151515> from gs582cfslab4:SPR
+21-225-12:39:32.211 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:33.215 00     SPR-I:OPRO         >> RawCmd = '098CC00000190000000000000000000016161616161616161616161616161616'
+21-225-12:39:33.219 00     CMH-I:CMD             Command SFDU received:<098CC00000190000000000000000000016161616161616161616161616161616> from gs582cfslab4:SPR
+21-225-12:39:33.232 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:34.235 00     SPR-I:OPRO         >> RawCmd = '098DC0000011000000000000000000001717171717171717'
+21-225-12:39:34.239 00     CMH-I:CMD             Command SFDU received:<098DC0000011000000000000000000001717171717171717> from gs582cfslab4:SPR
+21-225-12:39:34.253 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:35.254 00     SPR-I:OPRO         >> RawCmd = '098EC000000D0000000000000000000018181818'
+21-225-12:39:35.258 00     CMH-I:CMD             Command SFDU received:<098EC000000D0000000000000000000018181818> from gs582cfslab4:SPR
+21-225-12:39:35.272 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:36.273 00     SPR-I:OPRO         >> RawCmd = '098FC000000D0000000000000000000019191919'
+21-225-12:39:36.276 00     CMH-I:CMD             Command SFDU received:<098FC000000D0000000000000000000019191919> from gs582cfslab4:SPR
+21-225-12:39:36.289 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:37.292 00     SPR-I:OPRO         >> RawCmd = '0990C0000011000000000000000000001a1a1a1a1a1a1a1a'
+21-225-12:39:37.296 00     CMH-I:CMD             Command SFDU received:<0990C0000011000000000000000000001A1A1A1A1A1A1A1A> from gs582cfslab4:SPR
+21-225-12:39:37.309 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:38.312 00     SPR-I:OPRO         >> RawCmd = '0991C0000011000000000000000000001b1b1b1b1b1b1b1b'
+21-225-12:39:38.315 00     CMH-I:CMD             Command SFDU received:<0991C0000011000000000000000000001B1B1B1B1B1B1B1B> from gs582cfslab4:SPR
+21-225-12:39:38.328 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:39.329 00     SPR-I:OPRO         >> RawCmd = '0992C000000D000000000000000000001c1c1c1c'
+21-225-12:39:39.330 00     CMH-I:CMD             Command SFDU received:<0992C000000D000000000000000000001C1C1C1C> from gs582cfslab4:SPR
+21-225-12:39:39.341 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:40.343 00     SPR-I:OPRO         >> RawCmd = '0993C000000D000000000000000000001d1d1d1d'
+21-225-12:39:40.344 00     CMH-I:CMD             Command SFDU received:<0993C000000D000000000000000000001D1D1D1D> from gs582cfslab4:SPR
+21-225-12:39:40.356 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:41.359 00     SPR-I:OPRO         >> RawCmd = '0994C0000011000000000000000000001e1e1e1e1e1e1e1e'
+21-225-12:39:41.363 00     CMH-I:CMD             Command SFDU received:<0994C0000011000000000000000000001E1E1E1E1E1E1E1E> from gs582cfslab4:SPR
+21-225-12:39:41.375 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:42.379 00     SPR-I:OPRO         >> RawCmd = '0995C0000019000000000000000000001f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f'
+21-225-12:39:42.382 00     CMH-I:CMD             Command SFDU received:<0995C0000019000000000000000000001F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F> from gs582cfslab4:SPR
+21-225-12:39:42.394 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:43.400 00     SPR-I:OPRO         >> RawCmd = '0996C0000029000000000000000000002020202020202020202020202020202020202020202020202020202020202020'
+21-225-12:39:43.404 00     CMH-I:CMD             Command SFDU received:<0996C0000029000000000000000000002020202020202020202020202020202020202020202020202020202020202020> from gs582cfslab4:SPR
+21-225-12:39:43.417 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:44.423 00     SPR-I:OPRO         >> RawCmd = '0997C0000029000000000000000000002121212121212121212121212121212121212121212121212121212121212121'
+21-225-12:39:44.427 00     CMH-I:CMD             Command SFDU received:<0997C0000029000000000000000000002121212121212121212121212121212121212121212121212121212121212121> from gs582cfslab4:SPR
+21-225-12:39:44.441 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:45.445 00     SPR-I:OPRO         >> RawCmd = '0998C00000190000000000000000000022222222222222222222222222222222'
+21-225-12:39:45.448 00     CMH-I:CMD             Command SFDU received:<0998C00000190000000000000000000022222222222222222222222222222222> from gs582cfslab4:SPR
+21-225-12:39:45.461 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:46.465 00     SPR-I:OPRO         >> RawCmd = '0999C0000011000000000000000000002323232323232323'
+21-225-12:39:46.466 00     CMH-I:CMD             Command SFDU received:<0999C0000011000000000000000000002323232323232323> from gs582cfslab4:SPR
+21-225-12:39:46.468 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:47.469 00     SPR-I:OPRO         >> RawCmd = '099AC000000D0000000000000000000024242424'
+21-225-12:39:47.473 00     CMH-I:CMD             Command SFDU received:<099AC000000D0000000000000000000024242424> from gs582cfslab4:SPR
+21-225-12:39:47.486 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:39:48.487 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:39:48.487 00     SPR-I:OPRO         ;  Step 4.2: Send Output Message 1 command and check data
+21-225-12:39:48.487 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:39:48.498 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:39:48.502 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:39:48.515 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:39:53.525 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:39:53.525 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:39:53.525 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:39:53.525 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089C00000000'
+21-225-12:39:53.526 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089C00000000> from gs582cfslab4:SPR
+21-225-12:39:53.538 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:40:03.603 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:40:03.604 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:40:08.608 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:40:08.609 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:08.609 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:40:08.609 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:08.609 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:40:08.610 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:08.610 00     SPR-I:OPRO         ;  Step 4.3: Send Output Message 2 command and check data
+21-225-12:40:08.610 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:08.620 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:40:08.621 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:40:08.628 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:40:13.638 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:40:13.638 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:40:13.638 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:40:13.639 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089D00000000'
+21-225-12:40:13.646 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089D00000000> from gs582cfslab4:SPR
+21-225-12:40:13.659 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:40:23.722 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:40:23.724 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:40:28.728 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:40:28.729 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:28.729 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:40:28.729 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:28.729 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:40:28.729 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:28.729 00     SPR-I:OPRO         ;  Step 4.4: Send Output Message 3 command and check data
+21-225-12:40:28.729 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:28.740 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:40:28.741 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:40:28.749 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:40:33.759 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:40:33.760 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:40:33.760 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:40:33.761 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089E00000000'
+21-225-12:40:33.765 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089E00000000> from gs582cfslab4:SPR
+21-225-12:40:33.780 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:40:43.837 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:40:43.838 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:40:48.842 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:40:48.843 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:48.843 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:40:48.843 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:48.843 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:40:48.843 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:48.843 00     SPR-I:OPRO         ;  Step 4.5: Send Input packets that do not contain all their expected
+21-225-12:40:48.844 00     SPR-I:OPRO         ;  data. I.E., the packets will be short and generate an event message.
+21-225-12:40:48.844 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:40:48.846 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:40:48.846 00     SPR-I:OPRO         ; Setup event 1 with HK ERROR 6
+21-225-12:40:48.846 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:40:48.847 00     SPR-I:OPRO         >> RawCmd = '0988C000000D0000000000000000000012121212'
+21-225-12:40:48.848 00     CMH-I:CMD             Command SFDU received:<0988C000000D0000000000000000000012121212> from gs582cfslab4:SPR
+21-225-12:40:48.859 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:40:49.602 00    TLMH-I:STS          58-012-14:08:29.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x00000988, Length:20, Count:2
+21-225-12:40:49.860 00     SPR-I:OPRO         >> RawCmd = '0989C000000D0000000000000000000013131313'
+21-225-12:40:49.861 00     CMH-I:CMD             Command SFDU received:<0989C000000D0000000000000000000013131313> from gs582cfslab4:SPR
+21-225-12:40:49.872 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:40:50.596 00    TLMH-I:STS          58-012-14:08:30.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x00000989, Length:20, Count:2
+21-225-12:40:50.873 00     SPR-I:OPRO         >> RawCmd = '098AC000000D0000000000000000000014141414'
+21-225-12:40:50.877 00     CMH-I:CMD             Command SFDU received:<098AC000000D0000000000000000000014141414> from gs582cfslab4:SPR
+21-225-12:40:50.891 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:40:51.596 00    TLMH-I:STS          58-012-14:08:31.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x0000098A, Length:20, Count:2
+21-225-12:40:51.892 00     SPR-I:OPRO         >> RawCmd = '098BC000000D0000000000000000000015151515'
+21-225-12:40:51.896 00     CMH-I:CMD             Command SFDU received:<098BC000000D0000000000000000000015151515> from gs582cfslab4:SPR
+21-225-12:40:51.909 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:40:52.600 00    TLMH-I:STS          58-012-14:08:32.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x0000098B, Length:20, Count:2
+21-225-12:40:52.910 00     SPR-I:OPRO         >> RawCmd = '098CC000000D0000000000000000000016161616'
+21-225-12:40:52.914 00     CMH-I:CMD             Command SFDU received:<098CC000000D0000000000000000000016161616> from gs582cfslab4:SPR
+21-225-12:40:52.927 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:40:53.604 00    TLMH-I:STS          58-012-14:08:33.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x0000098C, Length:20, Count:2
+21-225-12:40:53.928 00     SPR-I:OPRO         >> RawCmd = '098DC000000D0000000000000000000017171717'
+21-225-12:40:53.932 00     CMH-I:CMD             Command SFDU received:<098DC000000D0000000000000000000017171717> from gs582cfslab4:SPR
+21-225-12:40:53.946 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:40:54.595 00    TLMH-I:STS          58-012-14:08:34.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x0000098D, Length:20, Count:2
+21-225-12:40:54.947 00     SPR-I:OPRO         >> RawCmd = '0990C000000D000000000000000000001a1a1a1a'
+21-225-12:40:54.951 00     CMH-I:CMD             Command SFDU received:<0990C000000D000000000000000000001A1A1A1A> from gs582cfslab4:SPR
+21-225-12:40:54.964 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:40:55.598 00    TLMH-I:STS          58-012-14:08:35.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x00000990, Length:20, Count:2
+21-225-12:40:55.966 00     SPR-I:OPRO         >> RawCmd = '0991C000000D000000000000000000001b1b1b1b'
+21-225-12:40:55.969 00     CMH-I:CMD             Command SFDU received:<0991C000000D000000000000000000001B1B1B1B> from gs582cfslab4:SPR
+21-225-12:40:55.983 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:40:56.601 00    TLMH-I:STS          58-012-14:08:36.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x00000991, Length:20, Count:2
+21-225-12:40:56.984 00     SPR-I:OPRO         >> RawCmd = '0994C000000D000000000000000000001e1e1e1e'
+21-225-12:40:56.988 00     CMH-I:CMD             Command SFDU received:<0994C000000D000000000000000000001E1E1E1E> from gs582cfslab4:SPR
+21-225-12:40:57.001 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:40:57.605 00    TLMH-I:STS          58-012-14:08:37.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x00000994, Length:20, Count:2
+21-225-12:40:58.003 00     SPR-I:OPRO         >> RawCmd = '0995C000000D000000000000000000001f1f1f1f'
+21-225-12:40:58.007 00     CMH-I:CMD             Command SFDU received:<0995C000000D000000000000000000001F1F1F1F> from gs582cfslab4:SPR
+21-225-12:40:58.021 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:40:58.598 00    TLMH-I:STS          58-012-14:08:38.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x00000995, Length:20, Count:2
+21-225-12:40:59.022 00     SPR-I:OPRO         >> RawCmd = '0996C000000D0000000000000000000020202020'
+21-225-12:40:59.026 00     CMH-I:CMD             Command SFDU received:<0996C000000D0000000000000000000020202020> from gs582cfslab4:SPR
+21-225-12:40:59.039 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:40:59.599 00    TLMH-I:STS          58-012-14:08:39.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x00000996, Length:20, Count:2
+21-225-12:41:00.040 00     SPR-I:OPRO         >> RawCmd = '0997C000000D0000000000000000000021212121'
+21-225-12:41:00.044 00     CMH-I:CMD             Command SFDU received:<0997C000000D0000000000000000000021212121> from gs582cfslab4:SPR
+21-225-12:41:00.057 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:41:00.604 00    TLMH-I:STS          58-012-14:08:40.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x00000997, Length:20, Count:2
+21-225-12:41:01.058 00     SPR-I:OPRO         >> RawCmd = '0998C000000D0000000000000000000022222222'
+21-225-12:41:01.061 00     CMH-I:CMD             Command SFDU received:<0998C000000D0000000000000000000022222222> from gs582cfslab4:SPR
+21-225-12:41:01.075 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:41:01.597 00    TLMH-I:STS          58-012-14:08:41.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x00000998, Length:20, Count:2
+21-225-12:41:02.076 00     SPR-I:OPRO         >> RawCmd = '0999C000000D0000000000000000000023232323'
+21-225-12:41:02.079 00     CMH-I:CMD             Command SFDU received:<0999C000000D0000000000000000000023232323> from gs582cfslab4:SPR
+21-225-12:41:02.092 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:41:02.597 00    TLMH-I:STS          58-012-14:08:42.500 ERROR CPU=CPU1 APPNAME=HK EVENT ID=6 HK table definition exceeds packet length. MID:0x00000999, Length:20, Count:2
+21-225-12:41:03.103 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:41:03.104 00     SPR-I:OPRO         <*> Passed (2001.5) - Rcv'd the expected error events for short packets
+21-225-12:41:03.107 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:41:03.107 00     SPR-I:OPRO         ;  Step 5.0: Test stale data in only 1 output packet.
+21-225-12:41:03.107 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:41:03.107 00     SPR-I:OPRO         ;  Step 5.1: Update copy table.
+21-225-12:41:03.107 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:41:03.108 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_copytable2.i
+21-225-12:41:03.121 00     SPR-I:STS          Procedure SCX_CPU1_HK_COPYTABLE2 started
+21-225-12:41:03.160 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:41:03.160 00     SPR-I:OPRO         ;  define local variables 
+21-225-12:41:03.160 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:41:03.161 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:41:03.161 00     SPR-I:OPRO         ;  Step 1.0:  Define Copy Table 2. 
+21-225-12:41:03.161 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:41:03.200 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/create_tbl_file_from_cvt.i
+21-225-12:41:03.200 00     SPR-I:STS          Procedure CREATE_TBL_FILE_FROM_CVT started
+21-225-12:41:03.201 00     SPR-I:OPRO         **********  hk_cpy_tbl.tbl  **********
+21-225-12:41:03.201 00     SPR-I:OPRO         
+21-225-12:41:03.201 00     SPR-I:OPRO                Content Type: cFE1
+21-225-12:41:03.201 00     SPR-I:OPRO                    Sub Type: 8
+21-225-12:41:03.202 00     SPR-I:OPRO                      Length: 12
+21-225-12:41:03.202 00     SPR-I:OPRO               Spacecraft Id: SCX
+21-225-12:41:03.202 00     SPR-I:OPRO                Processor Id: CPU3
+21-225-12:41:03.202 00     SPR-I:OPRO              Application Id: 4006
+21-225-12:41:03.202 00     SPR-I:OPRO            Create Time Secs: 1628858463
+21-225-12:41:03.202 00     SPR-I:OPRO         Create Time Subsecs: 0
+21-225-12:41:03.202 00     SPR-I:OPRO            File Description: Copy Table 2
+21-225-12:41:03.202 00     SPR-I:OPRO         
+21-225-12:41:03.202 00     SPR-I:OPRO         **********  HK.CopyTable  **********
+21-225-12:41:03.202 00     SPR-I:OPRO         
+21-225-12:41:03.202 00     SPR-I:OPRO              Start Mnemonic: SCX_CPU1_HK_CopyTable[1].InputMid
+21-225-12:41:03.202 00     SPR-I:OPRO                 Byte Offset: 0
+21-225-12:41:03.202 00     SPR-I:OPRO                End Mnemonic: SCX_CPU1_HK_CopyTable[128].NumBytes
+21-225-12:41:03.202 00     SPR-I:OPRO             Number of Bytes: 2048
+21-225-12:41:03.202 00     SPR-I:OPRO         
+21-225-12:41:03.208 00     SPR-I:STS          Loading file /s/opr/accounts/global/prc/partial_cvt_to_file_beta.i
+21-225-12:41:03.208 00     SPR-I:STS          Procedure PARTIAL_CVT_TO_FILE_BETA started
+21-225-12:41:03.209 00     SPR-I:OPRO         The unix command is cd /s/opr/accounts/cfs_test/image;cvt2file  -s 116 -e 2163 P0FA6 hk.copytable
+21-225-12:41:03.214 00     SPR-I:STS          Procedure PARTIAL_CVT_TO_FILE_BETA completed
+21-225-12:41:03.214 00     SPR-I:OPRO         cd /s/opr/accounts/cfs_test/image;cat hk_cpy_tbl.tbl.tmp hk.copytable > hk_cpy_tbl.tbl
+21-225-12:41:03.217 00     SPR-I:OPRO         cd /s/opr/accounts/cfs_test/image;rm hk.copytable hk_cpy_tbl.tbl.tmp
+21-225-12:41:03.222 00     SPR-I:STS          Procedure CREATE_TBL_FILE_FROM_CVT completed
+21-225-12:41:03.222 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:41:03.222 00     SPR-I:OPRO         ;  End procedure scx_cpu1_hk_copytable2  
+21-225-12:41:03.223 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:41:03.223 00     SPR-I:STS          Procedure SCX_CPU1_HK_COPYTABLE2 completed
+21-225-12:41:03.223 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/load_table.i
+21-225-12:41:03.224 00     SPR-I:STS          Procedure LOAD_TABLE started
+21-225-12:41:03.225 00     SPR-I:OPRO         Table Filename: hk_cpy_tbl.tbl
+21-225-12:41:03.226 00     SPR-I:OPRO         The perl command is: perl /s/opr/accounts/global/tools/table_ftp.pl 192.168.1.8 hk_cpy_tbl.tbl RAM:0 3
+21-225-12:41:03.226 00     SPR-I:OPRO         
+21-225-12:41:03.370 00     SPR-I:OPRO         Return code from ftp_file.pl: 0
+21-225-12:41:03.370 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:41:08.374 00     SPR-I:OPRO         
+21-225-12:41:08.377 00     SPR-I:OPRO         Sending Command: /SCX_CPU1_TBL_LOAD LFILENAME="/ram/hk_cpy_tbl.tbl"
+21-225-12:41:08.379 00     CMH-I:CMD              Command is /SCX_CPU1_TBL_LOAD  LFILENAME="/ram/hk_cpy_tbl.tbl" ;;; (SCX CPU1 TBL load table command)
+21-225-12:41:08.379 00     CMH-I:CMD             Command SFDU received:<1804C000004102592F72616D2F686B5F6370795F74626C2E74626C000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000> from gs582cfslab4:SPR
+21-225-12:41:08.401 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:41:09.101 00    TLMH-I:STS          58-012-14:08:49.001 INFO CPU=CPU1 APPNAME=CFE_TBL EVENT ID=12 Successful load of '/ram/hk_cpy_tbl.tbl' into 'HK.CopyTable' working buffer
+21-225-12:41:12.406 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:41:12.407 00     SPR-I:STS          Procedure LOAD_TABLE completed
+21-225-12:41:12.408 00     SPR-I:STTE         Wait mode - waiting 20 seconds ...
+21-225-12:41:32.429 00     SPR-I:OPRO         Sending command:  SCX_CPU1_TBL_VALIDATE INACTIVE VTABLENAME=HKCopyTblName
+21-225-12:41:32.430 00     CMH-I:CMD              Command is /SCX_CPU1_TBL_VALIDATE   INACTIVE VTABLENAME="HK.CopyTable" ;;; (SCX CPU1 TBL validate table command)
+21-225-12:41:32.430 00     CMH-I:CMD             Command SFDU received:<1804C000002B045A0000484B2E436F70795461626C6500000000000000000000000000000000000000000000000000000000> from gs582cfslab4:SPR
+21-225-12:41:32.446 00     SPR-I:OPRO          ; Telemetry update will wait a maximum of 24 seconds
+21-225-12:41:32.447 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:41:36.099 00    TLMH-I:STS          58-012-14:09:16.004 INFO CPU=CPU1 APPNAME=CFE_TBL EVENT ID=36 HK validation successful for Inactive 'HK.CopyTable'
+21-225-12:41:36.451 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:41:36.454 00     SPR-I:STTE         Wait mode - waiting 20 seconds ...
+21-225-12:41:56.471 00     SPR-I:OPRO         Sending command:  SCX_CPU1_TBL_ACTIVATE ATABLENAME=HKCopyTblName
+21-225-12:41:56.472 00     CMH-I:CMD              Command is /SCX_CPU1_TBL_ACTIVATE  ATABLENAME="HK.CopyTable" ;;; (SCX CPU1 TBL activate table command)
+21-225-12:41:56.472 00     CMH-I:CMD             Command SFDU received:<1804C00000290559484B2E436F70795461626C6500000000000000000000000000000000000000000000000000000000> from gs582cfslab4:SPR
+21-225-12:41:56.476 00     SPR-I:OPRO          ; Telemetry update will wait a maximum of 24 seconds
+21-225-12:41:56.477 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:42:00.105 00    TLMH-I:STS          58-012-14:09:40.005 INFO CPU=CPU1 APPNAME=CFE_TBL EVENT ID=37 HK Successfully Updated 'HK.CopyTable'
+21-225-12:42:00.481 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:42:00.484 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:42:10.490 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:42:10.490 00     SPR-I:OPRO         ;  Step 5.2: Send 19 input messages as per the copy table.
+21-225-12:42:10.490 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:42:10.491 00     SPR-I:OPRO         >> RawCmd = '0987C000000D0000000000000000000011111111'
+21-225-12:42:10.492 00     CMH-I:CMD             Command SFDU received:<0987C000000D0000000000000000000011111111> from gs582cfslab4:SPR
+21-225-12:42:10.504 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:11.505 00     SPR-I:OPRO         >> RawCmd = '0988C0000011000000000000000000002222222222222222'
+21-225-12:42:11.506 00     CMH-I:CMD             Command SFDU received:<0988C0000011000000000000000000002222222222222222> from gs582cfslab4:SPR
+21-225-12:42:11.518 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:12.522 00     SPR-I:OPRO         >> RawCmd = '0989C00000190000000000000000000033333333333333333333333333333333'
+21-225-12:42:12.525 00     CMH-I:CMD             Command SFDU received:<0989C00000190000000000000000000033333333333333333333333333333333> from gs582cfslab4:SPR
+21-225-12:42:12.539 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:13.544 00     SPR-I:OPRO         >> RawCmd = '098AC0000029000000000000000000004444444444444444444444444444444444444444444444444444444444444444'
+21-225-12:42:13.545 00     CMH-I:CMD             Command SFDU received:<098AC0000029000000000000000000004444444444444444444444444444444444444444444444444444444444444444> from gs582cfslab4:SPR
+21-225-12:42:13.556 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:14.562 00     SPR-I:OPRO         >> RawCmd = '098BC0000029000000000000000000005555555555555555555555555555555555555555555555555555555555555555'
+21-225-12:42:14.563 00     CMH-I:CMD             Command SFDU received:<098BC0000029000000000000000000005555555555555555555555555555555555555555555555555555555555555555> from gs582cfslab4:SPR
+21-225-12:42:14.574 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:15.578 00     SPR-I:OPRO         >> RawCmd = '098CC00000190000000000000000000066666666666666666666666666666666'
+21-225-12:42:15.581 00     CMH-I:CMD             Command SFDU received:<098CC00000190000000000000000000066666666666666666666666666666666> from gs582cfslab4:SPR
+21-225-12:42:15.592 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:16.594 00     SPR-I:OPRO         >> RawCmd = '098DC0000011000000000000000000007777777777777777'
+21-225-12:42:16.598 00     CMH-I:CMD             Command SFDU received:<098DC0000011000000000000000000007777777777777777> from gs582cfslab4:SPR
+21-225-12:42:16.612 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:17.613 00     SPR-I:OPRO         >> RawCmd = '098EC000000D0000000000000000000088888888'
+21-225-12:42:17.617 00     CMH-I:CMD             Command SFDU received:<098EC000000D0000000000000000000088888888> from gs582cfslab4:SPR
+21-225-12:42:17.630 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:18.630 00     SPR-I:OPRO         >> RawCmd = '098FC000000D0000000000000000000099999999'
+21-225-12:42:18.631 00     CMH-I:CMD             Command SFDU received:<098FC000000D0000000000000000000099999999> from gs582cfslab4:SPR
+21-225-12:42:18.642 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:19.644 00     SPR-I:OPRO         >> RawCmd = '0990C000001100000000000000000000aaaaaaaaaaaaaaaa'
+21-225-12:42:19.645 00     CMH-I:CMD             Command SFDU received:<0990C000001100000000000000000000AAAAAAAAAAAAAAAA> from gs582cfslab4:SPR
+21-225-12:42:19.656 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:20.657 00     SPR-I:OPRO         >> RawCmd = '0991C000001100000000000000000000bbbbbbbbbbbbbbbb'
+21-225-12:42:20.658 00     CMH-I:CMD             Command SFDU received:<0991C000001100000000000000000000BBBBBBBBBBBBBBBB> from gs582cfslab4:SPR
+21-225-12:42:20.670 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:21.671 00     SPR-I:OPRO         >> RawCmd = '0992C000000D00000000000000000000cccccccc'
+21-225-12:42:21.673 00     CMH-I:CMD             Command SFDU received:<0992C000000D00000000000000000000CCCCCCCC> from gs582cfslab4:SPR
+21-225-12:42:21.685 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:22.686 00     SPR-I:OPRO         >> RawCmd = '0993C000000D00000000000000000000dddddddd'
+21-225-12:42:22.687 00     CMH-I:CMD             Command SFDU received:<0993C000000D00000000000000000000DDDDDDDD> from gs582cfslab4:SPR
+21-225-12:42:22.698 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:23.701 00     SPR-I:OPRO         >> RawCmd = '0994C000001100000000000000000000eeeeeeeeeeeeeeee'
+21-225-12:42:23.705 00     CMH-I:CMD             Command SFDU received:<0994C000001100000000000000000000EEEEEEEEEEEEEEEE> from gs582cfslab4:SPR
+21-225-12:42:23.717 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:24.723 00     SPR-I:OPRO         >> RawCmd = '0996C0000029000000000000000000001616161616161616161616161616161616161616161616161616161616161616'
+21-225-12:42:24.725 00     CMH-I:CMD             Command SFDU received:<0996C0000029000000000000000000001616161616161616161616161616161616161616161616161616161616161616> from gs582cfslab4:SPR
+21-225-12:42:24.736 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:25.742 00     SPR-I:OPRO         >> RawCmd = '0997C0000029000000000000000000001717171717171717171717171717171717171717171717171717171717171717'
+21-225-12:42:25.746 00     CMH-I:CMD             Command SFDU received:<0997C0000029000000000000000000001717171717171717171717171717171717171717171717171717171717171717> from gs582cfslab4:SPR
+21-225-12:42:25.760 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:26.764 00     SPR-I:OPRO         >> RawCmd = '0998C00000190000000000000000000018181818181818181818181818181818'
+21-225-12:42:26.767 00     CMH-I:CMD             Command SFDU received:<0998C00000190000000000000000000018181818181818181818181818181818> from gs582cfslab4:SPR
+21-225-12:42:26.780 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:27.782 00     SPR-I:OPRO         >> RawCmd = '0999C0000011000000000000000000001919191919191919'
+21-225-12:42:27.783 00     CMH-I:CMD             Command SFDU received:<0999C0000011000000000000000000001919191919191919> from gs582cfslab4:SPR
+21-225-12:42:27.794 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:28.795 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:42:28.795 00     SPR-I:OPRO         ;  Don't send InputPacket20 so there will be missing data in Output2
+21-225-12:42:28.795 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:42:28.798 00     SPR-I:OPRO         >> RawCmd = '09A2C000001900000000000000000000ffffffffffffffffffffffffffffffff'
+21-225-12:42:28.801 00     CMH-I:CMD             Command SFDU received:<09A2C000001900000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF> from gs582cfslab4:SPR
+21-225-12:42:28.802 00     SPR-I:STTE         Wait mode - waiting 1 seconds ...
+21-225-12:42:29.803 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:42:29.803 00     SPR-I:OPRO         ;  Step 5.3: Send Output Message 1 command and check data
+21-225-12:42:29.803 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:42:29.816 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:42:29.820 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:42:29.841 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:42:34.851 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:42:34.852 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:42:34.852 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:42:34.853 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089C00000000'
+21-225-12:42:34.856 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089C00000000> from gs582cfslab4:SPR
+21-225-12:42:34.870 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:42:44.903 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:42:44.904 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:42:49.907 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:42:49.908 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:42:49.908 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:42:49.908 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:42:49.908 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:42:49.908 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:42:49.908 00     SPR-I:OPRO         ;  Step 5.4: Send Output Message 2 command and check data
+21-225-12:42:49.908 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:42:49.913 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:42:49.914 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:42:49.918 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:42:54.927 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:42:54.928 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:42:54.928 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:42:54.929 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089D00000000'
+21-225-12:42:54.935 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089D00000000> from gs582cfslab4:SPR
+21-225-12:42:54.937 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:42:55.600 00    TLMH-I:STS          58-012-14:10:35.500 DEBUG CPU=CPU1 APPNAME=HK EVENT ID=12 Combined Packet 0x0000089D missing data from Input Pkt 0x0000099A
+21-225-12:43:04.990 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:43:04.992 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:43:09.996 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:43:09.998 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:43:15.002 00     SPR-I:OPRO         <*> Passed (2001.3) - Missing Data Counter Updated as expected
+21-225-12:43:15.005 00     SPR-I:OPRO         <*> Passed (2001.3) - Event message 12 received
+21-225-12:43:15.009 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:43:15.009 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:43:15.009 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:43:15.009 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:43:15.010 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:43:15.010 00     SPR-I:OPRO         ;  Step 5.5: Send Output Message 4 command and check data
+21-225-12:43:15.010 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:43:15.039 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/scx_cpu1_hk_sendoutmsg.i
+21-225-12:43:15.041 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG started
+21-225-12:43:15.049 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:43:20.061 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:43:20.062 00     SPR-I:OPRO         ; Setup event 1 with HK DEBUG 12
+21-225-12:43:20.062 00     SPR-I:OPRO         ;***********************************************************************
+21-225-12:43:20.063 00     SPR-I:OPRO         >> RawCmd = '189cc000000500000000089F00000000'
+21-225-12:43:20.067 00     CMH-I:CMD             Command SFDU received:<189CC000000500000000089F00000000> from gs582cfslab4:SPR
+21-225-12:43:20.081 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:43:30.152 00     SPR-I:OPRO         <*> Passed (2000;2001) - Output packet received, data as expected
+21-225-12:43:30.153 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:43:35.157 00     SPR-I:OPRO         <*> Passed (3000) - Combined Packet Sent Counter Updated as expected
+21-225-12:43:35.161 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:43:35.161 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_sendoutmsg                        
+21-225-12:43:35.161 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:43:35.161 00     SPR-I:STS          Procedure SCX_CPU1_HK_SENDOUTMSG completed
+21-225-12:43:35.162 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:43:35.162 00     SPR-I:OPRO         ;  Step 6.0:  Perform a Power-on Reset to clean-up from this test.
+21-225-12:43:35.162 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:43:35.163 00     CMH-I:CMD              Command is /SCX_CPU1_ES_POWERONRESET  ;;; (SCX CPU1 ES Power-On Reset command code)
+21-225-12:43:35.164 00     CMH-I:CMD             Command SFDU received:<1806C000000302220002> from gs582cfslab4:SPR
+21-225-12:43:35.177 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:43:45.185 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/clear_spacecraft_status.i
+21-225-12:43:45.186 00     SPR-I:STS          Procedure CLEAR_SPACECRAFT_STATUS started
+21-225-12:43:45.202 00     SPR-I:STS          Procedure CLEAR_SPACECRAFT_STATUS completed
+21-225-12:43:45.273 00     SPR-I:STTE         Wait mode - waiting 60 seconds ...
+21-225-12:44:45.332 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:44:51.296 00     CMH-I:STS          Connected to FEDS:FEDS for commanding (internal ID 0). 
+21-225-12:44:55.341 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:44:55.343 00     CMH-I:CMD              SFDU is /DDIR  DATA="open udp_read C%03X 1235 packet_only" ;;; ( )
+21-225-12:44:55.360 00     CMH-I:CMD              SFDU is /DDIR  DATA="open udp_write CPKT cpu3 1234 ascii_pkt" ;;; ( )
+21-225-12:44:55.412 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/send_that_to_command.i
+21-225-12:44:55.413 00     SPR-I:STS          Procedure SEND_THAT_TO_COMMAND started
+21-225-12:44:55.417 00     SPR-I:OPRO         Sending: /SCX_CPU1_TO_OUTPUT_ENA gs582cfslab4
+21-225-12:44:55.420 00     CMH-I:CMD              Command is /SCX_CPU1_TO_OUTPUT_ENA   GS582CFSLAB4 ;;; (SCX CPU1 Enables TO output)
+21-225-12:44:55.420 00     CMH-I:CMD             Command SFDU received:<1880C0000011069A3139322E3136382E312E313031000000> from gs582cfslab4:SPR
+21-225-12:44:55.462 00     SPR-I:STS          Procedure SEND_THAT_TO_COMMAND completed
+21-225-12:44:55.462 00     SPR-I:STTE         Wait mode - WAIT UNTIL ...
+21-225-12:44:56.400 00    TLMH-I:STS          58-012-14:03:48.950 INFO CPU=CPU1 APPNAME=TO_LAB_APP EVENT ID=3 TO telemetry output enabled for IP 192.168.1.101
+21-225-12:44:59.466 00     SPR-I:STTE         WAIT UNTIL completed
+21-225-12:44:59.466 00     SPR-I:STS          Loading file /s/opr/accounts/cfs_test/prc/fill_in_spacecraft_status.i
+21-225-12:44:59.467 00     SPR-I:STS          Procedure FILL_IN_SPACECRAFT_STATUS started
+21-225-12:44:59.470 00     SPR-I:STS          Procedure FILL_IN_SPACECRAFT_STATUS completed
+21-225-12:44:59.470 00     SPR-I:STTE         Wait mode - waiting 5 seconds ...
+21-225-12:45:04.474 00     SPR-I:OPRO         **** Requirements Status Reporting
+21-225-12:45:04.474 00     SPR-I:OPRO         --------------------------
+21-225-12:45:04.474 00     SPR-I:OPRO            Requirement(s) Report
+21-225-12:45:04.474 00     SPR-I:OPRO         --------------------------
+21-225-12:45:04.475 00     SPR-I:OPRO         FSW Requirement: HK_2000                          P/F: P
+21-225-12:45:04.477 00     SPR-I:OPRO         FSW Requirement: HK_2001                          P/F: P
+21-225-12:45:04.478 00     SPR-I:OPRO         FSW Requirement: HK_2001.1                        P/F: N
+21-225-12:45:04.479 00     SPR-I:OPRO         FSW Requirement: HK_2001.2                        P/F: P
+21-225-12:45:04.479 00     SPR-I:OPRO         FSW Requirement: HK_2001.3                        P/F: P
+21-225-12:45:04.480 00     SPR-I:OPRO         FSW Requirement: HK_2001.5                        P/F: P
+21-225-12:45:04.480 00     SPR-I:OPRO         FSW Requirement: HK_2001.6                        P/F: N
+21-225-12:45:04.480 00     SPR-I:OPRO         FSW Requirement: HK_2001.7                        P/F: N
+21-225-12:45:04.480 00     SPR-I:OPRO         FSW Requirement: HK_3000                          P/F: P
+21-225-12:45:04.481 00     SPR-I:OPRO         FSW Requirement: HK_4000                          P/F: P
+21-225-12:45:04.481 00     SPR-I:STS          Variable "UT_REQUIREMENT" deleted
+21-225-12:45:04.481 00     SPR-I:STS          Variable "UT_REQ_ARRAY_SIZE" deleted
+21-225-12:45:04.481 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:45:04.481 00     SPR-I:OPRO         ;  End procedure SCX_CPU1_hk_missingdata                        
+21-225-12:45:04.481 00     SPR-I:OPRO         ;*********************************************************************
+21-225-12:45:04.481 00     SPR-I:STS          Procedure SCX_CPU1_HK_MISSINGDATA completed
+21-225-12:45:04.482 00     SPR-I:OPRO         *** Telemetry Info ***
+21-225-12:45:04.482 00     SPR-I:OPRO         
+21-225-12:45:04.482 00     SPR-I:OPRO         Pkt Loss Count: N/A
+21-225-12:45:04.482 00     SPR-I:OPRO         
+21-225-12:45:04.482 00     SPR-I:OPRO         ******************
+21-225-12:45:04.482 00     SPR-I:OPRO         
+21-225-12:45:04.482 00     SPR-I:OPRO         Elapsed time:  617.113 seconds
+21-225-12:45:04.482 00     SPR-I:OPRO         Elapsed time:  10.2852 minutes
+21-225-12:45:04.482 00     SPR-I:STTE         Wait mode - waiting 10 seconds ...
+21-225-12:45:14.491 00     SPR-I:OPRO         Creating filtered log at /s/opr/accounts/cfs_test/test_logs/HK2.5.0/scx_cpu1_hk_missingdata-2021-225-12h34m47s.logf
+21-225-12:45:14.491 00     SPR-I:OPRO         Creating filtered output log at /s/opr/accounts/cfs_test/test_logs/HK2.5.0/scx_cpu1_hk_missingdata-2021-225-12h34m47s.logp
+21-225-12:45:14.491 00     SPR-I:OPRO         Creating filtered output log (without SFDUs) at /s/opr/accounts/cfs_test/test_logs/HK2.5.0/scx_cpu1_hk_missingdata-2021-225-12h34m47s.logs
+21-225-12:45:14.491 00     SPR-I:OPRO         Creating filtered event log at /s/opr/accounts/cfs_test/test_logs/HK2.5.0/scx_cpu1_hk_missingdata-2021-225-12h34m47s.loge
+21-225-12:45:14.492 00     SPR-I:OPRO         Creating filtered requirements log at /s/opr/accounts/cfs_test/test_logs/HK2.5.0/scx_cpu1_hk_missingdata-2021-225-12h34m47s.logr
+21-225-12:45:14.607 00     SPR-I:OPRI     --> newlog scx_cpu1_hk_missingdata-2021-225-12h34m47s.log
