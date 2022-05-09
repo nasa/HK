@@ -1,6 +1,6 @@
 /************************************************************************
  * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.0”
+ * System (cFS) Housekeeping (HK) Application version 2.5.1”
  *
  * Copyright (c) 2021 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
@@ -30,9 +30,9 @@
  * \{
  */
 
-#define HK_MAJOR_VERSION 2  /**< \brief Major version number */
-#define HK_MINOR_VERSION 5  /**< \brief Minor version number */
-#define HK_REVISION      99 /**< \brief Revision number */
+#define HK_MAJOR_VERSION 2 /**< \brief Major version number */
+#define HK_MINOR_VERSION 5 /**< \brief Minor version number */
+#define HK_REVISION      1 /**< \brief Revision number */
 
 /**\}*/
 
