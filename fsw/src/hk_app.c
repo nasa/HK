@@ -1,30 +1,27 @@
 /************************************************************************
-** File: hk_app.c
-**
-** NASA Docket No. GSC-18449-1, and identified as "Core Flight System (cFS)
-** Housekeeping (HK) Application version 2.4.3”
-**
-** Copyright © 2019 United States Government as represented by the Administrator of
-** the National Aeronautics and Space Administration.  All Rights Reserved.
-**
-** Licensed under the Apache License, Version 2.0 (the "License");
-** you may not use this file except in compliance with the License.
-** You may obtain a copy of the License at
-** http://www.apache.org/licenses/LICENSE-2.0
-** Unless required by applicable law or agreed to in writing, software
-** distributed under the License is distributed on an "AS IS" BASIS,
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-** See the License for the specific language governing permissions and
-** limitations under the License.
-**
-** Purpose:
-**  The CFS Housekeeping (HK) Application file containing the application
-**  initialization routines, the main routine and the command interface.
-**
-** Notes:
-**
-**
-*************************************************************************/
+ * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
+ * System (cFS) Housekeeping (HK) Application version 2.5.0”
+ *
+ * Copyright (c) 2021 United States Government as represented by the
+ * Administrator of the National Aeronautics and Space Administration.
+ * All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ************************************************************************/
+
+/**
+ * @file
+ *  The CFS Housekeeping (HK) Application file containing the application
+ *  initialization routines, the main routine and the command interface.
+ */
 
 /************************************************************************
 ** Includes
@@ -138,7 +135,7 @@ int32 HK_AppInit(void)
     HK_AppData.RunStatus = CFE_ES_RunStatus_APP_RUN;
 
     /* Initialize housekeeping packet  */
-    CFE_MSG_Init(&HK_AppData.HkPacket.TlmHeader.Msg, HK_HK_TLM_MID, sizeof(HK_HkPacket_t));
+    CFE_MSG_Init(&HK_AppData.HkPacket.TlmHeader.Msg, CFE_SB_ValueToMsgId(HK_HK_TLM_MID), sizeof(HK_HkPacket_t));
 
     /* Register for event services...        */
     Status = CFE_EVS_Register(NULL, 0, CFE_EVS_EventFilter_BINARY);
@@ -158,7 +155,7 @@ int32 HK_AppInit(void)
     }
 
     /* Subscribe to 'Send Combined HK Pkt' Command */
-    Status = CFE_SB_Subscribe(HK_SEND_COMBINED_PKT_MID, HK_AppData.CmdPipe);
+    Status = CFE_SB_Subscribe(CFE_SB_ValueToMsgId(HK_SEND_COMBINED_PKT_MID), HK_AppData.CmdPipe);
     if (Status != CFE_SUCCESS)
     {
         CFE_EVS_SendEvent(HK_SUB_CMB_ERR_EID, CFE_EVS_EventType_ERROR,
@@ -168,7 +165,7 @@ int32 HK_AppInit(void)
     }
 
     /* Subscribe to Housekeeping Request */
-    Status = CFE_SB_Subscribe(HK_SEND_HK_MID, HK_AppData.CmdPipe);
+    Status = CFE_SB_Subscribe(CFE_SB_ValueToMsgId(HK_SEND_HK_MID), HK_AppData.CmdPipe);
     if (Status != CFE_SUCCESS)
     {
         CFE_EVS_SendEvent(HK_SUB_REQ_ERR_EID, CFE_EVS_EventType_ERROR,
@@ -178,7 +175,7 @@ int32 HK_AppInit(void)
     }
 
     /* Subscribe to HK ground commands */
-    Status = CFE_SB_Subscribe(HK_CMD_MID, HK_AppData.CmdPipe);
+    Status = CFE_SB_Subscribe(CFE_SB_ValueToMsgId(HK_CMD_MID), HK_AppData.CmdPipe);
     if (Status != CFE_SUCCESS)
     {
         CFE_EVS_SendEvent(HK_SUB_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
@@ -321,14 +318,15 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
 
     CFE_MSG_GetSize(&BufPtr->Msg, &ActualLength);
 
-    switch (MessageID)
+    switch (CFE_SB_MsgIdToValue(MessageID))
     {
 
         case HK_SEND_COMBINED_PKT_MID:
             if (ActualLength != sizeof(HK_Send_Out_Msg_t))
             {
                 CFE_EVS_SendEvent(HK_MSG_LEN_ERR_EID, CFE_EVS_EventType_ERROR,
-                                  "Msg with Bad length Rcvd: ID = 0x%08X, Exp Len = %u, Len = %d", MessageID,
+                                  "Msg with Bad length Rcvd: ID = 0x%08lX, Exp Len = %u, Len = %d",
+                                  (unsigned long)CFE_SB_MsgIdToValue(MessageID),
                                   (unsigned int)sizeof(HK_Send_Out_Msg_t), (int)ActualLength);
             }
             else
@@ -342,8 +340,9 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
             if (ActualLength != sizeof(HK_NoArgCmd_t))
             {
                 CFE_EVS_SendEvent(HK_MSG_LEN_ERR_EID, CFE_EVS_EventType_ERROR,
-                                  "Msg with Bad length Rcvd: ID = 0x%08X, Exp Len = %u, Len = %d", MessageID,
-                                  (unsigned int)sizeof(HK_NoArgCmd_t), (int)ActualLength);
+                                  "Msg with Bad length Rcvd: ID = 0x%08lX, Exp Len = %u, Len = %d",
+                                  (unsigned long)CFE_SB_MsgIdToValue(MessageID), (unsigned int)sizeof(HK_NoArgCmd_t),
+                                  (int)ActualLength);
             }
             else
             {
@@ -374,9 +373,8 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
 
                 default:
                     CFE_EVS_SendEvent(HK_CC_ERR_EID, CFE_EVS_EventType_ERROR,
-                                      "Cmd Msg with Invalid command code Rcvd -- ID = 0x%08X, CC = %d", MessageID,
-                                      CommandCode);
-
+                                      "Cmd Msg with Invalid command code Rcvd -- ID = 0x%08lX, CC = %d",
+                                      (unsigned long)CFE_SB_MsgIdToValue(MessageID), CommandCode);
                     HK_AppData.ErrCounter++;
                     break;
             }
@@ -398,7 +396,7 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_SendCombinedHKCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-    CFE_SB_MsgId_t WhichCombinedPacket = 0xFFFF; /* Init to invalid value */
+    CFE_SB_MsgId_t WhichCombinedPacket = CFE_SB_INVALID_MSG_ID;
 
     HK_Send_Out_Msg_t *CmdPtr = (HK_Send_Out_Msg_t *)BufPtr;
     WhichCombinedPacket       = CmdPtr->OutMsgToSend;

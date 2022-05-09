@@ -1,31 +1,28 @@
 /************************************************************************
-** File: hk_tbldefs.h
-**
-** NASA Docket No. GSC-18449-1, and identified as "Core Flight System (cFS)
-** Housekeeping (HK) Application version 2.4.3”
-**
-** Copyright © 2019 United States Government as represented by the Administrator of
-** the National Aeronautics and Space Administration.  All Rights Reserved.
-**
-** Licensed under the Apache License, Version 2.0 (the "License");
-** you may not use this file except in compliance with the License.
-** You may obtain a copy of the License at
-** http://www.apache.org/licenses/LICENSE-2.0
-** Unless required by applicable law or agreed to in writing, software
-** distributed under the License is distributed on an "AS IS" BASIS,
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-** See the License for the specific language governing permissions and
-** limitations under the License.
-**
-** Purpose:
-**  The CFS Housekeeping (HK) Application header file
-**
-** Notes:
-**
-**
-*************************************************************************/
-#ifndef _hk_tbldefs_h_
-#define _hk_tbldefs_h_
+ * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
+ * System (cFS) Housekeeping (HK) Application version 2.5.0”
+ *
+ * Copyright (c) 2021 United States Government as represented by the
+ * Administrator of the National Aeronautics and Space Administration.
+ * All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ************************************************************************/
+
+/**
+ * @file
+ *  The CFS Housekeeping (HK) Application header file
+ */
+#ifndef HK_TBLDEFS_H
+#define HK_TBLDEFS_H
 
 /************************************************************************
 ** Includes
@@ -57,8 +54,4 @@ typedef struct
     uint8            DataPresent;        /**< \brief Indicates if the data associated with the entry is present */
 } hk_runtime_tbl_entry_t;
 
-#endif /* _hk_tbldefs_h_ */
-
-/************************/
-/*  End of File Comment */
-/************************/
+#endif
