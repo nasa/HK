@@ -30,9 +30,9 @@
  * \{
  */
 
-#define HK_MAJOR_VERSION 2 /**< \brief Major version number */
-#define HK_MINOR_VERSION 5 /**< \brief Minor version number */
-#define HK_REVISION      1 /**< \brief Revision number */
+#define HK_MAJOR_VERSION 2  /**< \brief Major version number */
+#define HK_MINOR_VERSION 5  /**< \brief Minor version number */
+#define HK_REVISION      99 /**< \brief Revision number */
 
 /**\}*/
 
