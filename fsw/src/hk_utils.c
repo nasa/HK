@@ -44,9 +44,9 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
 {
-    hk_copy_table_entry_t * StartOfCopyTable = NULL;
+    hk_copy_table_entry_t * StartOfCopyTable = HK_AppData.CopyTablePtr;
     hk_copy_table_entry_t * CpyTblEntry      = NULL;
-    hk_runtime_tbl_entry_t *StartOfRtTable   = NULL;
+    hk_runtime_tbl_entry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
     hk_runtime_tbl_entry_t *RtTblEntry       = NULL;
     uint16                  Loop             = 0;
     CFE_SB_MsgId_t          MessageID        = CFE_SB_INVALID_MSG_ID;
@@ -55,9 +55,6 @@ void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
     size_t                  MessageLength    = 0;
     int32                   MessageErrors    = 0;
     int32                   LastByteAccessed = 0;
-
-    StartOfCopyTable = (hk_copy_table_entry_t *)HK_AppData.CopyTablePtr;
-    StartOfRtTable   = (hk_runtime_tbl_entry_t *)HK_AppData.RuntimeTablePtr;
 
     CFE_MSG_GetMsgId(&BufPtr->Msg, &MessageID);
 
@@ -368,14 +365,12 @@ int32 HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_e
 void HK_SendCombinedHkPacket(CFE_SB_MsgId_t WhichMidToSend)
 {
     bool                    PacketFound      = false;
-    hk_runtime_tbl_entry_t *StartOfRtTable   = NULL;
+    hk_runtime_tbl_entry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
     hk_runtime_tbl_entry_t *RtTblEntry       = NULL;
     int32                   Loop             = 0;
     CFE_SB_MsgId_t          ThisEntrysOutMid = CFE_SB_INVALID_MSG_ID;
     CFE_SB_MsgId_t          InputMidMissing  = CFE_SB_INVALID_MSG_ID;
     CFE_SB_Buffer_t *       OutBuffer        = NULL;
-
-    StartOfRtTable = (hk_runtime_tbl_entry_t *)HK_AppData.RuntimeTablePtr;
 
     /* Look thru each item in this Table, but only send this packet once, at most */
     for (Loop = 0; ((Loop < HK_COPY_TABLE_ENTRIES) && (PacketFound == false)); Loop++)
@@ -434,7 +429,7 @@ void HK_SendCombinedHkPacket(CFE_SB_MsgId_t WhichMidToSend)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 int32 HK_CheckStatusOfTables(void)
 {
-    int32 HKStatus = HK_ERROR; /* Assume failure */
+    int32 HKStatus;
 
     HKStatus = HK_CheckStatusOfCopyTable();
 
@@ -454,7 +449,7 @@ int32 HK_CheckStatusOfTables(void)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 int32 HK_CheckStatusOfCopyTable(void)
 {
-    int32 Status   = CFE_SUCCESS;
+    int32 Status;
     int32 HKStatus = HK_ERROR; /* Assume failure */
 
     /* Determine if the copy table has a validation or update that needs to be performed */
@@ -479,7 +474,7 @@ int32 HK_CheckStatusOfCopyTable(void)
            If the runtime table pointer is bad, the process new copy table call later on will
            flag the error.  So we can ignore the return status at this point.
         */
-        Status = HK_TearDownOldCopyTable(HK_AppData.CopyTablePtr, HK_AppData.RuntimeTablePtr);
+        HK_TearDownOldCopyTable(HK_AppData.CopyTablePtr, HK_AppData.RuntimeTablePtr);
 
         /* release address must be called for update to take. */
         Status = CFE_TBL_ReleaseAddress(HK_AppData.CopyTableHandle);
@@ -553,7 +548,7 @@ int32 HK_CheckStatusOfCopyTable(void)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 int32 HK_CheckStatusOfDumpTable(void)
 {
-    int32 Status   = CFE_SUCCESS;
+    int32 Status;
     int32 HKStatus = HK_ERROR; /* Assume failure */
 
     /* Determine if the runtime table has a dump pending */
@@ -598,13 +593,10 @@ int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *Missi
 {
     int32                   Loop             = 0;
     int32                   Status           = HK_NO_MISSING_DATA;
-    hk_copy_table_entry_t * StartOfCopyTable = NULL;
+    hk_copy_table_entry_t * StartOfCopyTable = HK_AppData.CopyTablePtr;
     hk_copy_table_entry_t * CpyTblEntry      = NULL;
-    hk_runtime_tbl_entry_t *StartOfRtTable   = NULL;
+    hk_runtime_tbl_entry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
     hk_runtime_tbl_entry_t *RtTblEntry       = NULL;
-
-    StartOfCopyTable = (hk_copy_table_entry_t *)HK_AppData.CopyTablePtr;
-    StartOfRtTable   = (hk_runtime_tbl_entry_t *)HK_AppData.RuntimeTablePtr;
 
     /* Loop thru each item in the runtime table until end is reached or
      * data-not-present detected */
@@ -637,13 +629,10 @@ int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *Missi
 void HK_SetFlagsToNotPresent(CFE_SB_MsgId_t OutPkt)
 {
     int32                   Loop             = 0;
-    hk_copy_table_entry_t * StartOfCopyTable = NULL;
+    hk_copy_table_entry_t * StartOfCopyTable = HK_AppData.CopyTablePtr;
     hk_copy_table_entry_t * CpyTblEntry      = NULL;
-    hk_runtime_tbl_entry_t *StartOfRtTable   = NULL;
+    hk_runtime_tbl_entry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
     hk_runtime_tbl_entry_t *RtTblEntry       = NULL;
-
-    StartOfCopyTable = (hk_copy_table_entry_t *)HK_AppData.CopyTablePtr;
-    StartOfRtTable   = (hk_runtime_tbl_entry_t *)HK_AppData.RuntimeTablePtr;
 
     /* Look thru each item in the runtime table until end is reached */
     for (Loop = 0; Loop < HK_COPY_TABLE_ENTRIES; Loop++)
