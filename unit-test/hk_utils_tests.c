@@ -403,15 +403,17 @@ void Test_HK_ProcessNewCopyTable_PoolBufFail(void)
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
+    hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
+    hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+
+    memset(RtTblPtr, 0, sizeof(RtTblPtr));
+
+    HK_Test_InitGoodCopyTable(CopyTblPtr);
+
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK Processing New Table: ES_GetPoolBuf for size %%d returned 0x%%04X");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_ES_GetPoolBuf), (CFE_SUCCESS - 1));
-
-    hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
-    hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
-
-    HK_Test_InitGoodCopyTable(CopyTblPtr);
 
     /* Act */
     ReturnValue = HK_ProcessNewCopyTable(CopyTblPtr, RtTblPtr);
@@ -529,6 +531,8 @@ void Test_HK_ProcessNewCopyTable_Success(void)
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
+    memset(RtTblPtr, 0, sizeof(RtTblPtr));
+
     HK_Test_InitGoodCopyTable(CopyTblPtr);
 
     /* Act */
@@ -575,6 +579,8 @@ void Test_HK_ProcessNewCopyTable_Success2(void)
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+
+    memset(RtTblPtr, 0, sizeof(RtTblPtr));
 
     HK_Test_InitGoodCopyTable(CopyTblPtr);
 
@@ -623,6 +629,8 @@ void Test_HK_ProcessNewCopyTable_PacketSizeZero(void)
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
+    memset(RtTblPtr, 0, sizeof(RtTblPtr));
+
     HK_Test_InitGoodCopyTable(CopyTblPtr);
 
     CopyTblPtr[1].OutputOffset = 0;
@@ -669,6 +677,8 @@ void Test_HK_ProcessNewCopyTable_AllPacketsSizeZero(void)
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+
+    memset(RtTblPtr, 0, sizeof(RtTblPtr));
 
     HK_Test_InitGoodCopyTable(CopyTblPtr);
 
@@ -720,6 +730,8 @@ void Test_HK_ProcessNewCopyTable_EmptyTable(void)
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+
+    memset(RtTblPtr, 0, sizeof(RtTblPtr));
 
     HK_Test_InitEmptyCopyTable(CopyTblPtr);
 
