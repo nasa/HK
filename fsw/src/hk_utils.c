@@ -77,7 +77,7 @@ void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
                 DestPtr = ((uint8 *)RtTblEntry->OutputPktAddr) + CpyTblEntry->OutputOffset;
                 SrcPtr  = ((uint8 *)BufPtr) + CpyTblEntry->InputOffset;
 
-                CFE_PSP_MemCpy(DestPtr, SrcPtr, CpyTblEntry->NumBytes);
+                memcpy(DestPtr, SrcPtr, CpyTblEntry->NumBytes);
 
                 /* Set the data present field to indicate the data is there */
                 RtTblEntry->DataPresent = HK_DATA_PRESENT;
