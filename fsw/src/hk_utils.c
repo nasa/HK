@@ -153,7 +153,6 @@ int32 HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_en
         OuterRtEntry->InputMidSubscribed = HK_INPUTMID_NOT_SUBSCRIBED;
         OuterRtEntry->DataPresent        = HK_DATA_NOT_PRESENT;
     }
-    printf("after first loop\n");
 
     /* Loop thru the table looking for all of the SB packets that need to be built */
     for (Loop1 = 0; Loop1 < HK_COPY_TABLE_ENTRIES; Loop1++)
@@ -494,7 +493,6 @@ int32 HK_CheckStatusOfCopyTable(void)
                 /* Status should only be CFE_TBL_INFO_UPDATED because we updated it above */
                 if (Status == CFE_TBL_INFO_UPDATED)
                 {
-                    printf("Calling HK_ProcessNewCopyTable\n");
                     Status = HK_ProcessNewCopyTable(HK_AppData.CopyTablePtr, HK_AppData.RuntimeTablePtr);
 
                     if (Status == CFE_SUCCESS)
