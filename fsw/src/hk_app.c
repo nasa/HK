@@ -396,13 +396,9 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_SendCombinedHKCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-    CFE_SB_MsgId_t WhichCombinedPacket = CFE_SB_INVALID_MSG_ID;
-
     HK_Send_Out_Msg_t *CmdPtr = (HK_Send_Out_Msg_t *)BufPtr;
-    WhichCombinedPacket       = CmdPtr->OutMsgToSend;
 
-    HK_SendCombinedHkPacket(WhichCombinedPacket);
-
+    HK_SendCombinedHkPacket(CmdPtr->OutMsgToSend);
 } /* end of HK_SendCombinedHKCmd() */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

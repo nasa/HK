@@ -1191,20 +1191,19 @@ void Test_HK_AppPipe_ProcessIncoming(void)
  */
 void Test_HK_SendCombinedHKCmd(void)
 {
-    /* Arrange */
-    CFE_SB_Buffer_t DummyBuf;
-    uint8           call_count_HK_SendCombinedHkPacket;
+    union
+    {
+        CFE_SB_Buffer_t   sbbuf;
+        HK_Send_Out_Msg_t msg;
+    } msgbuf;
 
-    /* TODO set return value of CFE_SB_GetUserData and check input to
-       HK_SendCombinedHkPacket */
+    memset(&msgbuf, 0, sizeof(msgbuf));
 
     /* Act */
-    HK_SendCombinedHKCmd(&DummyBuf);
-
-    call_count_HK_SendCombinedHkPacket = UT_GetStubCount(UT_KEY(HK_SendCombinedHkPacket));
+    HK_SendCombinedHKCmd(&msgbuf.sbbuf);
 
     /* Assert */
-    UtAssert_INT32_EQ(call_count_HK_SendCombinedHkPacket, 1);
+    UtAssert_STUB_COUNT(HK_SendCombinedHkPacket, 1);
 }
 
 /**********************************************************************/
