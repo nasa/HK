@@ -33,8 +33,8 @@
 /*************************************************************************
  * Macro definitions
  *************************************************************************/
-#define HK_INPUTMID_SUBSCRIBED     (0xFF) /**< \brief Input MsgId has been subscribed to */
-#define HK_INPUTMID_NOT_SUBSCRIBED (0)    /**< \brief Input MsgId is not subscribed */
+#define HK_INPUTMID_NOT_SUBSCRIBED (0) /**< \brief Input MsgId is not subscribed */
+#define HK_INPUTMID_SUBSCRIBED     (1) /**< \brief Input MsgId has been subscribed to */
 
 #define HK_DATA_NOT_PRESENT (0) /**< \brief Input MsgId present in output msg */
 #define HK_DATA_PRESENT     (1) /**< \brief Input MsgId not present */
