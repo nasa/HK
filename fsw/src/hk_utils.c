@@ -138,7 +138,7 @@ int32 HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_en
         CFE_EVS_SendEvent(HK_NULL_POINTER_NEWCPY_ERR_EID, CFE_EVS_EventType_ERROR,
                           "Null pointer detected in new copy tbl processing: CpyTbl = %p, RtTbl = %p",
                           (void *)CpyTblPtr, (void *)RtTblPtr);
-        return (HK_NULL_POINTER_DETECTED);
+        return HK_NULL_POINTER_DETECTED;
     }
 
     StartOfCopyTable = CpyTblPtr;
@@ -255,7 +255,7 @@ int32 HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_en
         }
     }
 
-    return (CFE_SUCCESS);
+    return CFE_SUCCESS;
 
 } /* end HK_ProcessNewCopyTable */
 
@@ -285,7 +285,7 @@ int32 HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_e
         CFE_EVS_SendEvent(HK_NULL_POINTER_TEARCPY_ERR_EID, CFE_EVS_EventType_ERROR,
                           "Null pointer detected in copy tbl tear down: CpyTbl = %p, RtTbl = %p", (void *)CpyTblPtr,
                           (void *)RtTblPtr);
-        return (HK_NULL_POINTER_DETECTED);
+        return HK_NULL_POINTER_DETECTED;
     }
 
     StartOfCopyTable = CpyTblPtr;
@@ -352,7 +352,7 @@ int32 HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_e
         }
     }
 
-    return (CFE_SUCCESS);
+    return CFE_SUCCESS;
 
 } /* end HK_TearDownOldCopyTable */
 
@@ -438,7 +438,7 @@ int32 HK_CheckStatusOfTables(void)
         HKStatus = HK_CheckStatusOfDumpTable();
     }
 
-    return (HKStatus);
+    return HKStatus;
 } /* end HK_CheckStatusOfTables */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -536,7 +536,7 @@ int32 HK_CheckStatusOfCopyTable(void)
         HKStatus = HK_SUCCESS;
     }
 
-    return (HKStatus);
+    return HKStatus;
 } /* end HK_CheckStatusOfCopyTable */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -579,7 +579,7 @@ int32 HK_CheckStatusOfDumpTable(void)
         HKStatus = HK_SUCCESS;
     }
 
-    return (HKStatus);
+    return HKStatus;
 } /* end HK_CheckStatusOfDumpTable */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
