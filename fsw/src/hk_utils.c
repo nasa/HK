@@ -97,8 +97,7 @@ void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
                           "HK table definition exceeds packet length. MID:0x%08lX, Length:%d, Count:%d",
                           (unsigned long)CFE_SB_MsgIdToValue(MessageID), (int)MessageLength, (int)MessageErrors);
     }
-
-} /* end HK_ProcessIncomingHkData */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -108,8 +107,7 @@ void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
 int32 HK_ValidateHkCopyTable(void *TblPtr)
 {
     return HK_SUCCESS;
-
-} /* end HK_ValidateHkCopyTable */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -256,8 +254,7 @@ int32 HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_en
     }
 
     return CFE_SUCCESS;
-
-} /* end HK_ProcessNewCopyTable */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -353,8 +350,7 @@ int32 HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_e
     }
 
     return CFE_SUCCESS;
-
-} /* end HK_TearDownOldCopyTable */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -379,7 +375,6 @@ void HK_SendCombinedHkPacket(CFE_SB_MsgId_t WhichMidToSend)
         /* Empty table entries are defined by NULL's in this field */
         if (RtTblEntry->OutputPktAddr != NULL)
         {
-
             OutBuffer = (CFE_SB_Buffer_t *)RtTblEntry->OutputPktAddr;
             CFE_MSG_GetMsgId(&OutBuffer->Msg, &ThisEntrysOutMid);
 
@@ -418,8 +413,7 @@ void HK_SendCombinedHkPacket(CFE_SB_MsgId_t WhichMidToSend)
                           "Combined HK Packet 0x%08lX is not found in current HK Copy Table",
                           (unsigned long)CFE_SB_MsgIdToValue(WhichMidToSend));
     }
-
-} /* end HK_SendCombinedHkPacket */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -439,7 +433,7 @@ int32 HK_CheckStatusOfTables(void)
     }
 
     return HKStatus;
-} /* end HK_CheckStatusOfTables */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                     */
@@ -537,7 +531,7 @@ int32 HK_CheckStatusOfCopyTable(void)
     }
 
     return HKStatus;
-} /* end HK_CheckStatusOfCopyTable */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                     */
@@ -580,7 +574,7 @@ int32 HK_CheckStatusOfDumpTable(void)
     }
 
     return HKStatus;
-} /* end HK_CheckStatusOfDumpTable */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -616,8 +610,7 @@ int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *Missi
     } while ((Loop < HK_COPY_TABLE_ENTRIES) && (Status == HK_NO_MISSING_DATA));
 
     return Status;
-
-} /* end HK_CheckForMissingData */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -644,8 +637,7 @@ void HK_SetFlagsToNotPresent(CFE_SB_MsgId_t OutPkt)
             RtTblEntry->DataPresent = HK_DATA_NOT_PRESENT;
         }
     }
-
-} /* end HK_SetFlagsToNotPresent */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -663,7 +655,6 @@ int32 HK_VerifyCmdLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength)
 
     if (ExpectedLength != ActualLength)
     {
-
         CFE_MSG_GetMsgId(&BufPtr->Msg, &MessageID);
         CFE_MSG_GetFcnCode(&BufPtr->Msg, &CommandCode);
 
@@ -676,8 +667,7 @@ int32 HK_VerifyCmdLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength)
     }
 
     return Status;
-
-} /* End of HK_VerifyCmdLength () */
+}
 
 /************************/
 /*  End of File Comment */

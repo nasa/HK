@@ -100,7 +100,6 @@ void Test_HK_AppMain_InitFail(void)
  */
 void Test_HK_AppMain_SingleRunLoop(void)
 {
-
     /* Arrange */
     CFE_SB_MsgId_t forced_MsgID                    = HK_UT_MID_100;
     size_t         forced_MsgSize                  = 0; /* invalid message size */
@@ -1425,7 +1424,6 @@ void Test_HK_ResetHkData(void)
  */
 void UtTest_Setup(void)
 {
-
     /* Test functions for HK_AppMain */
     UtTest_Add(Test_HK_AppMain_Success, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppMain_Success");
     UtTest_Add(Test_HK_AppMain_InitFail, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppMain_InitFail");

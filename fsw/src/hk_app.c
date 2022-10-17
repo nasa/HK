@@ -120,8 +120,7 @@ void HK_AppMain(void)
     ** Exit the Application.
     */
     CFE_ES_ExitApp(HK_AppData.RunStatus);
-
-} /* End of HK_AppMain() */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -212,8 +211,7 @@ int32 HK_AppInit(void)
     }
 
     return Status;
-
-} /* End of HK_AppInit() */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -300,7 +298,6 @@ int32 HK_TableInit(void)
     }
 
     return CFE_SUCCESS;
-
 } /* HK_TableInit */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -320,7 +317,6 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
 
     switch (CFE_SB_MsgIdToValue(MessageID))
     {
-
         case HK_SEND_COMBINED_PKT_MID:
             if (ActualLength != sizeof(HK_Send_Out_Msg_t))
             {
@@ -386,8 +382,7 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
             HK_ProcessIncomingHkData(BufPtr);
             break;
     }
-
-} /* End of HK_AppPipe() */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -399,7 +394,7 @@ void HK_SendCombinedHKCmd(const CFE_SB_Buffer_t *BufPtr)
     HK_Send_Out_Msg_t *CmdPtr = (HK_Send_Out_Msg_t *)BufPtr;
 
     HK_SendCombinedHkPacket(CmdPtr->OutMsgToSend);
-} /* end of HK_SendCombinedHKCmd() */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -408,7 +403,6 @@ void HK_SendCombinedHKCmd(const CFE_SB_Buffer_t *BufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_HousekeepingCmd(const CFE_MSG_CommandHeader_t *Msg)
 {
-
     /* copy data into housekeeping packet */
     HK_AppData.HkPacket.CmdCounter          = HK_AppData.CmdCounter;
     HK_AppData.HkPacket.ErrCounter          = HK_AppData.ErrCounter;
@@ -419,8 +413,7 @@ void HK_HousekeepingCmd(const CFE_MSG_CommandHeader_t *Msg)
     /* Send housekeeping telemetry packet...        */
     CFE_SB_TimeStampMsg(&HK_AppData.HkPacket.TlmHeader.Msg);
     CFE_SB_TransmitMsg(&HK_AppData.HkPacket.TlmHeader.Msg, true);
-
-} /* End of HK_HousekeepingCmd() */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -429,24 +422,20 @@ void HK_HousekeepingCmd(const CFE_MSG_CommandHeader_t *Msg)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-
     size_t ExpectedLength = sizeof(HK_NoArgCmd_t);
 
     if (HK_VerifyCmdLength(BufPtr, ExpectedLength) == HK_BAD_MSG_LENGTH_RC)
     {
-
         HK_AppData.ErrCounter++;
     }
     else
     {
-
         CFE_EVS_SendEvent(HK_NOOP_CMD_EID, CFE_EVS_EventType_INFORMATION, "HK No-op command, Version %d.%d.%d.%d",
                           HK_MAJOR_VERSION, HK_MINOR_VERSION, HK_REVISION, HK_MISSION_REV);
 
         HK_AppData.CmdCounter++;
     }
-
-} /* End of HK_NoopCmd() */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -459,17 +448,14 @@ void HK_ResetCtrsCmd(const CFE_SB_Buffer_t *BufPtr)
 
     if (HK_VerifyCmdLength(BufPtr, ExpectedLength) == HK_BAD_MSG_LENGTH_RC)
     {
-
         HK_AppData.ErrCounter++;
     }
     else
     {
-
         HK_ResetHkData();
         CFE_EVS_SendEvent(HK_RESET_CNTRS_CMD_EID, CFE_EVS_EventType_DEBUG, "HK Reset Counters command received");
     }
-
-} /* End of HK_ResetCtrsCmd() */
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
@@ -482,8 +468,7 @@ void HK_ResetHkData(void)
     HK_AppData.ErrCounter          = 0;
     HK_AppData.CombinedPacketsSent = 0;
     HK_AppData.MissingDataCtr      = 0;
-
-} /* End of HK_ResetHkData () */
+}
 
 /************************/
 /*  End of File Comment */

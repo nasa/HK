@@ -80,7 +80,6 @@ typedef struct
     hk_runtime_tbl_entry_t *RuntimeTablePtr; /**< \brief Ptr to run-time table entry */
 
     uint8 MemPoolBuffer[HK_NUM_BYTES_IN_MEM_POOL]; /**< \brief HK mempool buffer */
-
 } HK_AppData_t;
 
 /*************************************************************************
