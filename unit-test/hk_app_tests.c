@@ -288,7 +288,7 @@ void Test_HK_AppInit_Success(void)
 
     UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 1);
 
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_INIT_EID);
+    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_INIT_INF_EID);
 
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_INFORMATION);
 
@@ -978,7 +978,7 @@ void Test_HK_NoopCmd(void)
     /* Assert */
     UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 1);
 
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_NOOP_CMD_EID);
+    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_NOOP_INF_EID);
 
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_INFORMATION);
 
@@ -1019,7 +1019,7 @@ void Test_HK_ResetCountersCmd(void)
     /* Assert */
     UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 1);
 
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_RESET_CNTRS_CMD_EID);
+    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_RESET_INF_EID);
 
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_DEBUG);
 

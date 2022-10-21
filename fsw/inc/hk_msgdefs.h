@@ -45,7 +45,7 @@
  *       Successful execution of this command may be verified with the
  *       following telemetry:
  *       - #HK_HkTlm_Payload_t.CmdCounter will increment
- *       - The #HK_NOOP_CMD_EID informational event message will be generated
+ *       - The #HK_NOOP_INF_EID informational event message will be generated
  *
  *  \par Error Conditions
  *       There are no error conditions for this command. If the Housekeeping
@@ -71,7 +71,7 @@
  *       Successful execution of this command may be verified with the
  *       following telemetry:
  *       - #HK_HkTlm_Payload_t.CmdCounter will be reset
- *       - The #HK_RESET_CNTRS_CMD_EID informational event message will
+ *       - The #HK_RESET_INF_EID informational event message will
  *         be generated
  *
  *  \par Error Conditions

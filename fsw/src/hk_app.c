@@ -204,7 +204,7 @@ int32 HK_AppInit(void)
     }
 
     /* Application initialization event */
-    Status = CFE_EVS_SendEvent(HK_INIT_EID, CFE_EVS_EventType_INFORMATION, "HK Initialized.  Version %d.%d.%d.%d",
+    Status = CFE_EVS_SendEvent(HK_INIT_INF_EID, CFE_EVS_EventType_INFORMATION, "HK Initialized.  Version %d.%d.%d.%d",
                                HK_MAJOR_VERSION, HK_MINOR_VERSION, HK_REVISION, HK_MISSION_REV);
 
     if (Status != CFE_SUCCESS)
@@ -346,7 +346,7 @@ void HK_SendHkCmd(const CFE_SB_Buffer_t *BufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-    CFE_EVS_SendEvent(HK_NOOP_CMD_EID, CFE_EVS_EventType_INFORMATION, "HK No-op command, Version %d.%d.%d.%d",
+    CFE_EVS_SendEvent(HK_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "HK No-op command, Version %d.%d.%d.%d",
                       HK_MAJOR_VERSION, HK_MINOR_VERSION, HK_REVISION, HK_MISSION_REV);
 
     HK_AppData.CmdCounter++;
@@ -360,7 +360,7 @@ void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr)
 void HK_ResetCountersCmd(const CFE_SB_Buffer_t *BufPtr)
 {
     HK_ResetHkData();
-    CFE_EVS_SendEvent(HK_RESET_CNTRS_CMD_EID, CFE_EVS_EventType_DEBUG, "HK Reset Counters command received");
+    CFE_EVS_SendEvent(HK_RESET_INF_EID, CFE_EVS_EventType_DEBUG, "HK Reset Counters command received");
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
