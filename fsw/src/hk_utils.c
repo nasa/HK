@@ -54,7 +54,7 @@ void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
     uint8 *                 SrcPtr           = NULL;
     size_t                  MessageLength    = 0;
     int32                   MessageErrors    = 0;
-    int32                   LastByteAccessed = 0;
+    int32                   LastByteAccessed;
 
     CFE_MSG_GetMsgId(&BufPtr->Msg, &MessageID);
 
@@ -116,19 +116,19 @@ int32 HK_ValidateHkCopyTable(void *TblPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 int32 HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
 {
-    hk_copy_table_entry_t * StartOfCopyTable          = NULL;
-    hk_copy_table_entry_t * OuterCpyEntry             = NULL;
-    hk_copy_table_entry_t * InnerDefEntry             = NULL;
-    hk_runtime_tbl_entry_t *StartOfRtTable            = NULL;
-    hk_runtime_tbl_entry_t *OuterRtEntry              = NULL;
-    hk_runtime_tbl_entry_t *InnerRtEntry              = NULL;
-    int32                   Loop1                     = 0;
-    int32                   Loop2                     = 0;
-    CFE_SB_MsgId_t          MidOfThisPacket           = CFE_SB_INVALID_MSG_ID;
-    int32                   SizeOfThisPacket          = 0;
-    int32                   FurthestByteFromThisEntry = 0;
-    CFE_SB_Buffer_t *       NewPacketAddr             = 0;
-    int32                   Result                    = CFE_SUCCESS;
+    hk_copy_table_entry_t * StartOfCopyTable = NULL;
+    hk_copy_table_entry_t * OuterCpyEntry    = NULL;
+    hk_copy_table_entry_t * InnerDefEntry    = NULL;
+    hk_runtime_tbl_entry_t *StartOfRtTable   = NULL;
+    hk_runtime_tbl_entry_t *OuterRtEntry     = NULL;
+    hk_runtime_tbl_entry_t *InnerRtEntry     = NULL;
+    int32                   Loop1            = 0;
+    int32                   Loop2;
+    CFE_SB_MsgId_t          MidOfThisPacket;
+    int32                   SizeOfThisPacket;
+    int32                   FurthestByteFromThisEntry;
+    CFE_SB_Buffer_t *       NewPacketAddr;
+    int32                   Result;
 
     /* Ensure that the input arguments are valid */
     if (((void *)CpyTblPtr == NULL) || ((void *)RtTblPtr == NULL))
@@ -270,11 +270,11 @@ int32 HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_e
     hk_runtime_tbl_entry_t *OuterRtEntry     = NULL;
     hk_runtime_tbl_entry_t *InnerRtEntry     = NULL;
     int32                   Loop1            = 0;
-    int32                   Loop2            = 0;
-    CFE_SB_MsgId_t          MidOfThisPacket  = CFE_SB_INVALID_MSG_ID;
-    void *                  OutputPktAddr    = NULL;
-    void *                  SavedPktAddr     = NULL;
-    int32                   Result           = CFE_SUCCESS;
+    int32                   Loop2;
+    CFE_SB_MsgId_t          MidOfThisPacket;
+    void *                  OutputPktAddr = NULL;
+    void *                  SavedPktAddr  = NULL;
+    int32                   Result;
 
     /* Ensure that the input arguments are valid */
     if (((void *)CpyTblPtr == NULL) || ((void *)RtTblPtr == NULL))
