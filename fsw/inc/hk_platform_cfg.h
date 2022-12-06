@@ -56,17 +56,6 @@
 #define HK_DISCARD_INCOMPLETE_COMBO 0
 
 /**
- *  \brief Maximum Number of HK Copy Table Entries
- *
- *  \par Description:
- *       Dictates the number of elements in the hk copy table.
- *
- *  \par Limits
- *       The maximum size of this paramater is 8192
- */
-#define HK_COPY_TABLE_ENTRIES 128
-
-/**
  *  \brief Number of bytes in the HK Memory Pool
  *
  *  \par Description:
