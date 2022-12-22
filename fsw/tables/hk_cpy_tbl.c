@@ -27,8 +27,7 @@
 *************************************************************************/
 #include "cfe.h"
 #include "cfe_msgids.h"
-#include "hk_utils.h"
-#include "hk_app.h"
+#include "hk_extern_typedefs.h"
 #include "hk_msgids.h"
 #include "hk_tbldefs.h"
 #include "cfe_tbl_filedef.h"
