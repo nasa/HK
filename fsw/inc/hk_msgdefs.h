@@ -24,7 +24,7 @@
 #ifndef HK_MSGDEFS_H
 #define HK_MSGDEFS_H
 
-#include "cfe.h"
+#include <cfe.h>
 
 /**
  * \defgroup cfshkcmdcodes CFS Housekeeping Command Codes
