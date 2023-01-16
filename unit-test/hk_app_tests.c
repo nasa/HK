@@ -1231,6 +1231,8 @@ void Test_HK_HousekeepingCmd(void)
     HK_AppData.CombinedPacketsSent = 4;
     HK_AppData.MemPoolHandle       = HK_UT_MEMPOOL_1;
 
+    memset(&DummyMsg, 0, sizeof(DummyMsg));
+
     /* Act */
     HK_HousekeepingCmd(&DummyMsg);
 
