@@ -134,7 +134,8 @@ int32 HK_AppInit(void)
     HK_AppData.RunStatus = CFE_ES_RunStatus_APP_RUN;
 
     /* Initialize housekeeping packet  */
-    CFE_MSG_Init(&HK_AppData.HkPacket.TlmHeader.Msg, CFE_SB_ValueToMsgId(HK_HK_TLM_MID), sizeof(HK_HkPacket_t));
+    CFE_MSG_Init(CFE_MSG_PTR(HK_AppData.HkPacket.TelemetryHeader), CFE_SB_ValueToMsgId(HK_HK_TLM_MID),
+                 sizeof(HK_HkPacket_t));
 
     /* Register for event services...        */
     Status = CFE_EVS_Register(NULL, 0, CFE_EVS_EventFilter_BINARY);
@@ -318,12 +319,12 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
     switch (CFE_SB_MsgIdToValue(MessageID))
     {
         case HK_SEND_COMBINED_PKT_MID:
-            if (ActualLength != sizeof(HK_Send_Out_Msg_t))
+            if (ActualLength != sizeof(HK_SendCombinedPktCmd_t))
             {
                 CFE_EVS_SendEvent(HK_MSG_LEN_ERR_EID, CFE_EVS_EventType_ERROR,
                                   "Msg with Bad length Rcvd: ID = 0x%08lX, Exp Len = %u, Len = %d",
                                   (unsigned long)CFE_SB_MsgIdToValue(MessageID),
-                                  (unsigned int)sizeof(HK_Send_Out_Msg_t), (int)ActualLength);
+                                  (unsigned int)sizeof(HK_SendCombinedPktCmd_t), (int)ActualLength);
             }
             else
             {
@@ -333,11 +334,11 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
 
         /* Request for HK's Housekeeping data...      */
         case HK_SEND_HK_MID:
-            if (ActualLength != sizeof(HK_NoArgCmd_t))
+            if (ActualLength != sizeof(HK_SendHkCmd_t))
             {
                 CFE_EVS_SendEvent(HK_MSG_LEN_ERR_EID, CFE_EVS_EventType_ERROR,
                                   "Msg with Bad length Rcvd: ID = 0x%08lX, Exp Len = %u, Len = %d",
-                                  (unsigned long)CFE_SB_MsgIdToValue(MessageID), (unsigned int)sizeof(HK_NoArgCmd_t),
+                                  (unsigned long)CFE_SB_MsgIdToValue(MessageID), (unsigned int)sizeof(HK_SendHkCmd_t),
                                   (int)ActualLength);
             }
             else
@@ -391,7 +392,9 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_SendCombinedHKCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-    HK_Send_Out_Msg_t *CmdPtr = (HK_Send_Out_Msg_t *)BufPtr;
+    const HK_SendCombinedPktCmd_t *CmdPtr;
+
+    CmdPtr = (const HK_SendCombinedPktCmd_t *)BufPtr;
 
     HK_SendCombinedHkPacket(CmdPtr->OutMsgToSend);
 }
@@ -411,8 +414,8 @@ void HK_HousekeepingCmd(const CFE_MSG_CommandHeader_t *Msg)
     HK_AppData.HkPacket.MemPoolHandle       = HK_AppData.MemPoolHandle;
 
     /* Send housekeeping telemetry packet...        */
-    CFE_SB_TimeStampMsg(&HK_AppData.HkPacket.TlmHeader.Msg);
-    CFE_SB_TransmitMsg(&HK_AppData.HkPacket.TlmHeader.Msg, true);
+    CFE_SB_TimeStampMsg(CFE_MSG_PTR(HK_AppData.HkPacket.TelemetryHeader));
+    CFE_SB_TransmitMsg(CFE_MSG_PTR(HK_AppData.HkPacket.TelemetryHeader), true);
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -422,7 +425,7 @@ void HK_HousekeepingCmd(const CFE_MSG_CommandHeader_t *Msg)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-    size_t ExpectedLength = sizeof(HK_NoArgCmd_t);
+    size_t ExpectedLength = sizeof(HK_NoopCmd_t);
 
     if (HK_VerifyCmdLength(BufPtr, ExpectedLength) == HK_BAD_MSG_LENGTH_RC)
     {
@@ -444,7 +447,7 @@ void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_ResetCtrsCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-    size_t ExpectedLength = sizeof(HK_NoArgCmd_t);
+    size_t ExpectedLength = sizeof(HK_ResetCountersCmd_t);
 
     if (HK_VerifyCmdLength(BufPtr, ExpectedLength) == HK_BAD_MSG_LENGTH_RC)
     {

@@ -883,7 +883,7 @@ void Test_HK_AppPipe_CombinedPktLengthOk(void)
 {
     /* Arrange */
     uint8           call_count_HK_SendCombinedHKPacket;
-    size_t          forced_Size  = sizeof(HK_Send_Out_Msg_t);
+    size_t          forced_Size  = sizeof(HK_SendCombinedPktCmd_t);
     CFE_SB_MsgId_t  forced_MsgID = CFE_SB_ValueToMsgId(HK_SEND_COMBINED_PKT_MID);
     CFE_SB_Buffer_t DummyBuf;
 
@@ -911,7 +911,7 @@ void Test_HK_AppPipe_CombinedPktBadLength(void)
 {
     /* Arrange */
     uint8           call_count_HK_SendCombinedHKPacket;
-    size_t          forced_Size  = sizeof(HK_Send_Out_Msg_t) + 1;
+    size_t          forced_Size  = sizeof(HK_SendCombinedPktCmd_t) + 1;
     CFE_SB_MsgId_t  forced_MsgID = CFE_SB_ValueToMsgId(HK_SEND_COMBINED_PKT_MID);
     CFE_SB_Buffer_t DummyBuf;
 
@@ -953,7 +953,7 @@ void Test_HK_AppPipe_HkReqLengthOk(void)
 {
     /* Arrange */
     uint8           call_count_CFE_SB_TransmitMsg;
-    size_t          forced_Size  = sizeof(HK_NoArgCmd_t);
+    size_t          forced_Size  = sizeof(HK_SendHkCmd_t);
     CFE_SB_MsgId_t  forced_MsgID = CFE_SB_ValueToMsgId(HK_SEND_HK_MID);
     CFE_SB_Buffer_t DummyBuf;
 
@@ -988,7 +988,7 @@ void Test_HK_AppPipe_HkReqBadLength(void)
 {
     /* Arrange */
     uint8           call_count_CFE_SB_TransmitMsg;
-    size_t          forced_Size  = sizeof(HK_NoArgCmd_t) + 1;
+    size_t          forced_Size  = sizeof(HK_SendHkCmd_t) + 1;
     CFE_SB_MsgId_t  forced_MsgID = CFE_SB_ValueToMsgId(HK_SEND_HK_MID);
     CFE_SB_Buffer_t DummyBuf;
 
@@ -1032,7 +1032,7 @@ void Test_HK_AppPipe_HkReqBadLength(void)
 void Test_HK_AppPipe_HkReqBadTblStatus(void)
 {
     /* Arrange */
-    size_t          forced_Size  = sizeof(HK_NoArgCmd_t);
+    size_t          forced_Size  = sizeof(HK_SendHkCmd_t);
     CFE_SB_MsgId_t  forced_MsgID = CFE_SB_ValueToMsgId(HK_SEND_HK_MID);
     CFE_SB_Buffer_t DummyBuf;
 
@@ -1061,7 +1061,7 @@ void Test_HK_AppPipe_HkReqBadTblStatus(void)
 void Test_HK_AppPipe_NoopCmd(void)
 {
     /* Arrange */
-    size_t            forced_Size    = sizeof(HK_NoArgCmd_t);
+    size_t            forced_Size    = sizeof(HK_NoopCmd_t);
     CFE_SB_MsgId_t    forced_MsgID   = CFE_SB_ValueToMsgId(HK_CMD_MID);
     CFE_MSG_FcnCode_t forced_CmdCode = HK_NOOP_CC;
     CFE_SB_Buffer_t   DummyBuf;
@@ -1089,7 +1089,7 @@ void Test_HK_AppPipe_NoopCmd(void)
 void Test_HK_AppPipe_ResetCmd(void)
 {
     /* Arrange */
-    size_t            forced_Size    = sizeof(HK_NoArgCmd_t);
+    size_t            forced_Size    = sizeof(HK_ResetCountersCmd_t);
     CFE_SB_MsgId_t    forced_MsgID   = CFE_SB_ValueToMsgId(HK_CMD_MID);
     CFE_MSG_FcnCode_t forced_CmdCode = HK_RESET_CC;
     CFE_SB_Buffer_t   DummyBuf;
@@ -1117,7 +1117,7 @@ void Test_HK_AppPipe_ResetCmd(void)
 void Test_HK_AppPipe_UnknownCmd(void)
 {
     /* Arrange */
-    size_t            forced_Size    = sizeof(HK_NoArgCmd_t);
+    size_t            forced_Size    = sizeof(HK_NoopCmd_t);
     CFE_SB_MsgId_t    forced_MsgID   = CFE_SB_ValueToMsgId(HK_CMD_MID);
     CFE_MSG_FcnCode_t forced_CmdCode = 47; /* unknown CC */
     CFE_SB_Buffer_t   DummyBuf;
@@ -1160,7 +1160,7 @@ void Test_HK_AppPipe_ProcessIncoming(void)
 {
     /* Arrange */
     uint8           call_count_HK_ProcessIncomingHkData;
-    size_t          forced_Size  = sizeof(HK_NoArgCmd_t);
+    size_t          forced_Size  = sizeof(HK_NoopCmd_t);
     CFE_SB_MsgId_t  forced_MsgID = HK_UT_MID_100; /* Non HK MID */
     CFE_SB_Buffer_t DummyBuf;
 
@@ -1192,8 +1192,8 @@ void Test_HK_SendCombinedHKCmd(void)
 {
     union
     {
-        CFE_SB_Buffer_t   sbbuf;
-        HK_Send_Out_Msg_t msg;
+        CFE_SB_Buffer_t         sbbuf;
+        HK_SendCombinedPktCmd_t msg;
     } msgbuf;
 
     memset(&msgbuf, 0, sizeof(msgbuf));
