@@ -39,20 +39,38 @@
  */
 typedef struct
 {
-    CFE_MSG_CommandHeader_t Hdr; /**< \brief Command Message Header */
+    CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command Message Header */
 
     CFE_SB_MsgId_t OutMsgToSend; /**< \brief MsgId of combined tlm pkt to send  */
-} HK_Send_Out_Msg_t;
+} HK_SendCombinedPktCmd_t;
+
+/**
+ *  \brief Send HK command packet structure
+ */
+typedef struct
+{
+    CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command Message Header */
+} HK_SendHkCmd_t;
 
 /**
  *  \brief No-Operation command packet structure
  *
- *  For command details see #HK_NOOP_CC, #HK_RESET_CC
+ *  For command details see #HK_NOOP_CC
  */
 typedef struct
 {
-    CFE_MSG_CommandHeader_t CmdHeader; /**< \brief Command Message Header */
-} HK_NoArgCmd_t;
+    CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command Message Header */
+} HK_NoopCmd_t;
+
+/**
+ *  \brief No-Operation command packet structure
+ *
+ *  For command details see #HK_RESET_CC
+ */
+typedef struct
+{
+    CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command Message Header */
+} HK_ResetCountersCmd_t;
 
 /**\}*/
 
@@ -66,7 +84,7 @@ typedef struct
  */
 typedef struct
 {
-    CFE_MSG_TelemetryHeader_t TlmHeader; /**< \brief Telemetry Message Header */
+    CFE_MSG_TelemetryHeader_t TelemetryHeader; /**< \brief Telemetry Message Header */
 
     uint8              CmdCounter;          /**< \brief Count of valid commands received */
     uint8              ErrCounter;          /**< \brief Count of invalid commands received */
