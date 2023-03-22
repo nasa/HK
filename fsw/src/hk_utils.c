@@ -639,36 +639,6 @@ void HK_SetFlagsToNotPresent(CFE_SB_MsgId_t OutPkt)
     }
 }
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/*                                                                 */
-/* Verify Command Length                                           */
-/*                                                                 */
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-int32 HK_VerifyCmdLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength)
-{
-    int32             Status       = HK_SUCCESS;
-    CFE_SB_MsgId_t    MessageID    = CFE_SB_INVALID_MSG_ID; /* Init to invalid value */
-    CFE_MSG_FcnCode_t CommandCode  = 0;
-    size_t            ActualLength = 0;
-
-    CFE_MSG_GetSize(&BufPtr->Msg, &ActualLength);
-
-    if (ExpectedLength != ActualLength)
-    {
-        CFE_MSG_GetMsgId(&BufPtr->Msg, &MessageID);
-        CFE_MSG_GetFcnCode(&BufPtr->Msg, &CommandCode);
-
-        CFE_EVS_SendEvent(HK_CMD_LEN_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Cmd Msg with Bad length Rcvd: ID = 0x%08lX, CC = %d, Exp Len = %d, Len = %d",
-                          (unsigned long)CFE_SB_MsgIdToValue(MessageID), CommandCode, (int)ExpectedLength,
-                          (int)ActualLength);
-
-        Status = HK_BAD_MSG_LENGTH_RC;
-    }
-
-    return Status;
-}
-
 /************************/
 /*  End of File Comment */
 /************************/

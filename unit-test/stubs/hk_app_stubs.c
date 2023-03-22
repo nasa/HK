@@ -53,30 +53,6 @@ void HK_AppMain(void)
 
 /*
  * ----------------------------------------------------
- * Generated stub function for HK_AppPipe()
- * ----------------------------------------------------
- */
-void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
-{
-    UT_GenStub_AddParam(HK_AppPipe, const CFE_SB_Buffer_t *, BufPtr);
-
-    UT_GenStub_Execute(HK_AppPipe, Basic, NULL);
-}
-
-/*
- * ----------------------------------------------------
- * Generated stub function for HK_HousekeepingCmd()
- * ----------------------------------------------------
- */
-void HK_HousekeepingCmd(const CFE_MSG_CommandHeader_t *Msg)
-{
-    UT_GenStub_AddParam(HK_HousekeepingCmd, const CFE_MSG_CommandHeader_t *, Msg);
-
-    UT_GenStub_Execute(HK_HousekeepingCmd, Basic, NULL);
-}
-
-/*
- * ----------------------------------------------------
  * Generated stub function for HK_NoopCmd()
  * ----------------------------------------------------
  */
@@ -89,14 +65,14 @@ void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr)
 
 /*
  * ----------------------------------------------------
- * Generated stub function for HK_ResetCtrsCmd()
+ * Generated stub function for HK_ResetCountersCmd()
  * ----------------------------------------------------
  */
-void HK_ResetCtrsCmd(const CFE_SB_Buffer_t *BufPtr)
+void HK_ResetCountersCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-    UT_GenStub_AddParam(HK_ResetCtrsCmd, const CFE_SB_Buffer_t *, BufPtr);
+    UT_GenStub_AddParam(HK_ResetCountersCmd, const CFE_SB_Buffer_t *, BufPtr);
 
-    UT_GenStub_Execute(HK_ResetCtrsCmd, Basic, NULL);
+    UT_GenStub_Execute(HK_ResetCountersCmd, Basic, NULL);
 }
 
 /*
@@ -112,14 +88,26 @@ void HK_ResetHkData(void)
 
 /*
  * ----------------------------------------------------
- * Generated stub function for HK_SendCombinedHKCmd()
+ * Generated stub function for HK_SendCombinedPktCmd()
  * ----------------------------------------------------
  */
-void HK_SendCombinedHKCmd(const CFE_SB_Buffer_t *BufPtr)
+void HK_SendCombinedPktCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-    UT_GenStub_AddParam(HK_SendCombinedHKCmd, const CFE_SB_Buffer_t *, BufPtr);
+    UT_GenStub_AddParam(HK_SendCombinedPktCmd, const CFE_SB_Buffer_t *, BufPtr);
 
-    UT_GenStub_Execute(HK_SendCombinedHKCmd, Basic, NULL);
+    UT_GenStub_Execute(HK_SendCombinedPktCmd, Basic, NULL);
+}
+
+/*
+ * ----------------------------------------------------
+ * Generated stub function for HK_SendHkCmd()
+ * ----------------------------------------------------
+ */
+void HK_SendHkCmd(const CFE_SB_Buffer_t *BufPtr)
+{
+    UT_GenStub_AddParam(HK_SendHkCmd, const CFE_SB_Buffer_t *, BufPtr);
+
+    UT_GenStub_Execute(HK_SendHkCmd, Basic, NULL);
 }
 
 /*

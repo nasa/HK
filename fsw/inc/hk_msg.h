@@ -73,7 +73,7 @@ typedef struct
 /**
  *  \brief No-Operation command packet structure
  *
- *  For command details see #HK_RESET_CC
+ *  For command details see #HK_RESET_COUNTERS_CC
  */
 typedef struct
 {

@@ -170,20 +170,3 @@ int32 HK_ValidateHkCopyTable(void *TblPtr)
 
     return UT_GenStub_GetReturnValue(HK_ValidateHkCopyTable, int32);
 }
-
-/*
- * ----------------------------------------------------
- * Generated stub function for HK_VerifyCmdLength()
- * ----------------------------------------------------
- */
-int32 HK_VerifyCmdLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength)
-{
-    UT_GenStub_SetupReturnBuffer(HK_VerifyCmdLength, int32);
-
-    UT_GenStub_AddParam(HK_VerifyCmdLength, const CFE_SB_Buffer_t *, BufPtr);
-    UT_GenStub_AddParam(HK_VerifyCmdLength, size_t, ExpectedLength);
-
-    UT_GenStub_Execute(HK_VerifyCmdLength, Basic, NULL);
-
-    return UT_GenStub_GetReturnValue(HK_VerifyCmdLength, int32);
-}

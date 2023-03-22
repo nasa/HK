@@ -86,7 +86,7 @@
  *       to be designed such that they react to changes in the counter
  *       values that are reset by this command.
  */
-#define HK_RESET_CC 1
+#define HK_RESET_COUNTERS_CC 1
 
 /**\}*/
 

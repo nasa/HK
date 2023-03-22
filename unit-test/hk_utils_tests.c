@@ -1908,89 +1908,6 @@ void Test_HK_SetFlagsToNotPresent(void)
     UtAssert_INT32_EQ(EntriesWithDataPresent, 1);
 }
 
-/**********************************************************************/
-/*                                                                    */
-/* Test functions for HK_VerifyCmdLength                              */
-/*                                                                    */
-/**********************************************************************/
-
-/*
- * Function under test: HK_VerifyCmdLength
- *
- * Case: Tests the case in which the provided message has the expected
- *       length.
- */
-void Test_HK_VerifyCmdLength_LengthOk(void)
-{
-    /* Arrange */
-    int32             ReturnValue    = 0;
-    size_t            forced_Size    = 10; /* forced size matches the ExpectedLength */
-    size_t            ExpectedLength = forced_Size;
-    CFE_SB_MsgId_t    forced_MsgID   = HK_UT_MID_100;
-    CFE_MSG_FcnCode_t forced_CmdCode = 1;
-    CFE_SB_Buffer_t   DummyBuffer;
-
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetFcnCode), &forced_CmdCode, sizeof(forced_CmdCode), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
-
-    /* Act */
-    ReturnValue = HK_VerifyCmdLength(&DummyBuffer, ExpectedLength);
-
-    call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-
-    /* Assert */
-    UtAssert_INT32_EQ(ReturnValue, HK_SUCCESS);
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 0);
-}
-
-/*
- * Function under test: HK_VerifyCmdLength
- *
- * Case: Tests the case in which the provided message does not have
- *       the expected length.
- */
-void Test_HK_VerifyCmdLength_LengthError(void)
-{
-    /* Arrange */
-    int32             ReturnValue    = 0;
-    size_t            forced_Size    = 10;
-    size_t            ExpectedLength = forced_Size + 1; /* force a mismatch */
-    CFE_SB_MsgId_t    forced_MsgID   = HK_UT_MID_100;
-    CFE_MSG_FcnCode_t forced_CmdCode = 1;
-    CFE_SB_Buffer_t   DummyBuffer;
-
-    /* event message setup */
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
-             "Cmd Msg with Bad length Rcvd: ID = 0x%%08lX, CC = %%d, Exp Len = %%d, Len = %%d");
-
-    /* MSG API setup */
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetFcnCode), &forced_CmdCode, sizeof(forced_CmdCode), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
-
-    /* Act */
-    ReturnValue = HK_VerifyCmdLength(&DummyBuffer, ExpectedLength);
-
-    call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-
-    /* Assert */
-    UtAssert_INT32_EQ(ReturnValue, HK_BAD_MSG_LENGTH_RC);
-
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 1);
-
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_CMD_LEN_ERR_EID);
-
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_ERROR);
-
-    strCmpResult = strncmp(ExpectedEventString, context_CFE_EVS_SendEvent[0].Spec, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH);
-
-    UtAssert_True(strCmpResult == 0, "Event string matched expected result, '%s'", context_CFE_EVS_SendEvent[0].Spec);
-}
-
 /****************************************************************************/
 
 /*
@@ -2108,9 +2025,4 @@ void UtTest_Setup(void)
 
     /* Test functions for HK_SetFlagsToNotPresent */
     UtTest_Add(Test_HK_SetFlagsToNotPresent, HK_Test_Setup, HK_Test_TearDown, "Test_HK_SetFlagsToNotPresent");
-
-    /* Test functions for HK_VerifyCmdLength */
-    UtTest_Add(Test_HK_VerifyCmdLength_LengthOk, HK_Test_Setup, HK_Test_TearDown, "Test_HK_VerifyCmdLength_LengthOk");
-    UtTest_Add(Test_HK_VerifyCmdLength_LengthError, HK_Test_Setup, HK_Test_TearDown,
-               "Test_HK_VerifyCmdLength_LengthError");
 }
