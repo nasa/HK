@@ -32,16 +32,24 @@
  */
 
 /**
- *  \brief Send Combined Output Message Command
+ *  \brief Send Combined Output Payload
  *
  *  This structure contains the format of the command used to inform HK to send
  *  the specified combined output message
  */
 typedef struct
 {
+    CFE_SB_MsgId_t OutMsgToSend; /**< \brief MsgId of combined tlm pkt to send  */
+} HK_SendCombinedPkt_Payload_t;
+
+/**
+ *  \brief Send Combined Output Message Command
+ */
+typedef struct
+{
     CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command Message Header */
 
-    CFE_SB_MsgId_t OutMsgToSend; /**< \brief MsgId of combined tlm pkt to send  */
+    HK_SendCombinedPkt_Payload_t Payload;
 } HK_SendCombinedPktCmd_t;
 
 /**
@@ -80,18 +88,26 @@ typedef struct
  */
 
 /**
- *  \brief HK Application housekeeping Packet
+ *  \brief HK Application housekeeping Payload
  */
 typedef struct
 {
-    CFE_MSG_TelemetryHeader_t TelemetryHeader; /**< \brief Telemetry Message Header */
-
     uint8              CmdCounter;          /**< \brief Count of valid commands received */
     uint8              ErrCounter;          /**< \brief Count of invalid commands received */
     uint16             Padding;             /**< \brief Padding to force 32 bit alignment */
     uint16             CombinedPacketsSent; /**< \brief Count of combined tlm pkts sent */
     uint16             MissingDataCtr;      /**< \brief Number of times missing data was detected */
     CFE_ES_MemHandle_t MemPoolHandle;       /**< \brief Memory pool handle used to get mempool diags */
+} HK_HkTlm_Payload_t;
+
+/**
+ *  \brief HK Application housekeeping Packet
+ */
+typedef struct
+{
+    CFE_MSG_TelemetryHeader_t TelemetryHeader; /**< \brief Telemetry Message Header */
+
+    HK_HkTlm_Payload_t Payload;
 } HK_HkPacket_t;
 
 /**\}*/

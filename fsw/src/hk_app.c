@@ -392,9 +392,9 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_SendCombinedHKCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-    const HK_SendCombinedPktCmd_t *CmdPtr;
+    const HK_SendCombinedPkt_Payload_t *CmdPtr;
 
-    CmdPtr = (const HK_SendCombinedPktCmd_t *)BufPtr;
+    CmdPtr = &((const HK_SendCombinedPktCmd_t *)BufPtr)->Payload;
 
     HK_SendCombinedHkPacket(CmdPtr->OutMsgToSend);
 }
@@ -406,12 +406,16 @@ void HK_SendCombinedHKCmd(const CFE_SB_Buffer_t *BufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_HousekeepingCmd(const CFE_MSG_CommandHeader_t *Msg)
 {
+    HK_HkTlm_Payload_t *PayloadPtr;
+
+    PayloadPtr = &HK_AppData.HkPacket.Payload;
+
     /* copy data into housekeeping packet */
-    HK_AppData.HkPacket.CmdCounter          = HK_AppData.CmdCounter;
-    HK_AppData.HkPacket.ErrCounter          = HK_AppData.ErrCounter;
-    HK_AppData.HkPacket.MissingDataCtr      = HK_AppData.MissingDataCtr;
-    HK_AppData.HkPacket.CombinedPacketsSent = HK_AppData.CombinedPacketsSent;
-    HK_AppData.HkPacket.MemPoolHandle       = HK_AppData.MemPoolHandle;
+    PayloadPtr->CmdCounter          = HK_AppData.CmdCounter;
+    PayloadPtr->ErrCounter          = HK_AppData.ErrCounter;
+    PayloadPtr->MissingDataCtr      = HK_AppData.MissingDataCtr;
+    PayloadPtr->CombinedPacketsSent = HK_AppData.CombinedPacketsSent;
+    PayloadPtr->MemPoolHandle       = HK_AppData.MemPoolHandle;
 
     /* Send housekeeping telemetry packet...        */
     CFE_SB_TimeStampMsg(CFE_MSG_PTR(HK_AppData.HkPacket.TelemetryHeader));

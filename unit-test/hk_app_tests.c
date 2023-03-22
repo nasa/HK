@@ -1223,6 +1223,7 @@ void Test_HK_HousekeepingCmd(void)
     CFE_MSG_CommandHeader_t DummyMsg;
     uint8                   call_count_CFE_SB_TimeStampMsg;
     uint8                   call_count_CFE_SB_TransmitMsg;
+    HK_HkTlm_Payload_t *    PayloadPtr;
 
     /* Setup app data values */
     HK_AppData.CmdCounter          = 1;
@@ -1240,12 +1241,13 @@ void Test_HK_HousekeepingCmd(void)
     call_count_CFE_SB_TransmitMsg  = UT_GetStubCount(UT_KEY(CFE_SB_TransmitMsg));
 
     /* Assert */
-    UtAssert_INT32_EQ(HK_AppData.CmdCounter, HK_AppData.HkPacket.CmdCounter);
-    UtAssert_INT32_EQ(HK_AppData.ErrCounter, HK_AppData.HkPacket.ErrCounter);
-    UtAssert_INT32_EQ(HK_AppData.MissingDataCtr, HK_AppData.HkPacket.MissingDataCtr);
-    UtAssert_INT32_EQ(HK_AppData.CombinedPacketsSent, HK_AppData.HkPacket.CombinedPacketsSent);
-    UtAssert_True(CFE_RESOURCEID_TEST_EQUAL(HK_AppData.MemPoolHandle, HK_AppData.HkPacket.MemPoolHandle),
-                  "CFE_RESOURCEID_TEST_EQUAL(HK_AppData.MemPoolHandle, HK_AppData.HkPacket.MemPoolHandle)");
+    PayloadPtr = &HK_AppData.HkPacket.Payload;
+    UtAssert_INT32_EQ(HK_AppData.CmdCounter, PayloadPtr->CmdCounter);
+    UtAssert_INT32_EQ(HK_AppData.ErrCounter, PayloadPtr->ErrCounter);
+    UtAssert_INT32_EQ(HK_AppData.MissingDataCtr, PayloadPtr->MissingDataCtr);
+    UtAssert_INT32_EQ(HK_AppData.CombinedPacketsSent, PayloadPtr->CombinedPacketsSent);
+    UtAssert_True(CFE_RESOURCEID_TEST_EQUAL(HK_AppData.MemPoolHandle, PayloadPtr->MemPoolHandle),
+                  "CFE_RESOURCEID_TEST_EQUAL(HK_AppData.MemPoolHandle, PayloadPtr->MemPoolHandle)");
 
     UtAssert_INT32_EQ(call_count_CFE_SB_TimeStampMsg, 1);
     UtAssert_INT32_EQ(call_count_CFE_SB_TransmitMsg, 1);
