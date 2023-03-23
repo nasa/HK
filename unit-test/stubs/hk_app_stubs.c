@@ -17,69 +17,121 @@
  * limitations under the License.
  ************************************************************************/
 
+/**
+ * @file
+ *
+ * Auto-Generated stub implementations for functions defined in hk_app header
+ */
+
 #include "hk_app.h"
-#include "hk_msg.h"
-#include "hk_events.h"
-#include "hk_version.h"
-#include "hk_msgids.h"
-#include "hk_utils.h"
+#include "utgenstub.h"
 
-#include <string.h>
-
-/* UT includes */
-#include "uttest.h"
-#include "utassert.h"
-#include "utstubs.h"
-
-HK_AppData_t HK_AppData;
-
-void HK_AppMain(void)
-{
-    UtPrintf("HK_AppMain Stub");
-    UT_DEFAULT_IMPL(HK_AppMain);
-}
-
+/*
+ * ----------------------------------------------------
+ * Generated stub function for HK_AppInit()
+ * ----------------------------------------------------
+ */
 int32 HK_AppInit(void)
 {
-    return UT_DEFAULT_IMPL(HK_AppInit);
+    UT_GenStub_SetupReturnBuffer(HK_AppInit, int32);
+
+    UT_GenStub_Execute(HK_AppInit, Basic, NULL);
+
+    return UT_GenStub_GetReturnValue(HK_AppInit, int32);
 }
 
-int32 HK_TableInit(void)
+/*
+ * ----------------------------------------------------
+ * Generated stub function for HK_AppMain()
+ * ----------------------------------------------------
+ */
+void HK_AppMain(void)
 {
-    return UT_DEFAULT_IMPL(HK_TableInit);
+
+    UT_GenStub_Execute(HK_AppMain, Basic, NULL);
 }
 
+/*
+ * ----------------------------------------------------
+ * Generated stub function for HK_AppPipe()
+ * ----------------------------------------------------
+ */
 void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
 {
-    UT_Stub_RegisterContext(UT_KEY(HK_AppPipe), BufPtr);
-    UT_DEFAULT_IMPL(HK_AppPipe);
+    UT_GenStub_AddParam(HK_AppPipe, const CFE_SB_Buffer_t *, BufPtr);
+
+    UT_GenStub_Execute(HK_AppPipe, Basic, NULL);
 }
 
-void HK_SendCombinedHKCmd(const CFE_SB_Buffer_t *BufPtr)
-{
-    UT_Stub_RegisterContext(UT_KEY(HK_SendCombinedHKCmd), BufPtr);
-    UT_DEFAULT_IMPL(HK_SendCombinedHKCmd);
-}
-
+/*
+ * ----------------------------------------------------
+ * Generated stub function for HK_HousekeepingCmd()
+ * ----------------------------------------------------
+ */
 void HK_HousekeepingCmd(const CFE_MSG_CommandHeader_t *Msg)
 {
-    UT_Stub_RegisterContext(UT_KEY(HK_HousekeepingCmd), Msg);
-    UT_DEFAULT_IMPL(HK_HousekeepingCmd);
+    UT_GenStub_AddParam(HK_HousekeepingCmd, const CFE_MSG_CommandHeader_t *, Msg);
+
+    UT_GenStub_Execute(HK_HousekeepingCmd, Basic, NULL);
 }
 
+/*
+ * ----------------------------------------------------
+ * Generated stub function for HK_NoopCmd()
+ * ----------------------------------------------------
+ */
 void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-    UT_Stub_RegisterContext(UT_KEY(HK_NoopCmd), BufPtr);
-    UT_DEFAULT_IMPL(HK_NoopCmd);
+    UT_GenStub_AddParam(HK_NoopCmd, const CFE_SB_Buffer_t *, BufPtr);
+
+    UT_GenStub_Execute(HK_NoopCmd, Basic, NULL);
 }
 
+/*
+ * ----------------------------------------------------
+ * Generated stub function for HK_ResetCtrsCmd()
+ * ----------------------------------------------------
+ */
 void HK_ResetCtrsCmd(const CFE_SB_Buffer_t *BufPtr)
 {
-    UT_Stub_RegisterContext(UT_KEY(HK_ResetCtrsCmd), BufPtr);
-    UT_DEFAULT_IMPL(HK_ResetCtrsCmd);
+    UT_GenStub_AddParam(HK_ResetCtrsCmd, const CFE_SB_Buffer_t *, BufPtr);
+
+    UT_GenStub_Execute(HK_ResetCtrsCmd, Basic, NULL);
 }
 
+/*
+ * ----------------------------------------------------
+ * Generated stub function for HK_ResetHkData()
+ * ----------------------------------------------------
+ */
 void HK_ResetHkData(void)
 {
-    UT_DEFAULT_IMPL(HK_ResetHkData);
+
+    UT_GenStub_Execute(HK_ResetHkData, Basic, NULL);
+}
+
+/*
+ * ----------------------------------------------------
+ * Generated stub function for HK_SendCombinedHKCmd()
+ * ----------------------------------------------------
+ */
+void HK_SendCombinedHKCmd(const CFE_SB_Buffer_t *BufPtr)
+{
+    UT_GenStub_AddParam(HK_SendCombinedHKCmd, const CFE_SB_Buffer_t *, BufPtr);
+
+    UT_GenStub_Execute(HK_SendCombinedHKCmd, Basic, NULL);
+}
+
+/*
+ * ----------------------------------------------------
+ * Generated stub function for HK_TableInit()
+ * ----------------------------------------------------
+ */
+int32 HK_TableInit(void)
+{
+    UT_GenStub_SetupReturnBuffer(HK_TableInit, int32);
+
+    UT_GenStub_Execute(HK_TableInit, Basic, NULL);
+
+    return UT_GenStub_GetReturnValue(HK_TableInit, int32);
 }
