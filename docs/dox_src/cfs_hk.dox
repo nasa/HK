@@ -199,11 +199,11 @@
     
   <H2>5. Monitoring the command counter</H2>
    
-  The #HK_HkPacket_t.CmdCounter will increment only 
+  The #HK_HkTlm_Payload_t.CmdCounter will increment only 
   when the HK application receives a valid #HK_NOOP_CC.
 
   <H2>6. Monitoring the command error counter</H2>
-  The #HK_HkPacket_t.ErrCounter will increment under the following conditions:
+  The #HK_HkTlm_Payload_t.ErrCounter will increment under the following conditions:
       a. Invalid command code
       b. Unexpected packet length field for #HK_SEND_COMBINED_PKT_MID command
       c. Unexpected packet length field for #HK_SEND_HK_MID command
@@ -213,7 +213,7 @@
   <H2>7. Monitoring the 'Combined Packets Sent" counter</H2>
   
   Each time a #HK_SEND_COMBINED_PKT_MID \copybrief HK_SEND_COMBINED_PKT_MID is 
-  received without error #HK_HkPacket_t.CombinedPacketsSent will increment.
+  received without error #HK_HkTlm_Payload_t.CombinedPacketsSent will increment.
 
   <H2>8. Monitoring the 'Missing Data" counter</H2>
   
@@ -221,12 +221,12 @@
   received without error, the HK app begins checking the 'Data Present' flag (located 
   in the run-time table) for each of the data sections that make up the output packet. 
   If a data portion is missing, HK sends a debug event (which is filtered by default) 
-  and increments #HK_HkPacket_t.MissingDataCtr.
+  and increments #HK_HkTlm_Payload_t.MissingDataCtr.
   The event will display the Message ID of the input message that would normally 
   provide the missing portion.
   
   <B>NOTE:</B> HK will report only one missing data portion in any output message. 
-  The #HK_HkPacket_t.MissingDataCtr will advance 
+  The #HK_HkTlm_Payload_t.MissingDataCtr will advance 
   by one count (at most) and send one event (at most) for each 
   #HK_SEND_COMBINED_PKT_MID.
    
@@ -238,7 +238,7 @@
   The HK memory pool is used to allocate the memory needed to store the output
   packets. Each time a new copy table is processed, the memory for the output
   packets is dynamically allocated from the memory pool. The memory pool handle is
-  sent down in #HK_HkPacket_t. 
+  sent down in #HK_HkTlm_Payload_t. 
   It is possible to get statistics from the cFE ES application on the memory pool 
   used by this application. #CFE_ES_SEND_MEM_POOL_STATS_CC is
   used to get statistics will need this memory pool handle as a command parameter.
