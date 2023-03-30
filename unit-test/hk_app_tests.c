@@ -873,322 +873,19 @@ void Test_HK_TableInit_ProcessNewCpyTblFail(void)
 /*                                                                    */
 /**********************************************************************/
 
-/*
- * Function under test: HK_AppPipe
- *
- * Case: Tests the case in which a "Send Combined Packet" message
- *       received with the expected length.
- */
-void Test_HK_AppPipe_CombinedPktLengthOk(void)
-{
-    /* Arrange */
-    uint8           call_count_HK_SendCombinedHKPacket;
-    size_t          forced_Size  = sizeof(HK_SendCombinedPktCmd_t);
-    CFE_SB_MsgId_t  forced_MsgID = CFE_SB_ValueToMsgId(HK_SEND_COMBINED_PKT_MID);
-    CFE_SB_Buffer_t DummyBuf;
-
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
-
-    /* Act */
-    HK_AppPipe(&DummyBuf);
-
-    call_count_CFE_EVS_SendEvent       = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-    call_count_HK_SendCombinedHKPacket = UT_GetStubCount(UT_KEY(HK_SendCombinedHkPacket));
-
-    /* Assert */
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 0);
-    UtAssert_INT32_EQ(call_count_HK_SendCombinedHKPacket, 1);
-}
-
-/*
- * Function under test: HK_AppPipe
- *
- * Case: Tests the case in which a "Send Combined Packet" message
- *       received with an incorrect length.
- */
-void Test_HK_AppPipe_CombinedPktBadLength(void)
-{
-    /* Arrange */
-    uint8           call_count_HK_SendCombinedHKPacket;
-    size_t          forced_Size  = sizeof(HK_SendCombinedPktCmd_t) + 1;
-    CFE_SB_MsgId_t  forced_MsgID = CFE_SB_ValueToMsgId(HK_SEND_COMBINED_PKT_MID);
-    CFE_SB_Buffer_t DummyBuf;
-
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
-             "Msg with Bad length Rcvd: ID = 0x%%08lX, Exp Len = %%u, Len = %%d");
-
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
-
-    /* Act */
-    HK_AppPipe(&DummyBuf);
-
-    call_count_CFE_EVS_SendEvent       = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-    call_count_HK_SendCombinedHKPacket = UT_GetStubCount(UT_KEY(HK_SendCombinedHkPacket));
-
-    /* Assert */
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 1);
-
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_MSG_LEN_ERR_EID);
-
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_ERROR);
-
-    strCmpResult = strncmp(ExpectedEventString, context_CFE_EVS_SendEvent[0].Spec, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH);
-
-    UtAssert_True(strCmpResult == 0, "Event string matched expected result, '%s'", context_CFE_EVS_SendEvent[0].Spec);
-
-    UtAssert_INT32_EQ(call_count_HK_SendCombinedHKPacket, 0);
-}
-
-/*
- * Function under test: HK_AppPipe
- *
- * Case: Tests the case in which a "Housekeeping Request" message
- *       received with the expected length.
- */
-void Test_HK_AppPipe_HkReqLengthOk(void)
-{
-    /* Arrange */
-    uint8           call_count_CFE_SB_TransmitMsg;
-    size_t          forced_Size  = sizeof(HK_SendHkCmd_t);
-    CFE_SB_MsgId_t  forced_MsgID = CFE_SB_ValueToMsgId(HK_SEND_HK_MID);
-    CFE_SB_Buffer_t DummyBuf;
-
-    UT_SetDefaultReturnValue(UT_KEY(HK_CheckStatusOfTables), HK_SUCCESS);
-
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
-
-    /* Act */
-    HK_AppPipe(&DummyBuf);
-
-    call_count_CFE_EVS_SendEvent  = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-    call_count_CFE_SB_TransmitMsg = UT_GetStubCount(UT_KEY(CFE_SB_TransmitMsg));
-
-    /* Assert */
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 0);
-
-    /* call_count_CFE_SB_TransmitMsg indicates indirectly that
-     * HK_HousekeepingCmd was called */
-    UtAssert_INT32_EQ(call_count_CFE_SB_TransmitMsg, 1);
-
-    UtAssert_INT32_EQ(HK_AppData.RunStatus, 0);
-}
-
-/*
- * Function under test: HK_AppPipe
- *
- * Case: Tests the case in which a "Housekeeping Request" message
- *       received with an incorrect length.
- */
-void Test_HK_AppPipe_HkReqBadLength(void)
-{
-    /* Arrange */
-    uint8           call_count_CFE_SB_TransmitMsg;
-    size_t          forced_Size  = sizeof(HK_SendHkCmd_t) + 1;
-    CFE_SB_MsgId_t  forced_MsgID = CFE_SB_ValueToMsgId(HK_SEND_HK_MID);
-    CFE_SB_Buffer_t DummyBuf;
-
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
-             "Msg with Bad length Rcvd: ID = 0x%%08lX, Exp Len = %%u, Len = %%d");
-
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
-
-    /* Act */
-    HK_AppPipe(&DummyBuf);
-
-    call_count_CFE_EVS_SendEvent  = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-    call_count_CFE_SB_TransmitMsg = UT_GetStubCount(UT_KEY(CFE_SB_TransmitMsg));
-
-    /* Assert */
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 1);
-
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_MSG_LEN_ERR_EID);
-
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_ERROR);
-
-    strCmpResult = strncmp(ExpectedEventString, context_CFE_EVS_SendEvent[0].Spec, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH);
-
-    UtAssert_True(strCmpResult == 0, "Event string matched expected result, '%s'", context_CFE_EVS_SendEvent[0].Spec);
-
-    /* call_count_CFE_SB_TransmitMsg indicates indirectly that
-     * HK_HousekeepingCmd was called */
-    UtAssert_INT32_EQ(call_count_CFE_SB_TransmitMsg, 0);
-}
-
-/*
- * Function under test: HK_AppPipe
- *
- * Case: Tests the case in which a "Housekeeping Request" message
- *       received with the expected length, but during processing
- *       of the message, the HK_CheckStatusOfTables function fails.
- */
-void Test_HK_AppPipe_HkReqBadTblStatus(void)
-{
-    /* Arrange */
-    size_t          forced_Size  = sizeof(HK_SendHkCmd_t);
-    CFE_SB_MsgId_t  forced_MsgID = CFE_SB_ValueToMsgId(HK_SEND_HK_MID);
-    CFE_SB_Buffer_t DummyBuf;
-
-    UT_SetDefaultReturnValue(UT_KEY(HK_CheckStatusOfTables), !HK_SUCCESS);
-
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
-
-    /* Act */
-    HK_AppPipe(&DummyBuf);
-
-    call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-
-    /* Assert */
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 0);
-
-    UtAssert_INT32_EQ(HK_AppData.RunStatus, CFE_ES_RunStatus_APP_ERROR);
-}
-
-/*
- * Function under test: HK_AppPipe
- *
- * Case: Tests the case in which a Command message is received with a
- *       "No Operation" command code.
- */
-void Test_HK_AppPipe_NoopCmd(void)
-{
-    /* Arrange */
-    size_t            forced_Size    = sizeof(HK_NoopCmd_t);
-    CFE_SB_MsgId_t    forced_MsgID   = CFE_SB_ValueToMsgId(HK_CMD_MID);
-    CFE_MSG_FcnCode_t forced_CmdCode = HK_NOOP_CC;
-    CFE_SB_Buffer_t   DummyBuf;
-
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetFcnCode), &forced_CmdCode, sizeof(forced_CmdCode), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
-
-    /* Act */
-    HK_AppPipe(&DummyBuf);
-
-    call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-
-    /* Assert */
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 1);
-    UtAssert_INT32_EQ(HK_AppData.ErrCounter, 0);
-}
-
-/*
- * Function under test: HK_AppPipe
- *
- * Case: Tests the case in which a Command message is received with a
- *       "Reset" command code.
- */
-void Test_HK_AppPipe_ResetCmd(void)
-{
-    /* Arrange */
-    size_t            forced_Size    = sizeof(HK_ResetCountersCmd_t);
-    CFE_SB_MsgId_t    forced_MsgID   = CFE_SB_ValueToMsgId(HK_CMD_MID);
-    CFE_MSG_FcnCode_t forced_CmdCode = HK_RESET_CC;
-    CFE_SB_Buffer_t   DummyBuf;
-
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetFcnCode), &forced_CmdCode, sizeof(forced_CmdCode), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
-
-    /* Act */
-    HK_AppPipe(&DummyBuf);
-
-    call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-
-    /* Assert */
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 1);
-    UtAssert_INT32_EQ(HK_AppData.ErrCounter, 0);
-}
-
-/*
- * Function under test: HK_AppPipe
- *
- * Case: Tests the case in which a Command message is received with an
- *       unknown command code.
- */
-void Test_HK_AppPipe_UnknownCmd(void)
-{
-    /* Arrange */
-    size_t            forced_Size    = sizeof(HK_NoopCmd_t);
-    CFE_SB_MsgId_t    forced_MsgID   = CFE_SB_ValueToMsgId(HK_CMD_MID);
-    CFE_MSG_FcnCode_t forced_CmdCode = 47; /* unknown CC */
-    CFE_SB_Buffer_t   DummyBuf;
-
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
-             "Cmd Msg with Invalid command code Rcvd -- ID = 0x%%08lX, CC = %%d");
-
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetFcnCode), &forced_CmdCode, sizeof(forced_CmdCode), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
-
-    /* Act */
-    HK_AppPipe(&DummyBuf);
-
-    call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-
-    /* Assert */
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 1);
-
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_CC_ERR_EID);
-
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_ERROR);
-
-    strCmpResult = strncmp(ExpectedEventString, context_CFE_EVS_SendEvent[0].Spec, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH);
-
-    UtAssert_True(strCmpResult == 0, "Event string matched expected result, '%s'", context_CFE_EVS_SendEvent[0].Spec);
-
-    UtAssert_INT32_EQ(HK_AppData.ErrCounter, 1);
-}
-
-/*
- * Function under test: HK_AppPipe
- *
- * Case: Tests the case in which a message is received with an unknown
- *       message ID, triggering a call to HK_ProcessIncomingHkData.
- */
-void Test_HK_AppPipe_ProcessIncoming(void)
-{
-    /* Arrange */
-    uint8           call_count_HK_ProcessIncomingHkData;
-    size_t          forced_Size  = sizeof(HK_NoopCmd_t);
-    CFE_SB_MsgId_t  forced_MsgID = HK_UT_MID_100; /* Non HK MID */
-    CFE_SB_Buffer_t DummyBuf;
-
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
-
-    /* Act */
-    HK_AppPipe(&DummyBuf);
-
-    call_count_HK_ProcessIncomingHkData = UT_GetStubCount(UT_KEY(HK_ProcessIncomingHkData));
-
-    /* Assert */
-    UtAssert_INT32_EQ(call_count_HK_ProcessIncomingHkData, 1);
-}
-
 /**********************************************************************/
 /*                                                                    */
-/* Test functions for HK_SendCombinedHKCmd                            */
+/* Test functions for HK_SendCombinedPktCmd                            */
 /*                                                                    */
 /**********************************************************************/
 
 /*
- * Function under test: HK_SendCombinedHKCmd
+ * Function under test: HK_SendCombinedPktCmd
  *
- * Case: Tests the nominal case of the HK_SendCombinedHKCmd.  Note that
+ * Case: Tests the nominal case of the HK_SendCombinedPktCmd.  Note that
  *       the function under test has no branches.
  */
-void Test_HK_SendCombinedHKCmd(void)
+void Test_HK_SendCombinedPktCmd(void)
 {
     union
     {
@@ -1199,7 +896,7 @@ void Test_HK_SendCombinedHKCmd(void)
     memset(&msgbuf, 0, sizeof(msgbuf));
 
     /* Act */
-    HK_SendCombinedHKCmd(&msgbuf.sbbuf);
+    HK_SendCombinedPktCmd(&msgbuf.sbbuf);
 
     /* Assert */
     UtAssert_STUB_COUNT(HK_SendCombinedHkPacket, 1);
@@ -1207,23 +904,23 @@ void Test_HK_SendCombinedHKCmd(void)
 
 /**********************************************************************/
 /*                                                                    */
-/* Test functions for HK_HousekeepingCmd                              */
+/* Test functions for HK_SendHkCmd                              */
 /*                                                                    */
 /**********************************************************************/
 
 /*
- * Function under test: HK_HousekeepingCmd
+ * Function under test: HK_SendHkCmd
  *
- * Case: Tests the nominal case of the HK_HousekeepingCmd.  Note that
+ * Case: Tests the nominal case of the HK_SendHkCmd.  Note that
  *       the function under test has no branches.
  */
-void Test_HK_HousekeepingCmd(void)
+void Test_HK_SendHkCmd(void)
 {
     /* Arrange */
-    CFE_MSG_CommandHeader_t DummyMsg;
-    uint8                   call_count_CFE_SB_TimeStampMsg;
-    uint8                   call_count_CFE_SB_TransmitMsg;
-    HK_HkTlm_Payload_t *    PayloadPtr;
+    CFE_SB_Buffer_t     DummyMsg;
+    uint8               call_count_CFE_SB_TimeStampMsg;
+    uint8               call_count_CFE_SB_TransmitMsg;
+    HK_HkTlm_Payload_t *PayloadPtr;
 
     /* Setup app data values */
     HK_AppData.CmdCounter          = 1;
@@ -1235,7 +932,7 @@ void Test_HK_HousekeepingCmd(void)
     memset(&DummyMsg, 0, sizeof(DummyMsg));
 
     /* Act */
-    HK_HousekeepingCmd(&DummyMsg);
+    HK_SendHkCmd(&DummyMsg);
 
     call_count_CFE_SB_TimeStampMsg = UT_GetStubCount(UT_KEY(CFE_SB_TimeStampMsg));
     call_count_CFE_SB_TransmitMsg  = UT_GetStubCount(UT_KEY(CFE_SB_TransmitMsg));
@@ -1265,15 +962,13 @@ void Test_HK_HousekeepingCmd(void)
  * Case: Tests the case in which the HK_NoopCmd function processes a
  *       Noop command message with the correct length.
  */
-void Test_HK_NoopCmd_LengthOk(void)
+void Test_HK_NoopCmd(void)
 {
     /* Arrange */
     CFE_SB_Buffer_t DummyBuf;
     int32           strCmpResult;
     char            ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH, "HK No-op command, Version %%d.%%d.%%d.%%d");
-
-    UT_SetDefaultReturnValue(UT_KEY(HK_VerifyCmdLength), CFE_SUCCESS);
 
     /* Act */
     HK_NoopCmd(&DummyBuf);
@@ -1295,43 +990,19 @@ void Test_HK_NoopCmd_LengthOk(void)
     UtAssert_INT32_EQ(HK_AppData.ErrCounter, 0);
 }
 
-/*
- * Function under test: HK_NoopCmd
- *
- * Case: Tests the case in which the HK_NoopCmd function processes a
- *       Noop command message with an incorrect length.
- */
-void Test_HK_NoopCmd_LengthError(void)
-{
-    /* Arrange */
-    CFE_SB_Buffer_t DummyBuf;
-
-    UT_SetDefaultReturnValue(UT_KEY(HK_VerifyCmdLength), HK_BAD_MSG_LENGTH_RC);
-
-    /* Act */
-    HK_NoopCmd(&DummyBuf);
-
-    call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-
-    /* Assert */
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 0);
-    UtAssert_INT32_EQ(HK_AppData.CmdCounter, 0);
-    UtAssert_INT32_EQ(HK_AppData.ErrCounter, 1);
-}
-
 /**********************************************************************/
 /*                                                                    */
-/* Test functions for HK_ResetCtrsCmd                                 */
+/* Test functions for HK_ResetCountersCmd                                 */
 /*                                                                    */
 /**********************************************************************/
 
 /*
- * Function under test: HK_ResetCtrsCmd
+ * Function under test: HK_ResetCountersCmd
  *
- * Case: Tests the case in which the HK_ResetCtrsCmd function processes
+ * Case: Tests the case in which the HK_ResetCountersCmd function processes
  *       a Reset Counters command message with the correct length.
  */
-void Test_HK_ResetCtrsCmd_LengthOk(void)
+void Test_HK_ResetCountersCmd(void)
 {
     /* Arrange */
     CFE_SB_Buffer_t DummyBuf;
@@ -1340,10 +1011,8 @@ void Test_HK_ResetCtrsCmd_LengthOk(void)
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH, "HK Reset Counters command received");
 
-    UT_SetDefaultReturnValue(UT_KEY(HK_VerifyCmdLength), CFE_SUCCESS);
-
     /* Act */
-    HK_ResetCtrsCmd(&DummyBuf);
+    HK_ResetCountersCmd(&DummyBuf);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -1361,31 +1030,6 @@ void Test_HK_ResetCtrsCmd_LengthOk(void)
     /* neither counter is updated in this function in success case */
     UtAssert_INT32_EQ(HK_AppData.CmdCounter, 0);
     UtAssert_INT32_EQ(HK_AppData.ErrCounter, 0);
-}
-
-/*
- * Function under test: HK_ResetCtrsCmd
- *
- * Case: Tests the case in which the HK_ResetCtrsCmd function processes
- *       a Reset Counters command message with an incorrect length.
- */
-void Test_HK_ResetCtrsCmd_LengthError(void)
-{
-    /* Arrange */
-    CFE_SB_Buffer_t DummyBuf;
-
-    UT_SetDefaultReturnValue(UT_KEY(HK_VerifyCmdLength), HK_BAD_MSG_LENGTH_RC);
-
-    /* Act */
-    HK_ResetCtrsCmd(&DummyBuf);
-
-    call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
-
-    /* Assert */
-    UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 0);
-
-    UtAssert_INT32_EQ(HK_AppData.CmdCounter, 0);
-    UtAssert_INT32_EQ(HK_AppData.ErrCounter, 1);
 }
 
 /**********************************************************************/
@@ -1466,32 +1110,17 @@ void UtTest_Setup(void)
     UtTest_Add(Test_HK_TableInit_ProcessNewCpyTblFail, HK_Test_Setup, HK_Test_TearDown,
                "Test_HK_TableInit_ProcessNewCpyTblFail");
 
-    /* Test functions for HK_AppPipe */
-    UtTest_Add(Test_HK_AppPipe_CombinedPktLengthOk, HK_Test_Setup, HK_Test_TearDown,
-               "Test_HK_AppPipe_CombinedPktLengthOk");
-    UtTest_Add(Test_HK_AppPipe_CombinedPktBadLength, HK_Test_Setup, HK_Test_TearDown,
-               "Test_HK_AppPipe_CombinedPktBadLength");
-    UtTest_Add(Test_HK_AppPipe_HkReqLengthOk, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppPipe_HkReqLengthOk");
-    UtTest_Add(Test_HK_AppPipe_HkReqBadLength, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppPipe_HkReqBadLength");
-    UtTest_Add(Test_HK_AppPipe_HkReqBadTblStatus, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppPipe_HkReqBadTblStatus");
-    UtTest_Add(Test_HK_AppPipe_NoopCmd, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppPipe_NoopCmd");
-    UtTest_Add(Test_HK_AppPipe_ResetCmd, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppPipe_ResetCmd");
-    UtTest_Add(Test_HK_AppPipe_UnknownCmd, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppPipe_UnknownCmd");
-    UtTest_Add(Test_HK_AppPipe_ProcessIncoming, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppPipe_ProcessIncoming");
-
     /* Test functions for HK_SendCombinedHkPacket */
-    UtTest_Add(Test_HK_SendCombinedHKCmd, HK_Test_Setup, HK_Test_TearDown, "Test_HK_SendCombinedHKCmd");
+    UtTest_Add(Test_HK_SendCombinedPktCmd, HK_Test_Setup, HK_Test_TearDown, "Test_HK_SendCombinedPktCmd");
 
-    /* Test functions for HK_HousekeepingCmd */
-    UtTest_Add(Test_HK_HousekeepingCmd, HK_Test_Setup, HK_Test_TearDown, "Test_HK_HousekeepingCmd");
+    /* Test functions for HK_SendHkCmd */
+    UtTest_Add(Test_HK_SendHkCmd, HK_Test_Setup, HK_Test_TearDown, "Test_HK_SendHkCmd");
 
     /* Test functions for HK_NoopCmd */
-    UtTest_Add(Test_HK_NoopCmd_LengthOk, HK_Test_Setup, HK_Test_TearDown, "Test_HK_NoopCmd_LengthOk");
-    UtTest_Add(Test_HK_NoopCmd_LengthError, HK_Test_Setup, HK_Test_TearDown, "Test_HK_NoopCmd_LengthError");
+    UtTest_Add(Test_HK_NoopCmd, HK_Test_Setup, HK_Test_TearDown, "Test_HK_NoopCmd");
 
-    /* Test functions for HK_ResetCtrsCmd */
-    UtTest_Add(Test_HK_ResetCtrsCmd_LengthOk, HK_Test_Setup, HK_Test_TearDown, "Test_HK_ResetCtrsCmd_LengthOk");
-    UtTest_Add(Test_HK_ResetCtrsCmd_LengthError, HK_Test_Setup, HK_Test_TearDown, "Test_HK_ResetCtrsCmd_LengthError");
+    /* Test functions for HK_ResetCountersCmd */
+    UtTest_Add(Test_HK_ResetCountersCmd, HK_Test_Setup, HK_Test_TearDown, "Test_HK_ResetCountersCmd");
 
     /* Test functions for HK_ResetHkData */
     UtTest_Add(Test_HK_ResetHkData, HK_Test_Setup, HK_Test_TearDown, "Test_HK_ResetHkData");

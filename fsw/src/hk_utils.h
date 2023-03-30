@@ -223,22 +223,4 @@ int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *Missi
  */
 void HK_SetFlagsToNotPresent(CFE_SB_MsgId_t OutPkt);
 
-/**
- * \brief  Verify length of HK commands
- *
- *  \par Description
- *       Function called when an HK command is received.
- *
- *  \par Assumptions, External Events, and Notes:
- *       None
- *
- *  \param[in] BufPtr         Pointer to the Software Buss Buffer
- *  \param[in] ExpectedLength The expected lenght of the command
- *
- *  \return Command Length Status
- *  \retval #HK_SUCCESS           Length Valid
- *  \retval #HK_BAD_MSG_LENGTH_RC \copydoc HK_BAD_MSG_LENGTH_RC
- */
-int32 HK_VerifyCmdLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength);
-
 #endif

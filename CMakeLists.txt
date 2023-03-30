@@ -2,6 +2,7 @@ project(CFS_HK C)
 
 set(APP_SRC_FILES
   fsw/src/hk_app.c
+  fsw/src/hk_dispatch.c
   fsw/src/hk_utils.c
 )
 

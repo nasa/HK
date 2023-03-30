@@ -53,11 +53,11 @@
   <H2> Scope </H2>
 
   This document provides a complete specification for the commands and telemetry associated
-  with the CFS Housekeeping (HK) application software.  The document is intended primarily 
-  for users of the software (operations personal, test engineers, and maintenance personnel).  
-  The last section of the document, the deployment guide section, is intended for mission 
-  developers when deploying and configuring the FM application software for a mission 
-  flight software build environment. 
+  with the CFS Housekeeping (HK) application software.  The document is intended primarily
+  for users of the software (operations personal, test engineers, and maintenance personnel).
+  The last section of the document, the deployment guide section, is intended for mission
+  developers when deploying and configuring the FM application software for a mission
+  flight software build environment.
 
   \ref cfshkversion
 
@@ -121,16 +121,16 @@
   The HK Application is a passive application and is completely packet driven.
   There are no timers used to wake up the application. The housekeeping request
   commands are not sent to the system apps by HK. A common system design uses the
-  Scheduler (SCH) Application to send the housekeeping 
+  Scheduler (SCH) Application to send the housekeeping
   requests to the system apps as well as the send-output-message-x command to HK.
 
-  A key component that is part of the HK application is the 'copy table'. The copy 
+  A key component that is part of the HK application is the 'copy table'. The copy
   table has a configurable number of entries. Each entry specifies a source (via
-  msgid and offset into the packet), destination (via msgid and offset) and a 
+  msgid and offset into the packet), destination (via msgid and offset) and a
   number of bytes to copy.
 
   <H2> HK Design Overview </H2>
-  
+
   The HK Application has a single Software Bus pipe and wakes
   up only when a message is received on the pipe (named HK_CMD_PIPE). The
   HK_CMD_PIPE receives commands and input messages. If the message received
@@ -144,10 +144,10 @@
   than one area in the same output packet. The number of output packets is also
   limited only by the the number of entries in the table. The number of entries in
   the table is a platform configuration parameter.
-  
-  The output messages are sent to the software bus when HK receives the 
-  'Send Output Message x' command. Where 'x' is a parameter in the command that 
-  specifies the message ID of the output message to send. If a piece of data is 
+
+  The output messages are sent to the software bus when HK receives the
+  'Send Output Message x' command. Where 'x' is a parameter in the command that
+  specifies the message ID of the output message to send. If a piece of data is
   missing in the output message at the time the 'Send Output Message x' command
   is received, the HK app will send a debug event (which is filtered by default)
   and increment the 'missing data counter' in telemetry.
@@ -158,45 +158,45 @@
 
   The operational interface of the HK application consists of two commands, two
   tables and a few telemetry points. The following items detail the operational
-  interface. 
+  interface.
 
   <H2>1. The application version number</H2>
-  
+
   The application version number is displayed in the initialization event and the
   no-op event. Both events are 'informational' type and are unfiltered by default.
 
   <H2>2. Loading the copy table</H2>
-  
+
   The copy table is loaded by way of a file. The file must be present when the
   application starts up. Otherwise, the app will terminate after initialization.
   The location of the file is specified by the platform configuration parameter
-  named #HK_COPY_TABLE_FILENAME. The value of this define specifies the full  
+  named #HK_COPY_TABLE_FILENAME. The value of this define specifies the full
   path as well as the filename.
-  
-  After initialization, a new copy table may be loaded at any time. The steps to 
+
+  After initialization, a new copy table may be loaded at any time. The steps to
   load a new copy table are:
       - Transfer the table file to the on-board file system
       - Send the #CFE_TBL_LOAD_CC \copybrief CFE_TBL_LOAD_CC
       - Send the #CFE_TBL_VALIDATE_CC \copybrief CFE_TBL_VALIDATE_CC
       - Send the #CFE_TBL_ACTIVATE_CC \copybrief CFE_TBL_ACTIVATE_CC
-      
+
   The HK application will clean up the items used for the old table (such as SB
   subscriptions) before updating and processing the new table.
 
   <H2>3. Sending the No-op Command</H2>
-  
+
   To verify connectivity with the Housekeeping application, the ground may send an
   #HK_NOOP_CC \copybrief HK_NOOP_CC
 
-  If the packet length field in the 
-  command is set to the value expected by the HK app, then the command counter will 
+  If the packet length field in the
+  command is set to the value expected by the HK app, then the command counter will
   increment and a #HK_NOOP_CMD_EID event message
   will be sent.  This no-op event will show the version number of the HK application.
-    
+
   <H2>4. Sending the reset counters command</H2>
-  
-  The #HK_RESET_CC \copybrief HK_RESET_CC will reset counters in telemetry.
-    
+
+  The #HK_RESET_COUNTERS_CC \copybrief HK_RESET_COUNTERS_CC will reset counters in telemetry.
+
   <H2>5. Monitoring the command counter</H2>
    
   The #HK_HkTlm_Payload_t.CmdCounter will increment only 
@@ -208,7 +208,7 @@
       b. Unexpected packet length field for #HK_SEND_COMBINED_PKT_MID command
       c. Unexpected packet length field for #HK_SEND_HK_MID command
       d. Unexpected packet length field for #HK_NOOP_CC command
-      e. Unexpected packet length field for #HK_RESET_CC command
+      e. Unexpected packet length field for #HK_RESET_COUNTERS_CC command
 
   <H2>7. Monitoring the 'Combined Packets Sent" counter</H2>
   
@@ -229,12 +229,12 @@
   The #HK_HkTlm_Payload_t.MissingDataCtr will advance 
   by one count (at most) and send one event (at most) for each 
   #HK_SEND_COMBINED_PKT_MID.
-   
+
   The HK app will not zero-out or alter the missing data section(s) in any way.
   The missing data values will match the last 'good' section received.
 
   <H2>9. Using the Memory Pool handle to get mempool stats</H2>
-  
+
   The HK memory pool is used to allocate the memory needed to store the output
   packets. Each time a new copy table is processed, the memory for the output
   packets is dynamically allocated from the memory pool. The memory pool handle is
@@ -248,22 +248,22 @@
   \page cfshkdg CFS Housekeeping Deployment Guide
 
   Follow the general guidelines below for platform deployment of the Housekeeping app.
-  
+
   There are two message IDs that must be included in the CFS Scheduler Table:
   #HK_SEND_HK_MID is sent out at the housekeeping request interval.  The housekeeping app must send its
   housekeeping data to itself like any other app.
   #HK_SEND_COMBINED_PKT_MID is sent out at the desired rate for each combined packet.  UP to four
   combined packets are available.
-  
+
   The HK app can build up to four combined packets based on the definitions supplied in the
-  HK copy table.  The Scheduler Table uses each telemetry IDs (#HK_COMBINED_PKT1_MID , 
+  HK copy table.  The Scheduler Table uses each telemetry IDs (#HK_COMBINED_PKT1_MID ,
   #HK_COMBINED_PKT2_MID , #HK_COMBINED_PKT3_MID , and #HK_COMBINED_PKT4_MID ) as a valid parameter
   in the #HK_SEND_COMBINED_PKT_MID table entries.
-  
+
   The ES app uses the HK performance ID, #HK_APPMAIN_PERF_ID , to keep track of the performance
   of the HK app.
-  
-  The platform configuration file hk_platform_cfg.h contains parameters that can be adjusted to 
+
+  The platform configuration file hk_platform_cfg.h contains parameters that can be adjusted to
   specific platforms.  See \ref cfshkplatformcfg.
 
   See \ref cfshkmissioncfg for mission configuration parameters.
@@ -271,7 +271,7 @@
 
 /**
   \page cfshktbl CFS Housekeeping Table Definitions
-  
+
   The Housekeeping Application uses two tables. A load-dump table referred to as
   the "copy table" and a dump-only table referred to as the "run-time table". Each
   table has the same number of entries, defined by the configuration parameter
@@ -281,12 +281,12 @@
   tables were chosen so that checksumming can be executed on the more-static copy
   table.
 
-  <B>HK Copy Table Validation</B> - The HK copy table currently has an empty validation 
-  call-back function that always returns success. At the time of development, 
+  <B>HK Copy Table Validation</B> - The HK copy table currently has an empty validation
+  call-back function that always returns success. At the time of development,
   a validation process that would apply to all projects was not perceived.
 
   <B>HK Copy Table Entries</B> - Entries follow the concept of:
-  <I>Copy A bytes from input message B, byte-offset C to output message Y, 
+  <I>Copy A bytes from input message B, byte-offset C to output message Y,
   byte-offset Z. </I>
 
   The structure format of a single copy table entry is defined by #hk_copy_table_entry_t.
@@ -309,7 +309,7 @@
 /**
   \page cfshkcons CFS Housekeeping Constraints
 
-  The Housekeeping Application needs to find a valid table at the location 
+  The Housekeeping Application needs to find a valid table at the location
   specified by the configuration parameter #HK_COPY_TABLE_FILENAME in order to
   startup. Otherwise the application will send an error event or syslog message
   then terminate. See \ref cfshktbl for more detail.
@@ -323,10 +323,10 @@
   \page cfshkfaqs CFS Housekeeping Frequently Asked Questions
 
   <B> (Q)
-     Does the protocol for collecting telemetry use a single housekeeping request 
+     Does the protocol for collecting telemetry use a single housekeeping request
      command for all apps or a unique housekeeping request command for each app?
   </B> <BR> <BR> <I>
-     It is unknown to the HK application because HK does not send the 
+     It is unknown to the HK application because HK does not send the
      housekeeping request command(s). These commands are usually sent by the
      scheduler. However, each CFS application is capable of receiving a unique
      housekeeping request command. The message ID of this command is specified in the
@@ -336,15 +336,15 @@
      housekeeping request commands for each app or using a single command for all
      apps. In the latter case, all the defines would be set to the same value.
   </I>
-            
+
   <B> (Q)
      What is the basic flow of the application?
   </B> <BR> <BR> <I>
-     The HK application uses a common application format. When the app starts, 
+     The HK application uses a common application format. When the app starts,
      initialization is performed, then the app enters an infinite loop waiting for
      commands from the software bus.
   </I>
-            
+
   <B> (Q)
      In general, what is done during initialization?
   </B> <BR> <BR> <I>
@@ -356,24 +356,24 @@
      variables. If any error is encountered during initialization, the application
      will send an event or syslog message, then terminate.
   </I>
-            
+
   <B> (Q)
-     How does the app react if the file to load the copy table (during 
+     How does the app react if the file to load the copy table (during
      initialization) is not found?
   </B> <BR> <BR> <I>
      HK will send an error event or a syslog message, then terminate.
   </I>
-     
+
   <B> (Q)
-     At what frequency is the housekeeping request command sent to the system 
+     At what frequency is the housekeeping request command sent to the system
      applications?
   </B> <BR> <BR> <I>
      The HK application does not send the housekeeping request command to the
-     system applications. The frequency of the housekeeping request commands is 
-     typically specified in the scheduler table and sent by the scheduler 
+     system applications. The frequency of the housekeeping request commands is
+     typically specified in the scheduler table and sent by the scheduler
      application.
   </I>
-            
+
   <B> (Q)
      What factor controls the input message timing?
   </B> <BR> <BR> <I>
@@ -382,7 +382,7 @@
      command(s). The housekeeping request command(s) are not sent by the HK
      application. Rather, it is typically sent by the scheduler application.
   </I>
-            
+
   <B> (Q)
      What determines the timing of the combined output messages?
   </B> <BR> <BR> <I>
@@ -391,12 +391,12 @@
      command periodically. Where 'x' is a parameter in the command that specifies the
      message ID of the output message to send.
   </I>
-            
+
   <B> (Q)
      How is the format of the combined output messages defined?
   </B> <BR> <BR> <I>
-     The output message format is defined by the entries in the copy table. If a 
-     format change to one or more output messages is needed, a new table must be 
+     The output message format is defined by the entries in the copy table. If a
+     format change to one or more output messages is needed, a new table must be
      loaded.
   </I>
 **/
