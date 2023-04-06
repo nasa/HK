@@ -72,15 +72,14 @@ void UT_CFE_TBL_GetAddress_Handler(void *UserObj, UT_EntryKey_t FuncKey, const U
 void Test_HK_ProcessIncomingHkData_MidNotFound(void)
 {
     /* Arrange */
-    int32           i;
-    int32           NumEntriesWithDataPresent = 0;
-    CFE_SB_MsgId_t  forced_MsgID              = HK_UT_MID_100; /* not in copy table */
-    CFE_SB_Buffer_t Buf;
-
-    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
-
+    int32                  i;
+    int32                  NumEntriesWithDataPresent = 0;
+    CFE_SB_MsgId_t         forced_MsgID              = HK_UT_MID_100; /* not in copy table */
+    CFE_SB_Buffer_t        Buf;
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+
+    UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
 
     HK_Test_InitGoodCopyTable(CopyTblPtr);
     HK_Test_InitGoodRuntimeTable(RtTblPtr);
@@ -241,6 +240,8 @@ void Test_HK_ProcessIncomingHkData_MessageError(void)
     CFE_SB_Buffer_t        Buf;
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+    int32                  strCmpResult;
+    char                   ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
     HK_Test_InitGoodCopyTable(CopyTblPtr);
     HK_Test_InitGoodRuntimeTable(RtTblPtr);
@@ -254,8 +255,6 @@ void Test_HK_ProcessIncomingHkData_MessageError(void)
     UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
     UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
 
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK table definition exceeds packet length. MID:0x%%08lX, Length:%%d, Count:%%d");
 
@@ -329,6 +328,7 @@ void Test_HK_ProcessNewCopyTable_NullCpyTbl(void)
     /* Arrange */
     hk_runtime_tbl_entry_t RtTblPtr;
     int32                  strCmpResult;
+    int32                  ReturnValue;
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
@@ -336,7 +336,7 @@ void Test_HK_ProcessNewCopyTable_NullCpyTbl(void)
              "Null pointer detected in new copy tbl processing: CpyTbl = %%p, RtTbl = %%p");
 
     /* Act */
-    int32 ReturnValue = HK_ProcessNewCopyTable(NULL, &RtTblPtr);
+    ReturnValue = HK_ProcessNewCopyTable(NULL, &RtTblPtr);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -365,12 +365,13 @@ void Test_HK_ProcessNewCopyTable_NullRtTbl(void)
     hk_copy_table_entry_t CpyTblPtr;
     int32                 strCmpResult;
     char                  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    int32                 ReturnValue;
 
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Null pointer detected in new copy tbl processing: CpyTbl = %%p, RtTbl = %%p");
 
     /* Act */
-    int32 ReturnValue = HK_ProcessNewCopyTable(&CpyTblPtr, NULL);
+    ReturnValue = HK_ProcessNewCopyTable(&CpyTblPtr, NULL);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -469,13 +470,13 @@ void Test_HK_ProcessNewCopyTable_SubscribeFail(void)
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
+    hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
+    hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK Processing New Table:SB_Subscribe for Mid 0x%%08lX returned 0x%%04X");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_SB_Subscribe), !CFE_SUCCESS);
-
-    hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
-    hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
     HK_Test_InitGoodCopyTable(CopyTblPtr);
     HK_Test_InitGoodRuntimeTable(RtTblPtr);
@@ -772,6 +773,7 @@ void Test_HK_TearDownOldCopyTable_NullCpyTbl(void)
     /* Arrange */
     hk_runtime_tbl_entry_t RtTblPtr;
     int32                  strCmpResult;
+    int32                  ReturnValue;
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
@@ -779,7 +781,7 @@ void Test_HK_TearDownOldCopyTable_NullCpyTbl(void)
              "Null pointer detected in copy tbl tear down: CpyTbl = %%p, RtTbl = %%p");
 
     /* Act */
-    int32 ReturnValue = HK_TearDownOldCopyTable(NULL, &RtTblPtr);
+    ReturnValue = HK_TearDownOldCopyTable(NULL, &RtTblPtr);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -807,6 +809,7 @@ void Test_HK_TearDownOldCopyTable_NullRtTbl(void)
     /* Arrange */
     hk_copy_table_entry_t CpyTblPtr;
     int32                 strCmpResult;
+    int32                 ReturnValue;
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
@@ -814,7 +817,7 @@ void Test_HK_TearDownOldCopyTable_NullRtTbl(void)
              "Null pointer detected in copy tbl tear down: CpyTbl = %%p, RtTbl = %%p");
 
     /* Act */
-    int32 ReturnValue = HK_TearDownOldCopyTable(&CpyTblPtr, NULL);
+    ReturnValue = HK_TearDownOldCopyTable(&CpyTblPtr, NULL);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -846,13 +849,13 @@ void Test_HK_TearDownOldCopyTable_PoolFreeFail(void)
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
+    hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
+    hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK TearDown: ES_putPoolBuf Err pkt:0x%%08lX ret 0x%%04X, hdl 0x%%08lx");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_ES_PutPoolBuf), (CFE_SUCCESS - 1));
-
-    hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
-    hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
     HK_Test_InitGoodCopyTable(CopyTblPtr);
     HK_Test_InitGoodRuntimeTable(RtTblPtr);
@@ -1017,6 +1020,7 @@ void Test_HK_SendCombinedHkPacket_NoMissingData(void)
     int32          call_count_CFE_SB_TimeStampMsg;
     int32          call_count_CFE_SB_TransmitMsg;
     CFE_SB_MsgId_t SendMid = CFE_SB_ValueToMsgId(HK_COMBINED_PKT1_MID); /* MID in the table */
+    int32          i;
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -1024,7 +1028,7 @@ void Test_HK_SendCombinedHkPacket_NoMissingData(void)
     HK_Test_InitGoodCopyTable(CopyTblPtr);
     HK_Test_InitGoodRuntimeTable(RtTblPtr);
 
-    for (int i = 0; i < 5; i++)
+    for (i = 0; i < 5; i++)
     {
         RtTblPtr[i].DataPresent = HK_DATA_PRESENT;
     }
@@ -1099,6 +1103,9 @@ void Test_HK_SendCombinedHkPacket_MissingData(void)
 void Test_HK_SendCombinedHkPacket_EmptyTable(void)
 {
     /* Arrange */
+    int32 strCmpResult;
+    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
@@ -1106,10 +1113,6 @@ void Test_HK_SendCombinedHkPacket_EmptyTable(void)
     HK_Test_InitEmptyRuntimeTable(RtTblPtr);
     HK_AppData.RuntimeTablePtr = RtTblPtr;
     HK_AppData.CopyTablePtr    = CopyTblPtr;
-
-    int32 strCmpResult;
-
-    char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Combined HK Packet 0x%%08lX is not found in current HK Copy Table");
@@ -1141,23 +1144,22 @@ void Test_HK_SendCombinedHkPacket_EmptyTable(void)
 void Test_HK_SendCombinedHkPacket_PacketNotFound(void)
 {
     /* Arrange */
+    CFE_SB_MsgId_t  forced_MsgID = HK_UT_MID_100; /* does not match provided parameter */
+    int32           strCmpResult;
+    char            ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    CFE_SB_Buffer_t DummyBuffer;
+
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
     HK_Test_InitEmptyCopyTable(CopyTblPtr);
     HK_Test_InitEmptyRuntimeTable(RtTblPtr);
 
-    CFE_SB_Buffer_t DummyBuffer;
     /* populate one entry in the RT table */
     RtTblPtr[1].OutputPktAddr = &DummyBuffer; /* just needs to be non-null */
 
     HK_AppData.RuntimeTablePtr = RtTblPtr;
     HK_AppData.CopyTablePtr    = CopyTblPtr;
-
-    CFE_SB_MsgId_t forced_MsgID = HK_UT_MID_100; /* does not match provided parameter */
-    int32          strCmpResult;
-
-    char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Combined HK Packet 0x%%08lX is not found in current HK Copy Table");
@@ -1833,6 +1835,7 @@ void Test_HK_CheckForMissingData_NoMissingData_DataPresent(void)
     int32          ReturnValue;
     CFE_SB_MsgId_t OutPktToCheck   = CFE_SB_ValueToMsgId(HK_COMBINED_PKT1_MID); /* MID in the table */
     CFE_SB_MsgId_t MissingInputMid = CFE_SB_INVALID_MSG_ID;
+    int32          i;
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -1840,7 +1843,7 @@ void Test_HK_CheckForMissingData_NoMissingData_DataPresent(void)
     HK_Test_InitGoodCopyTable(CopyTblPtr);
     HK_Test_InitGoodRuntimeTable(RtTblPtr);
 
-    for (int i = 0; i < 5; i++)
+    for (i = 0; i < 5; i++)
     {
         RtTblPtr[i].DataPresent = HK_DATA_PRESENT;
     }
