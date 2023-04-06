@@ -975,14 +975,14 @@ void Test_HK_TearDownOldCopyTable_Success2(void)
     /* Arrange */
     int32                  ReturnValue;
     int32                  i;
-    CFE_SB_Buffer_t        DummyBuffer;
+    CFE_SB_Buffer_t        Buffer;
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
     HK_Test_InitGoodCopyTable(CopyTblPtr);
     HK_Test_InitGoodRuntimeTable(RtTblPtr);
 
-    RtTblPtr[4].OutputPktAddr = &DummyBuffer; /* Just needs to not match the
+    RtTblPtr[4].OutputPktAddr = &Buffer; /* Just needs to not match the
                                       other filled entries */
 
     /* Act */
@@ -1147,7 +1147,7 @@ void Test_HK_SendCombinedHkPacket_PacketNotFound(void)
     CFE_SB_MsgId_t  forced_MsgID = HK_UT_MID_100; /* does not match provided parameter */
     int32           strCmpResult;
     char            ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    CFE_SB_Buffer_t DummyBuffer;
+    CFE_SB_Buffer_t Buffer;
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -1156,7 +1156,7 @@ void Test_HK_SendCombinedHkPacket_PacketNotFound(void)
     HK_Test_InitEmptyRuntimeTable(RtTblPtr);
 
     /* populate one entry in the RT table */
-    RtTblPtr[1].OutputPktAddr = &DummyBuffer; /* just needs to be non-null */
+    RtTblPtr[1].OutputPktAddr = &Buffer; /* just needs to be non-null */
 
     HK_AppData.RuntimeTablePtr = RtTblPtr;
     HK_AppData.CopyTablePtr    = CopyTblPtr;
@@ -1881,11 +1881,11 @@ void Test_HK_SetFlagsToNotPresent(void)
     int32                  EntriesWithDataPresent = 0;
     hk_runtime_tbl_entry_t RtTbl[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CpyTbl[HK_COPY_TABLE_ENTRIES];
-    CFE_SB_Buffer_t        DummyBuffer;
+    CFE_SB_Buffer_t        Buffer;
     int32                  i;
     for (i = 0; i < HK_COPY_TABLE_ENTRIES; i++)
     {
-        RtTbl[i].OutputPktAddr = &DummyBuffer; /* just needs to be non-null */
+        RtTbl[i].OutputPktAddr = &Buffer; /* just needs to be non-null */
         CpyTbl[i].OutputMid    = CFE_SB_ValueToMsgId(CFE_EVS_HK_TLM_MID);
         RtTbl[i].DataPresent   = HK_DATA_PRESENT;
     }

@@ -135,7 +135,7 @@ void HK_Test_InitEmptyCopyTable(hk_copy_table_entry_t *CpyTbl)
 void HK_Test_InitGoodRuntimeTable(hk_runtime_tbl_entry_t *RtTbl)
 {
     int32                   i = 0;
-    CFE_SB_Buffer_t         DummyBuffer;
+    CFE_SB_Buffer_t         Buffer;
     hk_runtime_tbl_entry_t *RtEntry = NULL;
 
     /* Loop thru the RunTime table initializing the fields */
@@ -145,7 +145,7 @@ void HK_Test_InitGoodRuntimeTable(hk_runtime_tbl_entry_t *RtTbl)
 
         if (i < 5)
         {
-            RtEntry->OutputPktAddr      = &DummyBuffer; /* just needs to be non-null */
+            RtEntry->OutputPktAddr      = &Buffer; /* just needs to be non-null */
             RtEntry->InputMidSubscribed = HK_INPUTMID_SUBSCRIBED;
             RtEntry->DataPresent        = HK_DATA_NOT_PRESENT;
         }
