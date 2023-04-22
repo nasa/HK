@@ -31,13 +31,13 @@
  * Generated stub function for HK_AppInit()
  * ----------------------------------------------------
  */
-int32 HK_AppInit(void)
+CFE_Status_t HK_AppInit(void)
 {
-    UT_GenStub_SetupReturnBuffer(HK_AppInit, int32);
+    UT_GenStub_SetupReturnBuffer(HK_AppInit, CFE_Status_t);
 
     UT_GenStub_Execute(HK_AppInit, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(HK_AppInit, int32);
+    return UT_GenStub_GetReturnValue(HK_AppInit, CFE_Status_t);
 }
 
 /*
@@ -115,11 +115,11 @@ void HK_SendHkCmd(const CFE_SB_Buffer_t *BufPtr)
  * Generated stub function for HK_TableInit()
  * ----------------------------------------------------
  */
-int32 HK_TableInit(void)
+CFE_Status_t HK_TableInit(void)
 {
-    UT_GenStub_SetupReturnBuffer(HK_TableInit, int32);
+    UT_GenStub_SetupReturnBuffer(HK_TableInit, CFE_Status_t);
 
     UT_GenStub_Execute(HK_TableInit, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(HK_TableInit, int32);
+    return UT_GenStub_GetReturnValue(HK_TableInit, CFE_Status_t);
 }

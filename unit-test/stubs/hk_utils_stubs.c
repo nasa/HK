@@ -102,16 +102,16 @@ void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
  * Generated stub function for HK_ProcessNewCopyTable()
  * ----------------------------------------------------
  */
-int32 HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
+CFE_Status_t HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
 {
-    UT_GenStub_SetupReturnBuffer(HK_ProcessNewCopyTable, int32);
+    UT_GenStub_SetupReturnBuffer(HK_ProcessNewCopyTable, CFE_Status_t);
 
     UT_GenStub_AddParam(HK_ProcessNewCopyTable, hk_copy_table_entry_t *, CpyTblPtr);
     UT_GenStub_AddParam(HK_ProcessNewCopyTable, hk_runtime_tbl_entry_t *, RtTblPtr);
 
     UT_GenStub_Execute(HK_ProcessNewCopyTable, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(HK_ProcessNewCopyTable, int32);
+    return UT_GenStub_GetReturnValue(HK_ProcessNewCopyTable, CFE_Status_t);
 }
 
 /*
@@ -143,16 +143,16 @@ void HK_SetFlagsToNotPresent(CFE_SB_MsgId_t OutPkt)
  * Generated stub function for HK_TearDownOldCopyTable()
  * ----------------------------------------------------
  */
-int32 HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
+CFE_Status_t HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
 {
-    UT_GenStub_SetupReturnBuffer(HK_TearDownOldCopyTable, int32);
+    UT_GenStub_SetupReturnBuffer(HK_TearDownOldCopyTable, CFE_Status_t);
 
     UT_GenStub_AddParam(HK_TearDownOldCopyTable, hk_copy_table_entry_t *, CpyTblPtr);
     UT_GenStub_AddParam(HK_TearDownOldCopyTable, hk_runtime_tbl_entry_t *, RtTblPtr);
 
     UT_GenStub_Execute(HK_TearDownOldCopyTable, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(HK_TearDownOldCopyTable, int32);
+    return UT_GenStub_GetReturnValue(HK_TearDownOldCopyTable, CFE_Status_t);
 }
 
 /*

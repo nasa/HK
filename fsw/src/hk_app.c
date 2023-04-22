@@ -49,7 +49,7 @@ HK_AppData_t HK_AppData;
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_AppMain(void)
 {
-    int32            Status = CFE_SUCCESS;
+    CFE_Status_t     Status = CFE_SUCCESS;
     CFE_SB_Buffer_t *BufPtr = NULL;
 
     /*
@@ -128,9 +128,9 @@ void HK_AppMain(void)
 /* HK application initialization routine                           */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-int32 HK_AppInit(void)
+CFE_Status_t HK_AppInit(void)
 {
-    int32 Status = CFE_SUCCESS;
+    CFE_Status_t Status = CFE_SUCCESS;
 
     HK_AppData.RunStatus = CFE_ES_RunStatus_APP_RUN;
 
@@ -220,9 +220,9 @@ int32 HK_AppInit(void)
 /* HK application table initialization routine                     */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-int32 HK_TableInit(void)
+CFE_Status_t HK_TableInit(void)
 {
-    int32 Status = CFE_SUCCESS;
+    CFE_Status_t Status = CFE_SUCCESS;
 
     /* Register The HK Copy Table */
     Status = CFE_TBL_Register(&HK_AppData.CopyTableHandle, HK_COPY_TABLE_NAME,

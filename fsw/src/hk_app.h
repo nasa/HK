@@ -119,7 +119,7 @@ void HK_AppMain(void);
  *  \return Execution status, see \ref CFEReturnCodes
  *  \retval #CFE_SUCCESS \copybrief CFE_SUCCESS
  */
-int32 HK_AppInit(void);
+CFE_Status_t HK_AppInit(void);
 
 /**
  * \brief Initialize the Copy Table and the Runtime Table
@@ -133,7 +133,7 @@ int32 HK_AppInit(void);
  *
  *  \sa #HK_AppInit
  */
-int32 HK_TableInit(void);
+CFE_Status_t HK_TableInit(void);
 
 /**
  * \brief Send Combined Housekeeping Message

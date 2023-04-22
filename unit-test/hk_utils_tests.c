@@ -328,7 +328,7 @@ void Test_HK_ProcessNewCopyTable_NullCpyTbl(void)
     /* Arrange */
     hk_runtime_tbl_entry_t RtTblPtr;
     int32                  strCmpResult;
-    int32                  ReturnValue;
+    CFE_Status_t           ReturnValue;
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
@@ -365,7 +365,7 @@ void Test_HK_ProcessNewCopyTable_NullRtTbl(void)
     hk_copy_table_entry_t CpyTblPtr;
     int32                 strCmpResult;
     char                  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    int32                 ReturnValue;
+    CFE_Status_t          ReturnValue;
 
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Null pointer detected in new copy tbl processing: CpyTbl = %%p, RtTbl = %%p");
@@ -397,10 +397,10 @@ void Test_HK_ProcessNewCopyTable_NullRtTbl(void)
 void Test_HK_ProcessNewCopyTable_PoolBufFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 i;
-    int32 ExtraSubscribes = 0;
-    int32 strCmpResult;
+    CFE_Status_t ReturnValue;
+    int32        i;
+    int32        ExtraSubscribes = 0;
+    int32        strCmpResult;
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
@@ -463,10 +463,10 @@ void Test_HK_ProcessNewCopyTable_PoolBufFail(void)
 void Test_HK_ProcessNewCopyTable_SubscribeFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    int32 i;
-    int32 SubscriptionCount = 0;
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    int32        i;
+    int32        SubscriptionCount = 0;
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
@@ -525,9 +525,9 @@ void Test_HK_ProcessNewCopyTable_SubscribeFail(void)
 void Test_HK_ProcessNewCopyTable_Success(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 i;
-    int32 ExtraSubscribes = 0;
+    CFE_Status_t ReturnValue;
+    int32        i;
+    int32        ExtraSubscribes = 0;
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -574,9 +574,9 @@ void Test_HK_ProcessNewCopyTable_Success(void)
 void Test_HK_ProcessNewCopyTable_Success2(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 i;
-    int32 ExtraSubscribes = 0;
+    CFE_Status_t ReturnValue;
+    int32        i;
+    int32        ExtraSubscribes = 0;
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -623,9 +623,9 @@ void Test_HK_ProcessNewCopyTable_Success2(void)
 void Test_HK_ProcessNewCopyTable_PacketSizeZero(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 i;
-    int32 ExtraSubscribes = 0;
+    CFE_Status_t ReturnValue;
+    int32        i;
+    int32        ExtraSubscribes = 0;
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -672,9 +672,9 @@ void Test_HK_ProcessNewCopyTable_PacketSizeZero(void)
 void Test_HK_ProcessNewCopyTable_AllPacketsSizeZero(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 i;
-    int32 ExtraSubscribes = 0;
+    CFE_Status_t ReturnValue;
+    int32        i;
+    int32        ExtraSubscribes = 0;
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -725,9 +725,9 @@ void Test_HK_ProcessNewCopyTable_AllPacketsSizeZero(void)
 void Test_HK_ProcessNewCopyTable_EmptyTable(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 i;
-    int32 SubscriptionCount = 0;
+    CFE_Status_t ReturnValue;
+    int32        i;
+    int32        SubscriptionCount = 0;
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -773,7 +773,7 @@ void Test_HK_TearDownOldCopyTable_NullCpyTbl(void)
     /* Arrange */
     hk_runtime_tbl_entry_t RtTblPtr;
     int32                  strCmpResult;
-    int32                  ReturnValue;
+    CFE_Status_t           ReturnValue;
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
@@ -809,7 +809,7 @@ void Test_HK_TearDownOldCopyTable_NullRtTbl(void)
     /* Arrange */
     hk_copy_table_entry_t CpyTblPtr;
     int32                 strCmpResult;
-    int32                 ReturnValue;
+    CFE_Status_t          ReturnValue;
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
@@ -843,9 +843,9 @@ void Test_HK_TearDownOldCopyTable_NullRtTbl(void)
 void Test_HK_TearDownOldCopyTable_PoolFreeFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 i;
-    int32 strCmpResult;
+    CFE_Status_t ReturnValue;
+    int32        i;
+    int32        strCmpResult;
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
@@ -895,8 +895,8 @@ void Test_HK_TearDownOldCopyTable_PoolFreeFail(void)
 void Test_HK_TearDownOldCopyTable_Success(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 i;
+    CFE_Status_t ReturnValue;
+    int32        i;
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -930,9 +930,9 @@ void Test_HK_TearDownOldCopyTable_Success(void)
 void Test_HK_TearDownOldCopyTable_EmptyTable(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 i;
-    int32 SubscriptionCount = 0;
+    CFE_Status_t ReturnValue;
+    int32        i;
+    int32        SubscriptionCount = 0;
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -973,7 +973,7 @@ void Test_HK_TearDownOldCopyTable_EmptyTable(void)
 void Test_HK_TearDownOldCopyTable_Success2(void)
 {
     /* Arrange */
-    int32                  ReturnValue;
+    CFE_Status_t           ReturnValue;
     int32                  i;
     CFE_SB_Buffer_t        Buffer;
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];

@@ -266,9 +266,9 @@ void Test_HK_AppMain_RcvBufTimeoutCheckFail(void)
 void Test_HK_AppInit_Success(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH, "HK Initialized.  Version %%d.%%d.%%d.%%d");
 
     /* Set return codes for table functions so that HK_TableInit succeeds. */
@@ -305,9 +305,9 @@ void Test_HK_AppInit_Success(void)
 void Test_HK_AppInit_EVSRegFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedSysLogString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedSysLogString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedSysLogString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK: error registering for event services: 0x%%08X\n");
 
@@ -332,10 +332,10 @@ void Test_HK_AppInit_EVSRegFail(void)
 void Test_HK_AppInit_SBCreatePipeFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    int32 ForcedReturnVal = -1;
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    int32        ForcedReturnVal = -1;
 
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH, "Error Creating SB Pipe,RC=0x%%08X");
 
@@ -368,10 +368,10 @@ void Test_HK_AppInit_SBCreatePipeFail(void)
 void Test_HK_AppInit_SBSubscribe1Fail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    int32 ForcedReturnVal = -1;
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    int32        ForcedReturnVal = -1;
 
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Error Subscribing to HK Snd Cmb Pkt, MID=0x%%08X, RC=0x%%08X");
@@ -405,10 +405,10 @@ void Test_HK_AppInit_SBSubscribe1Fail(void)
 void Test_HK_AppInit_SBSubscribe2Fail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    int32 ForcedReturnVal = -1;
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    int32        ForcedReturnVal = -1;
 
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Error Subscribing to HK Request, MID=0x%%08X, RC=0x%%08X");
@@ -442,10 +442,10 @@ void Test_HK_AppInit_SBSubscribe2Fail(void)
 void Test_HK_AppInit_SBSubscribe3Fail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    int32 ForcedReturnVal = -1;
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    int32        ForcedReturnVal = -1;
 
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Error Subscribing to HK Gnd Cmds, MID=0x%%08X, RC=0x%%08X");
@@ -479,10 +479,10 @@ void Test_HK_AppInit_SBSubscribe3Fail(void)
 void Test_HK_AppInit_PoolCreateFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    int32 ForcedReturnVal = -1;
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    int32        ForcedReturnVal = -1;
 
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH, "Error Creating Memory Pool,RC=0x%%08X");
 
@@ -515,7 +515,7 @@ void Test_HK_AppInit_PoolCreateFail(void)
 void Test_HK_AppInit_TblInitFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
+    CFE_Status_t ReturnValue;
 
     /* forcing CFE_TBL_Register to fail indirectly causes HK_TableInit to fail */
     int32 ForcedReturnVal = -1;
@@ -540,10 +540,10 @@ void Test_HK_AppInit_TblInitFail(void)
 void Test_HK_AppInit_SendEventFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    uint8 call_count_CFE_ES_WriteToSysLog;
-    char  ExpectedSysLogString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    uint8        call_count_CFE_ES_WriteToSysLog;
+    char         ExpectedSysLogString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedSysLogString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK App:Error Sending Initialization Event,RC=0x%%08X\n");
 
@@ -578,7 +578,7 @@ void Test_HK_AppInit_SendEventFail(void)
 void Test_HK_TableInit_Success(void)
 {
     /* Arrange */
-    int32 ReturnValue;
+    CFE_Status_t ReturnValue;
 
     UT_SetDeferredRetcode(UT_KEY(CFE_TBL_GetAddress), 1, CFE_TBL_INFO_UPDATED);
     UT_SetDefaultReturnValue(UT_KEY(HK_ProcessNewCopyTable), CFE_SUCCESS);
@@ -602,7 +602,7 @@ void Test_HK_TableInit_Success(void)
 void Test_HK_TableInit_RegisterCpyTblFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
+    CFE_Status_t ReturnValue;
 
     int32 strCmpResult;
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
@@ -637,9 +637,9 @@ void Test_HK_TableInit_RegisterCpyTblFail(void)
 void Test_HK_TableInit_RegisterRtTblFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH, "Error Registering Runtime Table,RC=0x%%08X");
 
     UT_SetDeferredRetcode(UT_KEY(CFE_TBL_Register), 2, -1);
@@ -671,9 +671,9 @@ void Test_HK_TableInit_RegisterRtTblFail(void)
 void Test_HK_TableInit_LoadCpyTblFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH, "Error Loading Copy Table,RC=0x%%08X");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_Load), -1);
@@ -705,9 +705,9 @@ void Test_HK_TableInit_LoadCpyTblFail(void)
 void Test_HK_TableInit_ManageCpyTblFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Error from TBL Manage call for Copy Table,RC=0x%%08X");
 
@@ -740,9 +740,9 @@ void Test_HK_TableInit_ManageCpyTblFail(void)
 void Test_HK_TableInit_ManageRtTblFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Error from TBL Manage call for Runtime Table,RC=0x%%08X");
 
@@ -775,9 +775,9 @@ void Test_HK_TableInit_ManageRtTblFail(void)
 void Test_HK_TableInit_GetAddrCpyTblFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH, "Error Getting Adr for Cpy Tbl,RC=0x%%08X");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_GetAddress), -1);
@@ -809,9 +809,9 @@ void Test_HK_TableInit_GetAddrCpyTblFail(void)
 void Test_HK_TableInit_GetAddrRtTblFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH, "Error Getting Adr for Runtime Table,RC=0x%%08X");
 
     UT_SetDeferredRetcode(UT_KEY(CFE_TBL_GetAddress), 1, CFE_TBL_INFO_UPDATED);
@@ -844,9 +844,9 @@ void Test_HK_TableInit_GetAddrRtTblFail(void)
 void Test_HK_TableInit_ProcessNewCpyTblFail(void)
 {
     /* Arrange */
-    int32 ReturnValue;
-    int32 strCmpResult;
-    char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+    CFE_Status_t ReturnValue;
+    int32        strCmpResult;
+    char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Process New Copy Table Failed, status = 0x%%08X");
 
