@@ -68,7 +68,8 @@ typedef struct
     uint8           CmdCounter; /**< \brief Number of valid commands received */
     uint8           ErrCounter; /**< \brief Number of invalid commands received */
 
-    uint16 MissingDataCtr;      /**< \brief Number of times missing data was detected */
+    uint8  PacketNotFoundCtr;   /**< \brief Number of times a requested packet was not found */
+    uint8  MissingDataCtr;      /**< \brief Number of times missing data was detected */
     uint16 CombinedPacketsSent; /**< \brief Count of combined output msgs sent */
 
     CFE_ES_MemHandle_t MemPoolHandle; /**< \brief HK mempool handle for output pkts */

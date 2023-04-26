@@ -930,8 +930,9 @@ void Test_HK_SendHkCmd(void)
     /* Setup app data values */
     HK_AppData.CmdCounter          = 1;
     HK_AppData.ErrCounter          = 2;
-    HK_AppData.MissingDataCtr      = 3;
-    HK_AppData.CombinedPacketsSent = 4;
+    HK_AppData.PacketNotFoundCtr   = 3;
+    HK_AppData.MissingDataCtr      = 4;
+    HK_AppData.CombinedPacketsSent = 5;
     HK_AppData.MemPoolHandle       = HK_UT_MEMPOOL_1;
 
     memset(&Msg, 0, sizeof(Msg));
@@ -946,6 +947,7 @@ void Test_HK_SendHkCmd(void)
     PayloadPtr = &HK_AppData.HkPacket.Payload;
     UtAssert_INT32_EQ(HK_AppData.CmdCounter, PayloadPtr->CmdCounter);
     UtAssert_INT32_EQ(HK_AppData.ErrCounter, PayloadPtr->ErrCounter);
+    UtAssert_INT32_EQ(HK_AppData.PacketNotFoundCtr, PayloadPtr->PacketNotFoundCtr);
     UtAssert_INT32_EQ(HK_AppData.MissingDataCtr, PayloadPtr->MissingDataCtr);
     UtAssert_INT32_EQ(HK_AppData.CombinedPacketsSent, PayloadPtr->CombinedPacketsSent);
     UtAssert_True(CFE_RESOURCEID_TEST_EQUAL(HK_AppData.MemPoolHandle, PayloadPtr->MemPoolHandle),
@@ -1055,6 +1057,7 @@ void Test_HK_ResetHkData(void)
     HK_AppData.CmdCounter          = 1;
     HK_AppData.ErrCounter          = 1;
     HK_AppData.CombinedPacketsSent = 1;
+    HK_AppData.PacketNotFoundCtr   = 1;
     HK_AppData.MissingDataCtr      = 1;
 
     /* Act */
@@ -1064,6 +1067,7 @@ void Test_HK_ResetHkData(void)
     UtAssert_INT32_EQ(HK_AppData.CmdCounter, 0);
     UtAssert_INT32_EQ(HK_AppData.ErrCounter, 0);
     UtAssert_INT32_EQ(HK_AppData.CombinedPacketsSent, 0);
+    UtAssert_INT32_EQ(HK_AppData.PacketNotFoundCtr, 0);
     UtAssert_INT32_EQ(HK_AppData.MissingDataCtr, 0);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));

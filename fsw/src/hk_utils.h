@@ -129,8 +129,9 @@ int32 HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_e
  *
  * \par Description
  *        This routine searches for the combined HK that contains the specified
- *        MID.  Once found, the packet is sent.  If not found, an event is
- *        generated. Also sets the data pieces for this output pkt
+ *        MID.  Once found, the packet is sent.  If not found, PacketNotFoundCtr
+ *        is incremented, and an event is generated. Also sets the data pieces
+ *        for this output pkt
  *
  * \par Assumptions, External Events, and Notes:
  *          None
