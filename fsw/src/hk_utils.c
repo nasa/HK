@@ -114,7 +114,7 @@ int32 HK_ValidateHkCopyTable(void *TblPtr)
 /* HK process new copy table                                       */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-int32 HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
+CFE_Status_t HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
 {
     hk_copy_table_entry_t * StartOfCopyTable = NULL;
     hk_copy_table_entry_t * OuterCpyEntry    = NULL;
@@ -128,7 +128,7 @@ int32 HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_en
     int32                   SizeOfThisPacket;
     int32                   FurthestByteFromThisEntry;
     CFE_SB_Buffer_t *       NewPacketAddr;
-    int32                   Result;
+    CFE_Status_t            Result;
 
     /* Ensure that the input arguments are valid */
     if (((void *)CpyTblPtr == NULL) || ((void *)RtTblPtr == NULL))
@@ -261,7 +261,7 @@ int32 HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_en
 /* HK Tear down old copy table                                     */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-int32 HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
+CFE_Status_t HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
 {
     hk_copy_table_entry_t * StartOfCopyTable = NULL;
     hk_copy_table_entry_t * OuterCpyEntry    = NULL;
@@ -274,7 +274,7 @@ int32 HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_e
     CFE_SB_MsgId_t          MidOfThisPacket;
     void *                  OutputPktAddr = NULL;
     void *                  SavedPktAddr  = NULL;
-    int32                   Result;
+    CFE_Status_t            Result;
 
     /* Ensure that the input arguments are valid */
     if (((void *)CpyTblPtr == NULL) || ((void *)RtTblPtr == NULL))
