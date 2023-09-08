@@ -19,10 +19,19 @@
 
 /**
  * @file
- *  The CFS Housekeeping (HK) Application platform configuration header file
+ *   CFS Housekeeping (HK) Application Private Config Definitions
+ *
+ * This provides default values for configurable items that are internal
+ * to this module and do NOT affect the interface(s) of this module.  Changes
+ * to items in this file only affect the local module and will be transparent
+ * to external entities that are using the public interface(s).
+ *
+ * @note This file may be overridden/superseded by mission-provided definitions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
  */
-#ifndef HK_PLATFORM_CFG_H
-#define HK_PLATFORM_CFG_H
+#ifndef HK_INTERNAL_CFG_H
+#define HK_INTERNAL_CFG_H
 
 /**
  * \defgroup cfshkplatformcfg CFS Housekeeping Platform Configuration

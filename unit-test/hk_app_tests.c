@@ -23,7 +23,7 @@
 
 #include "hk_app.h"
 #include "hk_msg.h"
-#include "hk_events.h"
+#include "hk_eventids.h"
 #include "hk_version.h"
 #include "hk_msgids.h"
 #include "hk_utils.h"
@@ -50,7 +50,7 @@ uint8 call_count_CFE_EVS_SendEvent;
  * Function under test: HK_AppMain
  *
  * Case: Tests the "nominal" mode where all dependent calls should be
- *       successful by defaut.
+ *       successful by default.
  */
 void Test_HK_AppMain_Success(void)
 {

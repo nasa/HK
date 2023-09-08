@@ -19,12 +19,15 @@
 
 /**
  * @file
- *  The CFS Housekeeping (HK) Application header file
+ *   Specification for the CFS Housekeeping (HK) command function codes
+ *
+ * @note
+ *   This file should be strictly limited to the command/function code (CC)
+ *   macro definitions.  Other definitions such as enums, typedefs, or other
+ *   macros should be placed in the hk_msgdefs.h or hk_msg.h files.
  */
-#ifndef HK_MSGDEFS_H
-#define HK_MSGDEFS_H
-
-#include <cfe.h>
+#ifndef HK_FCNCODES_H
+#define HK_FCNCODES_H
 
 /**
  * \defgroup cfshkcmdcodes CFS Housekeeping Command Codes

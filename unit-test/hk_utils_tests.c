@@ -23,7 +23,7 @@
 
 #include "hk_app.h"
 #include "hk_msg.h"
-#include "hk_events.h"
+#include "hk_eventids.h"
 #include "hk_version.h"
 #include "hk_msgids.h"
 #include "hk_utils.h"
@@ -1952,7 +1952,7 @@ void UtTest_Setup(void)
     UtTest_Add(Test_HK_ProcessIncomingHkData_MessageError, HK_Test_Setup, HK_Test_TearDown,
                "Test_HK_ProcessIncomingHkData_MessageError");
 
-    /* Test functions for HK_VaidateHkCopyTable */
+    /* Test functions for HK_ValidateHkCopyTable */
     UtTest_Add(Test_HK_ValidateHkCopyTable_Success, HK_Test_Setup, HK_Test_TearDown,
                "Test_HK_ValidateHkCopyTable_Success");
     UtTest_Add(Test_HK_ValidateHkCopyTable_Error, HK_Test_Setup, HK_Test_TearDown,

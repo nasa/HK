@@ -45,7 +45,7 @@
  *       None
  *
  *  \param[in] BufPtr         Pointer to the Software Buss Buffer
- *  \param[in] ExpectedLength The expected lenght of the command
+ *  \param[in] ExpectedLength The expected length of the command
  *
  *  \return Command Length Status
  *  \retval #HK_SUCCESS           Length Valid

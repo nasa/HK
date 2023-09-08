@@ -19,19 +19,20 @@
 
 /**
  * @file
- *  The CFS Housekeeping (HK) Application header file
+ *
+ *   CFS Housekeeping (HK) Application Table Structure Definition
+ *
+ * Provides default definitions for HK table structures
+ *
+ * @note This file may be overridden/superseded by mission-provided definitions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
  */
-#ifndef HK_TBLDEFS_H
-#define HK_TBLDEFS_H
 
-/************************************************************************
-** Includes
-*************************************************************************/
-#include <cfe.h>
+#ifndef HK_TBLSTRUCT_H
+#define HK_TBLSTRUCT_H
 
-/*************************************************************************
-** Type definitions
-**************************************************************************/
+#include "cfe.h"
 
 /**  \brief HK Copy Table Entry Format
  */

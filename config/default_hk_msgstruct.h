@@ -19,12 +19,13 @@
 
 /**
  * @file
- *  The CFS Housekeeping (HK) Application header file
+ *   Specification for the CFS Housekeeping (HK) command and telemetry
+ *   message data types.
  */
-#ifndef HK_MSG_H
-#define HK_MSG_H
+#ifndef HK_MSGSTRUCT_H
+#define HK_MSGSTRUCT_H
 
-#include <cfe.h>
+#include "cfe.h"
 
 /**
  * \defgroup cfshkcmdstructs CFS Housekeeping Command Structures
