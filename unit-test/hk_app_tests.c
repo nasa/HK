@@ -1016,6 +1016,8 @@ void Test_HK_ResetCountersCmd(void)
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH, "HK Reset Counters command received");
 
+    memset(&Buf, 0, sizeof(Buf));
+
     /* Act */
     HK_ResetCountersCmd(&Buf);
 
