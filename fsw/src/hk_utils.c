@@ -106,7 +106,31 @@ void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 int32 HK_ValidateHkCopyTable(void *TblPtr)
 {
-    return HK_SUCCESS;
+    int32                  HKStatus;
+    int32                  i        = 0;
+    int32                  sumBytes = 0;
+    hk_copy_table_entry_t *tbl      = (hk_copy_table_entry_t *)TblPtr;
+
+    /* Loop thru the table and add up all the bytes copied for testing overflow scenario */
+    for (i = 0; i < HK_COPY_TABLE_ENTRIES; i++)
+    {
+        sumBytes += tbl[i].NumBytes;
+    }
+
+    /* Check if the accumulated bytes exceed the allowed packet size, indicating an overflow */
+    if (sumBytes > HK_MAX_COMBINED_PACKET_SIZE)
+    {
+        HKStatus = HK_ERROR;
+
+        CFE_EVS_SendEvent(HK_NEWCPYTBL_HK_FAILED_EID, CFE_EVS_EventType_ERROR,
+                          "HK Validate: table contents has size %d > %d\n", sumBytes, HK_MAX_COMBINED_PACKET_SIZE);
+    }
+    else
+    {
+        HKStatus = HK_SUCCESS;
+    }
+
+    return HKStatus;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

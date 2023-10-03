@@ -81,6 +81,7 @@ void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr);
  *
  * \return Table Validation Status
  * \retval #HK_SUCCESS Valid table
+ * \retval #HK_ERROR   \copydoc HK_ERROR
  *
  * \sa #HK_TableInit
  */

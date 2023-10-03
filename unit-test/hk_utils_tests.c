@@ -296,20 +296,42 @@ void Test_HK_ProcessIncomingHkData_MessageError(void)
  * Function under test: HK_ValidateHkCopyTable
  *
  * Case: Tests that the HK_ValidateHkCopyTable returns HK_SUCCESS
- *       (that is the only possible outcome - there are no branches in
- *       the function).
  */
 
 void Test_HK_ValidateHkCopyTable_Success(void)
 {
     /* Arrange */
+    hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+
+    HK_Test_InitGoodCopyTable(CopyTblPtr);
 
     /* Act */
-    int32 ReturnValue = HK_ValidateHkCopyTable(NULL);
+    int32 ReturnValue = HK_ValidateHkCopyTable(CopyTblPtr);
 
     /* Assert */
     UtAssert_True(ReturnValue == HK_SUCCESS, "HK_ValidateHkCopyTable returned %d, expected %d (HK_SUCCESS)",
                   ReturnValue, HK_SUCCESS);
+}
+
+/*
+ * Function under test: HK_ValidateHkCopyTable
+ *
+ * Case: Tests that the HK_ValidateHkCopyTable returns HK_ERROR
+ */
+
+void Test_HK_ValidateHkCopyTable_Error(void)
+{
+    /* Arrange */
+    hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+
+    HK_Test_InitOverflowCopyTable(CopyTblPtr);
+
+    /* Act */
+    int32 ReturnValue = HK_ValidateHkCopyTable(CopyTblPtr);
+
+    /* Assert */
+    UtAssert_True(ReturnValue == HK_ERROR, "HK_ValidateHkCopyTable returned %d, expected %d (HK_ERROR)",
+                  ReturnValue, HK_ERROR);
 }
 
 /**********************************************************************/
@@ -1933,6 +1955,8 @@ void UtTest_Setup(void)
     /* Test functions for HK_VaidateHkCopyTable */
     UtTest_Add(Test_HK_ValidateHkCopyTable_Success, HK_Test_Setup, HK_Test_TearDown,
                "Test_HK_ValidateHkCopyTable_Success");
+    UtTest_Add(Test_HK_ValidateHkCopyTable_Error, HK_Test_Setup, HK_Test_TearDown,
+            "Test_HK_ValidateHkCopyTable_Error");
 
     /* Test functions for HK_ProcessNewCopyTable */
     UtTest_Add(Test_HK_ProcessNewCopyTable_EmptyTable, HK_Test_Setup, HK_Test_TearDown,

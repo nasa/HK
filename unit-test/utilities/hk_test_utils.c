@@ -118,6 +118,22 @@ void HK_Test_InitGoodCopyTable(hk_copy_table_entry_t *CpyTbl)
     }
 }
 
+void HK_Test_InitOverflowCopyTable(hk_copy_table_entry_t *CpyTbl)
+{
+    int32 i;
+    int32 overflowBytes = (HK_MAX_COMBINED_PACKET_SIZE / HK_COPY_TABLE_ENTRIES) + 1;
+
+    /* Set each table entry such that the combined size exceeds HK_MAX_COMBINED_PACKET_SIZE */
+    for (i = 0; i < HK_COPY_TABLE_ENTRIES; i++)
+    {
+        CpyTbl[i].InputMid     = CFE_SB_ValueToMsgId(CFE_EVS_HK_TLM_MID);
+        CpyTbl[i].InputOffset  = 12;
+        CpyTbl[i].OutputMid    = CFE_SB_ValueToMsgId(HK_COMBINED_PKT1_MID);
+        CpyTbl[i].OutputOffset = ((i + 1) * overflowBytes);
+        CpyTbl[i].NumBytes     = overflowBytes; /* Ensures overflow when summed across all entries */
+    }
+}
+
 void HK_Test_InitEmptyCopyTable(hk_copy_table_entry_t *CpyTbl)
 {
     int32 i = 0;
