@@ -121,6 +121,18 @@
  */
 #define HK_MISSION_REV 0
 
+/**
+ * \brief Maximum size allowed for HK combined packet
+ *
+ *  \par Description:
+ *       Defines the maximum allowed size (in bytes) of a combined packet.
+ *
+ *  \par Limits:
+ *       Must be defined as a numeric value that is greater than
+ *       or equal to zero.
+ */
+#define HK_MAX_COMBINED_PACKET_SIZE 1500
+
 /**\}*/
 
 #endif

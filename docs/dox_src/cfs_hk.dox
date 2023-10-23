@@ -281,9 +281,10 @@
   tables were chosen so that checksumming can be executed on the more-static copy
   table.
 
-  <B>HK Copy Table Validation</B> - The HK copy table currently has an empty validation
-  call-back function that always returns success. At the time of development,
-  a validation process that would apply to all projects was not perceived.
+  <B>HK Copy Table Validation</B> - The HK copy table currently has a validation
+  call-back function that returns success when the size of the resulting combined
+  packet is less than or equal to the platform/project defined maximum value. Otherwise,
+  this function returns error and sends and error event.
 
   <B>HK Copy Table Entries</B> - Entries follow the concept of:
   <I>Copy A bytes from input message B, byte-offset C to output message Y,

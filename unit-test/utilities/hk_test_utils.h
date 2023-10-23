@@ -57,6 +57,8 @@ extern CFE_ES_WriteToSysLog_context_t context_CFE_ES_WriteToSysLog;
 
 void HK_Test_InitGoodCopyTable(hk_copy_table_entry_t *CpyTbl);
 
+void HK_Test_InitOverflowCopyTable(hk_copy_table_entry_t *CpyTbl);
+
 void HK_Test_InitEmptyCopyTable(hk_copy_table_entry_t *CpyTbl);
 
 void HK_Test_InitGoodRuntimeTable(hk_runtime_tbl_entry_t *RtTbl);
