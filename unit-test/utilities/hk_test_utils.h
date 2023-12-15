@@ -52,7 +52,7 @@ extern CFE_EVS_SendEvent_context_t    context_CFE_EVS_SendEvent[];
 extern CFE_ES_WriteToSysLog_context_t context_CFE_ES_WriteToSysLog;
 
 /* Unit test ids */
-#define HK_UT_MID_100   CFE_SB_ValueToMsgId(CFE_PLATFORM_TLM_MID_BASE + 100)
+#define HK_UT_MID_100   CFE_SB_ValueToMsgId(100)
 #define HK_UT_MEMPOOL_1 CFE_ES_MEMHANDLE_C(CFE_RESOURCEID_WRAP(1))
 
 void HK_Test_InitGoodCopyTable(hk_copy_table_entry_t *CpyTbl);
