@@ -123,7 +123,7 @@ int32 HK_ValidateHkCopyTable(void *TblPtr)
         HKStatus = HK_ERROR;
 
         CFE_EVS_SendEvent(HK_NEWCPYTBL_HK_FAILED_EID, CFE_EVS_EventType_ERROR,
-                          "HK Validate: table contents has size %d > %d\n", sumBytes, HK_MAX_COMBINED_PACKET_SIZE);
+                          "HK Validate: table contents has size %d > %d\n", (int)sumBytes, HK_MAX_COMBINED_PACKET_SIZE);
     }
     else
     {

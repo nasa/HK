@@ -301,7 +301,7 @@ void Test_HK_ProcessIncomingHkData_MessageError(void)
 void Test_HK_ValidateHkCopyTable_Success(void)
 {
     /* Arrange */
-    hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+    hk_copy_table_entry_t CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
     HK_Test_InitGoodCopyTable(CopyTblPtr);
 
@@ -309,8 +309,7 @@ void Test_HK_ValidateHkCopyTable_Success(void)
     int32 ReturnValue = HK_ValidateHkCopyTable(CopyTblPtr);
 
     /* Assert */
-    UtAssert_True(ReturnValue == HK_SUCCESS, "HK_ValidateHkCopyTable returned %d, expected %d (HK_SUCCESS)",
-                  ReturnValue, HK_SUCCESS);
+    UtAssert_INT32_EQ(ReturnValue, HK_SUCCESS);
 }
 
 /*
@@ -322,7 +321,7 @@ void Test_HK_ValidateHkCopyTable_Success(void)
 void Test_HK_ValidateHkCopyTable_Error(void)
 {
     /* Arrange */
-    hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
+    hk_copy_table_entry_t CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
     HK_Test_InitOverflowCopyTable(CopyTblPtr);
 
@@ -330,8 +329,7 @@ void Test_HK_ValidateHkCopyTable_Error(void)
     int32 ReturnValue = HK_ValidateHkCopyTable(CopyTblPtr);
 
     /* Assert */
-    UtAssert_True(ReturnValue == HK_ERROR, "HK_ValidateHkCopyTable returned %d, expected %d (HK_ERROR)",
-                  ReturnValue, HK_ERROR);
+    UtAssert_INT32_EQ(ReturnValue, HK_ERROR);
 }
 
 /**********************************************************************/
@@ -422,7 +420,7 @@ void Test_HK_ProcessNewCopyTable_PoolBufFail(void)
     CFE_Status_t ReturnValue;
     int32        i;
     int32        ExtraSubscribes = 0;
-    int32        strCmpResult;
+    int          strCmpResult;
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
@@ -457,7 +455,7 @@ void Test_HK_ProcessNewCopyTable_PoolBufFail(void)
         strCmpResult =
             strncmp(ExpectedEventString, context_CFE_EVS_SendEvent[i].Spec, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH);
 
-        UtAssert_True(strCmpResult == 0, "Event #%d string matched expected result, '%s'", i,
+        UtAssert_True(strCmpResult == 0, "Event #%d string matched expected result, '%s'", (int)i,
                       context_CFE_EVS_SendEvent[i].Spec);
     }
 
@@ -486,7 +484,7 @@ void Test_HK_ProcessNewCopyTable_SubscribeFail(void)
 {
     /* Arrange */
     CFE_Status_t ReturnValue;
-    int32        strCmpResult;
+    int          strCmpResult;
     int32        i;
     int32        SubscriptionCount = 0;
 
@@ -522,7 +520,7 @@ void Test_HK_ProcessNewCopyTable_SubscribeFail(void)
         strCmpResult =
             strncmp(ExpectedEventString, context_CFE_EVS_SendEvent[i].Spec, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH);
 
-        UtAssert_True(strCmpResult == 0, "Event #%d string matched expected result, '%s'", i,
+        UtAssert_True(strCmpResult == 0, "Event #%d string matched expected result, '%s'", (int)i,
                       context_CFE_EVS_SendEvent[i].Spec);
     }
 
@@ -867,7 +865,7 @@ void Test_HK_TearDownOldCopyTable_PoolFreeFail(void)
     /* Arrange */
     CFE_Status_t ReturnValue;
     int32        i;
-    int32        strCmpResult;
+    int          strCmpResult;
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
@@ -901,7 +899,7 @@ void Test_HK_TearDownOldCopyTable_PoolFreeFail(void)
         strCmpResult =
             strncmp(ExpectedEventString, context_CFE_EVS_SendEvent[i].Spec, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH);
 
-        UtAssert_True(strCmpResult == 0, "Event #%d string matched expected result, '%s'", i,
+        UtAssert_True(strCmpResult == 0, "Event #%d string matched expected result, '%s'", (int)i,
                       context_CFE_EVS_SendEvent[i].Spec);
     }
 }
@@ -938,7 +936,7 @@ void Test_HK_TearDownOldCopyTable_Success(void)
 
     for (i = 0; i < 5; i++)
     {
-        UtAssert_True(RtTblPtr[i].OutputPktAddr == NULL, "RtTblPtr[%d].OutputPktAddr == NULL", i);
+        UtAssert_True(RtTblPtr[i].OutputPktAddr == NULL, "RtTblPtr[%d].OutputPktAddr == NULL", (int)i);
         UtAssert_INT32_EQ(RtTblPtr[i].InputMidSubscribed, HK_INPUTMID_NOT_SUBSCRIBED);
     }
 }
@@ -1019,7 +1017,7 @@ void Test_HK_TearDownOldCopyTable_Success2(void)
 
     for (i = 0; i < 5; i++)
     {
-        UtAssert_True(RtTblPtr[i].OutputPktAddr == NULL, "RtTblPtr[%d].OutputPktAddr == NULL", i);
+        UtAssert_True(RtTblPtr[i].OutputPktAddr == NULL, "RtTblPtr[%d].OutputPktAddr == NULL", (int)i);
         UtAssert_INT32_EQ(RtTblPtr[i].InputMidSubscribed, HK_INPUTMID_NOT_SUBSCRIBED);
     }
 }
@@ -1955,8 +1953,7 @@ void UtTest_Setup(void)
     /* Test functions for HK_VaidateHkCopyTable */
     UtTest_Add(Test_HK_ValidateHkCopyTable_Success, HK_Test_Setup, HK_Test_TearDown,
                "Test_HK_ValidateHkCopyTable_Success");
-    UtTest_Add(Test_HK_ValidateHkCopyTable_Error, HK_Test_Setup, HK_Test_TearDown,
-            "Test_HK_ValidateHkCopyTable_Error");
+    UtTest_Add(Test_HK_ValidateHkCopyTable_Error, HK_Test_Setup, HK_Test_TearDown, "Test_HK_ValidateHkCopyTable_Error");
 
     /* Test functions for HK_ProcessNewCopyTable */
     UtTest_Add(Test_HK_ProcessNewCopyTable_EmptyTable, HK_Test_Setup, HK_Test_TearDown,
