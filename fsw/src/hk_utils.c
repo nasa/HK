@@ -433,6 +433,8 @@ void HK_SendCombinedHkPacket(CFE_SB_MsgId_t WhichMidToSend)
 
     if (PacketFound == false)
     {
+        HK_AppData.PacketNotFoundCtr++;
+
         CFE_EVS_SendEvent(HK_UNKNOWN_COMBINED_PACKET_EID, CFE_EVS_EventType_INFORMATION,
                           "Combined HK Packet 0x%08lX is not found in current HK Copy Table",
                           (unsigned long)CFE_SB_MsgIdToValue(WhichMidToSend));

@@ -233,7 +233,13 @@
   The HK app will not zero-out or alter the missing data section(s) in any way.
   The missing data values will match the last 'good' section received.
 
-  <H2>9. Using the Memory Pool handle to get mempool stats</H2>
+  <H2>9. Monitoring the 'Packet Not Found" counter</H2>
+  
+  If the combined HK Packet cannot be found in the current HK Copy Table, an
+  informational event will be sent, and the #HK_HkTlm_Payload_t.PacketNotFoundCtr
+  will be incremented.
+
+  <H2>10. Using the Memory Pool handle to get mempool stats</H2>
 
   The HK memory pool is used to allocate the memory needed to store the output
   packets. Each time a new copy table is processed, the memory for the output

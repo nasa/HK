@@ -96,7 +96,8 @@ typedef struct
     uint8              ErrCounter;          /**< \brief Count of invalid commands received */
     uint16             Padding;             /**< \brief Padding to force 32 bit alignment */
     uint16             CombinedPacketsSent; /**< \brief Count of combined tlm pkts sent */
-    uint16             MissingDataCtr;      /**< \brief Number of times missing data was detected */
+    uint8              PacketNotFoundCtr;   /**< \brief Number of times a requested packet was not found */
+    uint8              MissingDataCtr;      /**< \brief Number of times missing data was detected */
     CFE_ES_MemHandle_t MemPoolHandle;       /**< \brief Memory pool handle used to get mempool diags */
 } HK_HkTlm_Payload_t;
 

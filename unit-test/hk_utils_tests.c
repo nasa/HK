@@ -1067,6 +1067,7 @@ void Test_HK_SendCombinedHkPacket_NoMissingData(void)
 
     /* Assert */
     UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 0);
+    UtAssert_INT32_EQ(HK_AppData.PacketNotFoundCtr, 0);
     UtAssert_INT32_EQ(HK_AppData.MissingDataCtr, 0);
     UtAssert_INT32_EQ(call_count_CFE_SB_TimeStampMsg, 1);
     UtAssert_INT32_EQ(call_count_CFE_SB_TransmitMsg, 1);
@@ -1143,6 +1144,8 @@ void Test_HK_SendCombinedHkPacket_EmptyTable(void)
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
     /* Assert */
+    UtAssert_INT32_EQ(HK_AppData.PacketNotFoundCtr, 1);
+
     UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 1);
 
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_UNKNOWN_COMBINED_PACKET_EID);
@@ -1192,6 +1195,8 @@ void Test_HK_SendCombinedHkPacket_PacketNotFound(void)
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
     /* Assert */
+    UtAssert_INT32_EQ(HK_AppData.PacketNotFoundCtr, 1);
+
     UtAssert_INT32_EQ(call_count_CFE_EVS_SendEvent, 1);
 
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_UNKNOWN_COMBINED_PACKET_EID);

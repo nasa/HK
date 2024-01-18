@@ -330,6 +330,7 @@ void HK_SendHkCmd(const CFE_SB_Buffer_t *BufPtr)
     /* copy data into housekeeping packet */
     PayloadPtr->CmdCounter          = HK_AppData.CmdCounter;
     PayloadPtr->ErrCounter          = HK_AppData.ErrCounter;
+    PayloadPtr->PacketNotFoundCtr   = HK_AppData.PacketNotFoundCtr;
     PayloadPtr->MissingDataCtr      = HK_AppData.MissingDataCtr;
     PayloadPtr->CombinedPacketsSent = HK_AppData.CombinedPacketsSent;
     PayloadPtr->MemPoolHandle       = HK_AppData.MemPoolHandle;
@@ -373,6 +374,7 @@ void HK_ResetHkData(void)
     HK_AppData.CmdCounter          = 0;
     HK_AppData.ErrCounter          = 0;
     HK_AppData.CombinedPacketsSent = 0;
+    HK_AppData.PacketNotFoundCtr   = 0;
     HK_AppData.MissingDataCtr      = 0;
 }
 
