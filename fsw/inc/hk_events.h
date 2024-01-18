@@ -39,7 +39,7 @@
  *  This event message is issued when the Housekeeping App completes its
  *  initialization.
  */
-#define HK_INIT_EID 1
+#define HK_INIT_INF_EID 1
 
 /**
  * \brief HK Command Code Invalid Event ID
@@ -76,7 +76,7 @@
  *  \link #HK_NOOP_CC No-op command. \endlink  The command is used primarily as an
  *  indicator that the HK application can receive commands and generate telemetry.
  */
-#define HK_NOOP_CMD_EID 4
+#define HK_NOOP_INF_EID 4
 
 /**
  * \brief HK Reset Counters Command Event ID
@@ -88,7 +88,7 @@
  *  This event message is issued when the HK application receives a Reset
  *  Counters command.
  */
-#define HK_RESET_CNTRS_CMD_EID 5
+#define HK_RESET_INF_EID 5
 
 /**
  * \brief HK Table Definition Exceeds Packet Length Event ID

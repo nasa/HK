@@ -190,7 +190,7 @@
 
   If the packet length field in the
   command is set to the value expected by the HK app, then the command counter will
-  increment and a #HK_NOOP_CMD_EID event message
+  increment and a #HK_NOOP_INF_EID event message
   will be sent.  This no-op event will show the version number of the HK application.
 
   <H2>4. Sending the reset counters command</H2>
