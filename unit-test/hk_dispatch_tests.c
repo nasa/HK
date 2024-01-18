@@ -23,7 +23,7 @@
 
 #include "hk_dispatch.h"
 #include "hk_msg.h"
-#include "hk_events.h"
+#include "hk_eventids.h"
 #include "hk_msgids.h"
 #include "hk_test_utils.h"
 

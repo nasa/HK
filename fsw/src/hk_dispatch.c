@@ -27,7 +27,7 @@
 ** Includes
 *************************************************************************/
 #include "hk_app.h"
-#include "hk_events.h"
+#include "hk_eventids.h"
 #include "hk_msgids.h"
 #include "hk_dispatch.h"
 #include "hk_utils.h"
@@ -66,7 +66,7 @@ int32 HK_VerifyCmdLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength)
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
-/* Verify Non-Command Msg Length (Event is differnt)               */
+/* Verify Non-Command Msg Length (Event is different)               */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 int32 HK_VerifyMsgLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength)

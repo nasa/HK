@@ -30,7 +30,7 @@
 #include "cfe.h"
 #include "hk_utils.h"
 #include "hk_app.h"
-#include "hk_events.h"
+#include "hk_eventids.h"
 #include <string.h>
 
 /*************************************************************************

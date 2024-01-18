@@ -29,11 +29,10 @@
  ************************************************************************/
 
 #include "cfe.h"
-#include "hk_msgdefs.h"
 #include "hk_msg.h"
 #include "hk_utils.h"
 #include "hk_platform_cfg.h"
-#include "hk_extern_typedefs.h"
+#include "hk_tbl.h"
 
 /*************************************************************************
  * Macro definitions
@@ -185,7 +184,7 @@ void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr);
  *
  *  \par Description
  *       Processes a reset counters ground command which will reset
- *       the memory manager commmand error and command execution counters
+ *       the memory manager command error and command execution counters
  *       to zero.
  *
  *  \par Assumptions, External Events, and Notes:

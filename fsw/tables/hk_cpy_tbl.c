@@ -27,9 +27,8 @@
 *************************************************************************/
 #include "cfe.h"
 #include "cfe_msgids.h"
-#include "hk_extern_typedefs.h"
+#include "hk_tbl.h"
 #include "hk_msgids.h"
-#include "hk_tbldefs.h"
 #include "cfe_tbl_filedef.h"
 
 hk_copy_table_entry_t HK_CopyTable[HK_COPY_TABLE_ENTRIES] = {

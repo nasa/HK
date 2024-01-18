@@ -1,8 +1,8 @@
 /************************************************************************
- * NASA Docket No. GSC-18,447-1, and identified as “CFS CFDP (CF)
- * Application version 3.0.0”
+ * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
+ * System (cFS) Housekeeping (HK) Application version 2.5.1”
  *
- * Copyright (c) 2019 United States Government as represented by the
+ * Copyright (c) 2021 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -19,22 +19,21 @@
 
 /**
  * @file
+ *   Specification for the CFS Housekeeping (HK) command and telemetry
+ *   message data types.
  *
- * Declarations and prototypes for hk_extern_typedefs module
+ * This is a compatibility header for the "hk_msg.h" file that has
+ * traditionally provided the message definitions for cFS apps.
+ *
+ * @note This file may be overridden/superseded by mission-provided definitions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
  */
+#ifndef HK_MSG_H
+#define HK_MSG_H
 
-#ifndef HK_EXTERN_TYPEDEFS_H
-#define HK_EXTERN_TYPEDEFS_H
+#include "hk_interface_cfg.h"
+#include "hk_msgdefs.h"
+#include "hk_msgstruct.h"
 
-/**
- *  \brief Maximum Number of HK Copy Table Entries
- *
- *  \par Description:
- *       Dictates the number of elements in the hk copy table.
- *
- *  \par Limits
- *       The maximum size of this paramater is 8192
- */
-#define HK_COPY_TABLE_ENTRIES 128
-
-#endif /* HK_EXTERN_TYPEDEFS_H */
+#endif

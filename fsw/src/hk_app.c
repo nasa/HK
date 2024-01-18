@@ -27,7 +27,8 @@
 ** Includes
 *************************************************************************/
 #include "hk_app.h"
-#include "hk_events.h"
+#include "hk_eventids.h"
+#include "hk_msg.h"
 #include "hk_msgids.h"
 #include "hk_perfids.h"
 #include "hk_verify.h"
