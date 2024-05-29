@@ -33,7 +33,7 @@
  *       Dictates the number of elements in the hk copy table.
  *
  *  \par Limits
- *       The maximum size of this paramater is 8192
+ *       The maximum size of this parameter is 8192
  */
 #define HK_COPY_TABLE_ENTRIES 128
 
