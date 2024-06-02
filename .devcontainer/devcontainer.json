@@ -1,0 +1,6 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+  }
+}make prep
+  make -C build/docs/hk-usersguide hk-usersguide
