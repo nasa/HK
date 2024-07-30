@@ -50,7 +50,7 @@ uint8 call_count_CFE_EVS_SendEvent;
  * Function under test: HK_AppMain
  *
  * Case: Tests the "nominal" mode where all dependent calls should be
- *       successful by defaut.
+ *       successful by default.
  */
 void Test_HK_AppMain_Success(void)
 {
@@ -1028,7 +1028,7 @@ void Test_HK_ResetCountersCmd(void)
 
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_RESET_INF_EID);
 
-    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_DEBUG);
+    UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_INFORMATION);
 
     strCmpResult = strncmp(ExpectedEventString, context_CFE_EVS_SendEvent[0].Spec, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH);
 
