@@ -43,10 +43,10 @@
 #endif
 /*
  * JPH 2015-06-29 - Removed check of:
- *  HK_PIPE_DEPTH  >  CFE_SB_MAX_PIPE_DEPTH
+ *  HK_PIPE_DEPTH  >  OS_QUEUE_MAX_DEPTH
  *
  * This is not a valid check anymore, as the HK app does not have knowledge
- * of CFE_SB_MAX_PIPE_DEPTH.  But if the configuration violates this rule it will
+ * of OS_QUEUE_MAX_DEPTH.  But if the configuration violates this rule it will
  * show up as an obvious run-time error so the compile-time check is redundant.
  */
 

@@ -360,7 +360,7 @@ void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr)
 void HK_ResetCountersCmd(const CFE_SB_Buffer_t *BufPtr)
 {
     HK_ResetHkData();
-    CFE_EVS_SendEvent(HK_RESET_INF_EID, CFE_EVS_EventType_DEBUG, "HK Reset Counters command received");
+    CFE_EVS_SendEvent(HK_RESET_INF_EID, CFE_EVS_EventType_INFORMATION, "HK Reset Counters command received");
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

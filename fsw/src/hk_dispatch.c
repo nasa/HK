@@ -66,7 +66,7 @@ int32 HK_VerifyCmdLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength)
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
-/* Verify Non-Command Msg Length (Event is differnt)               */
+/* Verify Non-Command Msg Length (Event is different)               */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 int32 HK_VerifyMsgLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength)
