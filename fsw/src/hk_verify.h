@@ -30,25 +30,19 @@
 
 #include "hk_app.h"
 
-#if HK_DISCARD_INCOMPLETE_COMBO < 0
-#error HK_DISCARD_INCOMPLETE_COMBO cannot be less than 0!
-#elif HK_DISCARD_INCOMPLETE_COMBO > 1
-#error HK_DISCARD_INCOMPLETE_COMBO cannot be greater than 1!
-#endif
-
 #ifndef HK_PIPE_DEPTH
 #error HK_PIPE_DEPTH must be defined!
 #elif (HK_PIPE_DEPTH < 1)
 #error HK_PIPE_DEPTH cannot be less than 1!
+#elif (HK_PIPE_DEPTH > OS_QUEUE_MAX_DEPTH)
+#error HK_PIPE_DEPTH cannot exceed OS_QUEUE_MAX_DEPTH!
 #endif
-/*
- * JPH 2015-06-29 - Removed check of:
- *  HK_PIPE_DEPTH  >  OS_QUEUE_MAX_DEPTH
- *
- * This is not a valid check anymore, as the HK app does not have knowledge
- * of OS_QUEUE_MAX_DEPTH.  But if the configuration violates this rule it will
- * show up as an obvious run-time error so the compile-time check is redundant.
- */
+
+#ifndef HK_DISCARD_INCOMPLETE_COMBO
+#error HK_DISCARD_INCOMPLETE_COMBO must be defined!
+#elif ((HK_DISCARD_INCOMPLETE_COMBO != 0) && (HK_DISCARD_INCOMPLETE_COMBO != 1))
+#error HK_DISCARD_INCOMPLETE_COMBO must be 0 or 1!
+#endif
 
 #ifndef HK_COPY_TABLE_ENTRIES
 #error HK_COPY_TABLE_ENTRIES must be defined!
@@ -58,8 +52,26 @@
 #error HK_COPY_TABLE_ENTRIES cannot be greater than 8192!
 #endif
 
+#ifndef HK_COPY_TABLE_NAME
+#error HK_COPY_TABLE_NAME must be defined!
+#endif
+
+#ifndef HK_RUNTIME_TABLE_NAME
+#error HK_RUNTIME_TABLE_NAME must be defined!
+#endif
+
+#ifndef HK_COPY_TABLE_FILENAME
+#error HK_COPY_TABLE_FILENAME must be defined!
+#endif
+
 #ifndef HK_NUM_BYTES_IN_MEM_POOL
 #error HK_NUM_BYTES_IN_MEM_POOL must be defined!
+#endif
+
+#ifndef HK_MAX_COMBINED_PACKET_SIZE
+#error HK_MAX_COMBINED_PACKET_SIZE must be defined!
+#elif (HK_MAX_COMBINED_PACKET_SIZE < 0)
+#error HK_MAX_COMBINED_PACKET_SIZE cannot be less than zero!
 #endif
 
 #endif
