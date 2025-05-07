@@ -123,7 +123,7 @@ void Test_HK_ProcessIncomingHkData_LengthOkEqual(void)
     size_t          forced_Size;
     CFE_SB_Buffer_t Buf;
     int             i;
-    CFE_SB_Buffer_t OutputPkt;
+    uint8           OutputPkt[100];
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -131,7 +131,7 @@ void Test_HK_ProcessIncomingHkData_LengthOkEqual(void)
     HK_Test_InitGoodCopyTable(CopyTblPtr);
     HK_Test_InitGoodRuntimeTable(RtTblPtr);
 
-    RtTblPtr[2].OutputPktAddr = &OutputPkt;
+    RtTblPtr[2].OutputPktAddr = OutputPkt;
 
     HK_AppData.CopyTablePtr    = CopyTblPtr;
     HK_AppData.RuntimeTablePtr = RtTblPtr;
@@ -181,7 +181,7 @@ void Test_HK_ProcessIncomingHkData_LengthOkGreater(void)
     CFE_SB_MsgId_t  forced_MsgID;
     size_t          forced_Size;
     CFE_SB_Buffer_t Buf;
-    CFE_SB_Buffer_t OutputPkt;
+    uint8           OutputPkt[100];
 
     hk_runtime_tbl_entry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     hk_copy_table_entry_t  CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -189,7 +189,7 @@ void Test_HK_ProcessIncomingHkData_LengthOkGreater(void)
     HK_Test_InitGoodCopyTable(CopyTblPtr);
     HK_Test_InitGoodRuntimeTable(RtTblPtr);
 
-    RtTblPtr[2].OutputPktAddr = &OutputPkt;
+    RtTblPtr[2].OutputPktAddr = OutputPkt;
 
     HK_AppData.CopyTablePtr    = CopyTblPtr;
     HK_AppData.RuntimeTablePtr = RtTblPtr;
