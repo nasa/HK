@@ -67,6 +67,7 @@ typedef struct
     CFE_SB_PipeId_t CmdPipe;    /**< \brief Pipe Id for HK command pipe */
     uint8           CmdCounter; /**< \brief Number of valid commands received */
     uint8           ErrCounter; /**< \brief Number of invalid commands received */
+    uint16          Padding;    /**< \brief Padding for structure alignment */
 
     uint16 MissingDataCtr;      /**< \brief Number of times missing data was detected */
     uint16 CombinedPacketsSent; /**< \brief Count of combined output msgs sent */
@@ -77,7 +78,7 @@ typedef struct
     CFE_TBL_Handle_t CopyTableHandle;    /**< \brief Copy Table handle */
     CFE_TBL_Handle_t RuntimeTableHandle; /**< \brief Run-time table handle */
 
-    hk_copy_table_entry_t * CopyTablePtr;    /**< \brief Ptr to copy table entry */
+    hk_copy_table_entry_t  *CopyTablePtr;    /**< \brief Ptr to copy table entry */
     hk_runtime_tbl_entry_t *RuntimeTablePtr; /**< \brief Ptr to run-time table entry */
 
     uint8 MemPoolBuffer[HK_NUM_BYTES_IN_MEM_POOL]; /**< \brief HK mempool buffer */

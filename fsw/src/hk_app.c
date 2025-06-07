@@ -103,10 +103,10 @@ void HK_AppMain(void)
         else
         {
             CFE_EVS_SendEvent(HK_RCV_MSG_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "HK_APP Exiting due to CFE_SB_RcvMsg error 0x%08X", (unsigned int)Status);
+                              "HK_APP Exiting due to CFE_SB_ReceiveBuffer error 0x%08X", (unsigned int)Status);
 
             /* Write to syslog in case there is a problem with event services */
-            CFE_ES_WriteToSysLog("HK_APP Exiting due to CFE_SB_RcvMsg error 0x%08X\n", (unsigned int)Status);
+            CFE_ES_WriteToSysLog("HK_APP Exiting due to CFE_SB_ReceiveBuffer error 0x%08X\n", (unsigned int)Status);
 
             HK_AppData.RunStatus = CFE_ES_RunStatus_APP_ERROR;
         }
