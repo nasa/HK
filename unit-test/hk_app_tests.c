@@ -150,7 +150,7 @@ void Test_HK_AppMain_RcvBufFail(void)
     int32 strCmpResult;
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
-             "HK_APP Exiting due to CFE_SB_RcvMsg error 0x%%08X");
+             "HK_APP Exiting due to CFE_SB_ReceiveBuffer error 0x%%08X");
 
     /* Set return codes for table functions so that HK_TableInit
      * succeeds. */
