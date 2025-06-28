@@ -36,8 +36,8 @@
 #define HK_INPUTMID_SUBSCRIBED     (0xFF) /**< \brief Input MsgId has been subscribed to */
 #define HK_INPUTMID_NOT_SUBSCRIBED (0)    /**< \brief Input MsgId is not subscribed */
 
-#define HK_DATA_NOT_PRESENT (0) /**< \brief Input MsgId present in output msg */
-#define HK_DATA_PRESENT     (1) /**< \brief Input MsgId not present */
+#define HK_DATA_NOT_PRESENT (0) /**< \brief Input MsgId data not present in output msg */
+#define HK_DATA_PRESENT     (1) /**< \brief Input MsgId data present in output msg */
 
 #define HK_NO_MISSING_DATA       (0) /**< \brief Output Msg has no missing data */
 #define HK_MISSING_DATA_DETECTED (1) /**< \brief Output Msg has missing data */
