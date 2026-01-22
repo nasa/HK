@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -19,23 +18,28 @@
 
 /**
  * @file
- *  The CFS Housekeeping (HK) Application header file
+ *  The CFS Housekeeping (HK) Application Table Structure Definition
+ *
+ * This is a compatibility header for the "hk_tbldefs.h" file that has
+ * traditionally provided the table definitions for cFS apps.
+ *
+ * @note This file may be overridden/superceded by mission-provided defintions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
  */
-#ifndef HK_TBLDEFS_H
-#define HK_TBLDEFS_H
+#ifndef DEFAULT_HK_TBLDEFS_H
+#define DEFAULT_HK_TBLDEFS_H
 
 /************************************************************************
 ** Includes
 *************************************************************************/
-#include <cfe.h>
-
-/*************************************************************************
-** Type definitions
-**************************************************************************/
+#include "common_types.h"
+#include "hk_mission_cfg.h"
+#include "cfe_sb_extern_typedefs.h"
+#include "cfe_es_extern_typedefs.h"
 
 /**  \brief HK Copy Table Entry Format
  */
-
 typedef struct
 {
     CFE_SB_MsgId_t InputMid;     /**< \brief MsgId of the input packet */
@@ -43,15 +47,15 @@ typedef struct
     CFE_SB_MsgId_t OutputMid;    /**< \brief MsgId of the output packet */
     uint16         OutputOffset; /**< \brief ByteOffset into the output pkt where data will be placed */
     uint16         NumBytes;     /**< \brief Number of data bytes to copy from input to output pkt */
-} hk_copy_table_entry_t;
+} HK_CopyTableEntry_t;
 
 /**  \brief HK Run-time Table Entry Format
  */
 typedef struct
 {
-    CFE_SB_Buffer_t *OutputPktAddr;      /**< \brief Addr of output packet */
-    uint8            InputMidSubscribed; /**< \brief Indicates if input MID has been subscribed to */
-    uint8            DataPresent;        /**< \brief Indicates if the data associated with the entry is present */
-} hk_runtime_tbl_entry_t;
+    CFE_ES_MemAddress_t OutputPktAddr;      /**< \brief Addr of output packet */
+    uint8               InputMidSubscribed; /**< \brief Indicates if input MID has been subscribed to */
+    uint8               DataPresent;        /**< \brief Indicates if the data associated with the entry is present */
+} HK_RuntimeTableEntry_t;
 
 #endif

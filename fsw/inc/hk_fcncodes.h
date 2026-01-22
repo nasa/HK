@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -19,12 +18,13 @@
 
 /**
  * @file
- *  The CFS Housekeeping (HK) Application header file
+ *  The CFS Housekeeping (HK) Application function codes
+ *
  */
-#ifndef HK_MSGDEFS_H
-#define HK_MSGDEFS_H
+#ifndef HK_FCNCODES_H
+#define HK_FCNCODES_H
 
-#include <cfe.h>
+#include "hk_fcncode_values.h"
 
 /**
  * \defgroup cfshkcmdcodes CFS Housekeeping Command Codes
@@ -56,7 +56,7 @@
  *  \par Criticality
  *       None
  */
-#define HK_NOOP_CC 0
+#define HK_NOOP_CC HK_CCVAL(NOOP)
 
 /**
  * \brief Housekeeping Reset Counters
@@ -86,7 +86,7 @@
  *       to be designed such that they react to changes in the counter
  *       values that are reset by this command.
  */
-#define HK_RESET_COUNTERS_CC 1
+#define HK_RESET_COUNTERS_CC HK_CCVAL(RESET_COUNTERS)
 
 /**\}*/
 

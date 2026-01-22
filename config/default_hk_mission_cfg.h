@@ -16,11 +16,22 @@
  * limitations under the License.
  ************************************************************************/
 
-#include "hk_app.h"
+/**
+ * @file
+ *  The CFS Housekeeping (HK) Application Public Definitions
+ *
+ * This provides default values for configurable items that affect
+ * the interface(s) of this module.  This includes the CMD/TLM message
+ * interface, tables definitions, and/or the public API, if applicable.
+ *
+ * @note This file may be overridden/superceded by mission-provided defintions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
+ */
 
-/* UT includes */
-#include "uttest.h"
-#include "utassert.h"
-#include "utstubs.h"
+#ifndef DEFAULT_HK_MISSION_CONFIG_H
+#define DEFAULT_HK_MISSION_CONFIG_H
 
-HK_AppData_t HK_AppData;
+#include "hk_interface_cfg.h"
+
+#endif /* DEFAULT_HK_MISSION_CONFIG_H */

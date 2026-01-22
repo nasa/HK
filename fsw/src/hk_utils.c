@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -44,10 +43,10 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
 {
-    hk_copy_table_entry_t * StartOfCopyTable = HK_AppData.CopyTablePtr;
-    hk_copy_table_entry_t * CpyTblEntry      = NULL;
-    hk_runtime_tbl_entry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
-    hk_runtime_tbl_entry_t *RtTblEntry       = NULL;
+    HK_CopyTableEntry_t *   StartOfCopyTable = HK_AppData.CopyTablePtr;
+    HK_CopyTableEntry_t *   CpyTblEntry      = NULL;
+    HK_RuntimeTableEntry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
+    HK_RuntimeTableEntry_t *RtTblEntry       = NULL;
     uint16                  Loop             = 0;
     CFE_SB_MsgId_t          MessageID        = CFE_SB_INVALID_MSG_ID;
     uint8 *                 DestPtr          = NULL;
@@ -74,8 +73,9 @@ void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
             {
                 /* We have a match.  Build the Source and Destination addresses
                    and move the data */
-                DestPtr = ((uint8 *)RtTblEntry->OutputPktAddr) + CpyTblEntry->OutputOffset;
-                SrcPtr  = ((uint8 *)BufPtr) + CpyTblEntry->InputOffset;
+                DestPtr = CFE_ES_MEMADDRESS_TO_PTR(RtTblEntry->OutputPktAddr);
+                DestPtr += CpyTblEntry->OutputOffset;
+                SrcPtr = ((uint8 *)BufPtr) + CpyTblEntry->InputOffset;
 
                 memcpy(DestPtr, SrcPtr, CpyTblEntry->NumBytes);
 
@@ -106,28 +106,77 @@ void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 int32 HK_ValidateHkCopyTable(void *TblPtr)
 {
-    int32                  HKStatus;
-    int32                  i        = 0;
-    int32                  sumBytes = 0;
-    hk_copy_table_entry_t *tbl      = (hk_copy_table_entry_t *)TblPtr;
+    int32                HKStatus;
+    int32                i;
+    HK_CopyTableEntry_t *EntryPtr;
+    size_t               EntryTail;
+    char                 IssueStringBuf[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
+
+    IssueStringBuf[0] = 0;
+    HKStatus          = HK_SUCCESS;
+    EntryPtr          = (HK_CopyTableEntry_t *)TblPtr;
 
     /* Loop thru the table and add up all the bytes copied for testing overflow scenario */
     for (i = 0; i < HK_COPY_TABLE_ENTRIES; i++)
     {
-        sumBytes += tbl[i].NumBytes;
+        /* If the entry is not used, then NEITHER of the MID values should be set */
+        if (CFE_SB_IsValidMsgId(EntryPtr->OutputMid) || CFE_SB_IsValidMsgId(EntryPtr->InputMid))
+        {
+            /* If it has an input MID but not a valid output, this is an error */
+            if (!CFE_SB_IsValidMsgId(EntryPtr->OutputMid))
+            {
+                snprintf(IssueStringBuf, sizeof(IssueStringBuf), "Invalid Output MID: 0x%lx",
+                         (unsigned long)CFE_SB_MsgIdToValue(EntryPtr->OutputMid));
+                HKStatus = HK_ERROR;
+                break;
+            }
+
+            /* If it has an output MID but not a valid input, this is an error */
+            if (!CFE_SB_IsValidMsgId(EntryPtr->InputMid))
+            {
+                snprintf(IssueStringBuf, sizeof(IssueStringBuf), "Invalid Input MID: 0x%lx",
+                         (unsigned long)CFE_SB_MsgIdToValue(EntryPtr->InputMid));
+                HKStatus = HK_ERROR;
+                break;
+            }
+
+            /* check input position */
+            EntryTail = EntryPtr->InputOffset;
+            EntryTail += EntryPtr->NumBytes;
+
+            /* Check if the accumulated bytes exceed the allowed packet size, indicating an overflow */
+            if (EntryTail > HK_MAX_COMBINED_PACKET_SIZE)
+            {
+                snprintf(IssueStringBuf, sizeof(IssueStringBuf), "Invalid input offset+size: %lu > %lu, mid 0x%lx",
+                         (unsigned long)EntryTail, (unsigned long)HK_MAX_COMBINED_PACKET_SIZE,
+                         (unsigned long)CFE_SB_MsgIdToValue(EntryPtr->InputMid));
+                HKStatus = HK_ERROR;
+                break;
+            }
+
+            /* check output position */
+            EntryTail = EntryPtr->OutputOffset;
+            EntryTail += EntryPtr->NumBytes;
+
+            /* Check if the accumulated bytes exceed the allowed packet size, indicating an overflow */
+            if (EntryTail > HK_MAX_COMBINED_PACKET_SIZE)
+            {
+                snprintf(IssueStringBuf, sizeof(IssueStringBuf), "Invalid output offset+size: %lu > %lu, mid 0x%lx",
+                         (unsigned long)EntryTail, (unsigned long)HK_MAX_COMBINED_PACKET_SIZE,
+                         (unsigned long)CFE_SB_MsgIdToValue(EntryPtr->OutputMid));
+                HKStatus = HK_ERROR;
+                break;
+            }
+        }
+
+        ++EntryPtr;
     }
 
-    /* Check if the accumulated bytes exceed the allowed packet size, indicating an overflow */
-    if (sumBytes > HK_MAX_COMBINED_PACKET_SIZE)
+    /* Report any error as an event before leaving (IssueStringBuf should be filled with something). */
+    if (HKStatus != HK_SUCCESS)
     {
-        HKStatus = HK_ERROR;
-
-        CFE_EVS_SendEvent(HK_NEWCPYTBL_HK_FAILED_EID, CFE_EVS_EventType_ERROR,
-                          "HK Validate: table contents has size %d > %d\n", (int)sumBytes, HK_MAX_COMBINED_PACKET_SIZE);
-    }
-    else
-    {
-        HKStatus = HK_SUCCESS;
+        CFE_EVS_SendEvent(HK_NEWCPYTBL_HK_FAILED_EID, CFE_EVS_EventType_ERROR, "HK Validate: %s at entry index %d\n",
+                          IssueStringBuf, (int)i);
     }
 
     return HKStatus;
@@ -138,14 +187,14 @@ int32 HK_ValidateHkCopyTable(void *TblPtr)
 /* HK process new copy table                                       */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-CFE_Status_t HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
+CFE_Status_t HK_ProcessNewCopyTable(HK_CopyTableEntry_t *CpyTblPtr, HK_RuntimeTableEntry_t *RtTblPtr)
 {
-    hk_copy_table_entry_t * StartOfCopyTable = NULL;
-    hk_copy_table_entry_t * OuterCpyEntry    = NULL;
-    hk_copy_table_entry_t * InnerDefEntry    = NULL;
-    hk_runtime_tbl_entry_t *StartOfRtTable   = NULL;
-    hk_runtime_tbl_entry_t *OuterRtEntry     = NULL;
-    hk_runtime_tbl_entry_t *InnerRtEntry     = NULL;
+    HK_CopyTableEntry_t *   StartOfCopyTable = NULL;
+    HK_CopyTableEntry_t *   OuterCpyEntry    = NULL;
+    HK_CopyTableEntry_t *   InnerDefEntry    = NULL;
+    HK_RuntimeTableEntry_t *StartOfRtTable   = NULL;
+    HK_RuntimeTableEntry_t *OuterRtEntry     = NULL;
+    HK_RuntimeTableEntry_t *InnerRtEntry     = NULL;
     int32                   Loop1            = 0;
     int32                   Loop2;
     CFE_SB_MsgId_t          MidOfThisPacket;
@@ -171,7 +220,7 @@ CFE_Status_t HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime
     {
         OuterRtEntry = &StartOfRtTable[Loop1];
 
-        OuterRtEntry->OutputPktAddr      = NULL;
+        OuterRtEntry->OutputPktAddr      = CFE_ES_MEMADDRESS_C(0);
         OuterRtEntry->InputMidSubscribed = HK_INPUTMID_NOT_SUBSCRIBED;
         OuterRtEntry->DataPresent        = HK_DATA_NOT_PRESENT;
     }
@@ -185,7 +234,7 @@ CFE_Status_t HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime
         /* If the both MIDs exists but the Packet Address has yet to be assigned,
            we need to build an SB packet, so compute the size */
         if (CFE_SB_IsValidMsgId(OuterCpyEntry->OutputMid) && CFE_SB_IsValidMsgId(OuterCpyEntry->InputMid) &&
-            (OuterRtEntry->OutputPktAddr == NULL))
+            (CFE_ES_MEMADDRESS_TO_PTR(OuterRtEntry->OutputPktAddr) == NULL))
         {
             /* We have a table entry that needs a SB message to be built */
             MidOfThisPacket  = OuterCpyEntry->OutputMid;
@@ -230,7 +279,7 @@ CFE_Status_t HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime
                         /* If this entry's MID matches the one we're looking for */
                         if (CFE_SB_MsgId_Equal(InnerDefEntry->OutputMid, MidOfThisPacket))
                         {
-                            InnerRtEntry->OutputPktAddr = NewPacketAddr;
+                            InnerRtEntry->OutputPktAddr = CFE_ES_MEMADDRESS_C(NewPacketAddr);
                         }
                     }
 
@@ -285,18 +334,19 @@ CFE_Status_t HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime
 /* HK Tear down old copy table                                     */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-CFE_Status_t HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
+CFE_Status_t HK_TearDownOldCopyTable(HK_CopyTableEntry_t *CpyTblPtr, HK_RuntimeTableEntry_t *RtTblPtr)
 {
-    hk_copy_table_entry_t * StartOfCopyTable = NULL;
-    hk_copy_table_entry_t * OuterCpyEntry    = NULL;
-    hk_copy_table_entry_t * InnerDefEntry    = NULL;
-    hk_runtime_tbl_entry_t *StartOfRtTable   = NULL;
-    hk_runtime_tbl_entry_t *OuterRtEntry     = NULL;
-    hk_runtime_tbl_entry_t *InnerRtEntry     = NULL;
+    HK_CopyTableEntry_t *   StartOfCopyTable = NULL;
+    HK_CopyTableEntry_t *   OuterCpyEntry    = NULL;
+    HK_CopyTableEntry_t *   InnerDefEntry    = NULL;
+    HK_RuntimeTableEntry_t *StartOfRtTable   = NULL;
+    HK_RuntimeTableEntry_t *OuterRtEntry     = NULL;
+    HK_RuntimeTableEntry_t *InnerRtEntry     = NULL;
     int32                   Loop1            = 0;
     int32                   Loop2;
     CFE_SB_MsgId_t          MidOfThisPacket;
     void *                  OutputPktAddr = NULL;
+    void *                  InnerPktAddr  = NULL;
     void *                  SavedPktAddr  = NULL;
     CFE_Status_t            Result;
 
@@ -319,9 +369,9 @@ CFE_Status_t HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtim
         OuterRtEntry  = &StartOfRtTable[Loop1];
 
         /* If a Packet Address has been assigned, it needs to get deleted */
-        if (OuterRtEntry->OutputPktAddr != NULL)
+        OutputPktAddr = CFE_ES_MEMADDRESS_TO_PTR(OuterRtEntry->OutputPktAddr);
+        if (OutputPktAddr != NULL)
         {
-            OutputPktAddr   = OuterRtEntry->OutputPktAddr;
             MidOfThisPacket = OuterCpyEntry->OutputMid;
 
             SavedPktAddr = OutputPktAddr;
@@ -334,11 +384,11 @@ CFE_Status_t HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtim
                     InnerDefEntry = &StartOfCopyTable[Loop2];
                     InnerRtEntry  = &StartOfRtTable[Loop2];
 
-                    if (CFE_SB_MsgId_Equal(InnerDefEntry->OutputMid, MidOfThisPacket) &&
-                        (InnerRtEntry->OutputPktAddr == SavedPktAddr))
+                    InnerPktAddr = CFE_ES_MEMADDRESS_TO_PTR(InnerRtEntry->OutputPktAddr);
+                    if (CFE_SB_MsgId_Equal(InnerDefEntry->OutputMid, MidOfThisPacket) && (InnerPktAddr == SavedPktAddr))
                     {
                         /* NULL out the table entry whose packet was freed above */
-                        InnerRtEntry->OutputPktAddr = (CFE_SB_Buffer_t *)NULL;
+                        InnerRtEntry->OutputPktAddr = CFE_ES_MEMADDRESS_C(0);
                     }
                 }
             }
@@ -384,8 +434,8 @@ CFE_Status_t HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtim
 void HK_SendCombinedHkPacket(CFE_SB_MsgId_t WhichMidToSend)
 {
     bool                    PacketFound      = false;
-    hk_runtime_tbl_entry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
-    hk_runtime_tbl_entry_t *RtTblEntry       = NULL;
+    HK_RuntimeTableEntry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
+    HK_RuntimeTableEntry_t *RtTblEntry       = NULL;
     int32                   Loop             = 0;
     CFE_SB_MsgId_t          ThisEntrysOutMid = CFE_SB_INVALID_MSG_ID;
     CFE_SB_MsgId_t          InputMidMissing  = CFE_SB_INVALID_MSG_ID;
@@ -397,9 +447,9 @@ void HK_SendCombinedHkPacket(CFE_SB_MsgId_t WhichMidToSend)
         RtTblEntry = &StartOfRtTable[Loop];
 
         /* Empty table entries are defined by NULL's in this field */
-        if (RtTblEntry->OutputPktAddr != NULL)
+        OutBuffer = CFE_ES_MEMADDRESS_TO_PTR(RtTblEntry->OutputPktAddr);
+        if (OutBuffer != NULL)
         {
-            OutBuffer = (CFE_SB_Buffer_t *)RtTblEntry->OutputPktAddr;
             CFE_MSG_GetMsgId(&OutBuffer->Msg, &ThisEntrysOutMid);
 
             if (CFE_SB_MsgId_Equal(ThisEntrysOutMid, WhichMidToSend))
@@ -609,10 +659,10 @@ int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *Missi
 {
     int32                   Loop             = 0;
     int32                   Status           = HK_NO_MISSING_DATA;
-    hk_copy_table_entry_t * StartOfCopyTable = HK_AppData.CopyTablePtr;
-    hk_copy_table_entry_t * CpyTblEntry      = NULL;
-    hk_runtime_tbl_entry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
-    hk_runtime_tbl_entry_t *RtTblEntry       = NULL;
+    HK_CopyTableEntry_t *   StartOfCopyTable = HK_AppData.CopyTablePtr;
+    HK_CopyTableEntry_t *   CpyTblEntry      = NULL;
+    HK_RuntimeTableEntry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
+    HK_RuntimeTableEntry_t *RtTblEntry       = NULL;
 
     /* Loop thru each item in the runtime table until end is reached or
      * data-not-present detected */
@@ -622,8 +672,8 @@ int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *Missi
         RtTblEntry  = &StartOfRtTable[Loop];
 
         /* Empty table entries are defined by NULL's in this field */
-        if ((RtTblEntry->OutputPktAddr != NULL) && CFE_SB_MsgId_Equal(CpyTblEntry->OutputMid, OutPktToCheck) &&
-            (RtTblEntry->DataPresent == HK_DATA_NOT_PRESENT))
+        if (CFE_ES_MEMADDRESS_TO_PTR(RtTblEntry->OutputPktAddr) != NULL &&
+            CFE_SB_MsgId_Equal(CpyTblEntry->OutputMid, OutPktToCheck) && RtTblEntry->DataPresent == HK_DATA_NOT_PRESENT)
         {
             *MissingInputMid = CpyTblEntry->InputMid;
             Status           = HK_MISSING_DATA_DETECTED;
@@ -644,10 +694,10 @@ int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *Missi
 void HK_SetFlagsToNotPresent(CFE_SB_MsgId_t OutPkt)
 {
     int32                   Loop             = 0;
-    hk_copy_table_entry_t * StartOfCopyTable = HK_AppData.CopyTablePtr;
-    hk_copy_table_entry_t * CpyTblEntry      = NULL;
-    hk_runtime_tbl_entry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
-    hk_runtime_tbl_entry_t *RtTblEntry       = NULL;
+    HK_CopyTableEntry_t *   StartOfCopyTable = HK_AppData.CopyTablePtr;
+    HK_CopyTableEntry_t *   CpyTblEntry      = NULL;
+    HK_RuntimeTableEntry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
+    HK_RuntimeTableEntry_t *RtTblEntry       = NULL;
 
     /* Look thru each item in the runtime table until end is reached */
     for (Loop = 0; Loop < HK_COPY_TABLE_ENTRIES; Loop++)
@@ -656,7 +706,8 @@ void HK_SetFlagsToNotPresent(CFE_SB_MsgId_t OutPkt)
         RtTblEntry  = &StartOfRtTable[Loop];
 
         /* Empty table entries are defined by NULL's in this field */
-        if ((RtTblEntry->OutputPktAddr != NULL) && CFE_SB_MsgId_Equal(CpyTblEntry->OutputMid, OutPkt))
+        if (CFE_ES_MEMADDRESS_TO_PTR(RtTblEntry->OutputPktAddr) != NULL &&
+            CFE_SB_MsgId_Equal(CpyTblEntry->OutputMid, OutPkt))
         {
             RtTblEntry->DataPresent = HK_DATA_NOT_PRESENT;
         }

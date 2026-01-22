@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -55,15 +54,13 @@ extern CFE_ES_WriteToSysLog_context_t context_CFE_ES_WriteToSysLog;
 #define HK_UT_MID_100   CFE_SB_ValueToMsgId(100)
 #define HK_UT_MEMPOOL_1 CFE_ES_MEMHANDLE_C(CFE_RESOURCEID_WRAP(1))
 
-void HK_Test_InitGoodCopyTable(hk_copy_table_entry_t *CpyTbl);
+void HK_Test_InitGoodCopyTable(HK_CopyTableEntry_t *CpyTbl);
 
-void HK_Test_InitOverflowCopyTable(hk_copy_table_entry_t *CpyTbl);
+void HK_Test_InitEmptyCopyTable(HK_CopyTableEntry_t *CpyTbl);
 
-void HK_Test_InitEmptyCopyTable(hk_copy_table_entry_t *CpyTbl);
+void HK_Test_InitGoodRuntimeTable(HK_RuntimeTableEntry_t *RtTbl);
 
-void HK_Test_InitGoodRuntimeTable(hk_runtime_tbl_entry_t *RtTbl);
-
-void HK_Test_InitEmptyRuntimeTable(hk_runtime_tbl_entry_t *RtTbl);
+void HK_Test_InitEmptyRuntimeTable(HK_RuntimeTableEntry_t *RtTbl);
 
 /*
  * Setup function prior to every test

@@ -16,11 +16,27 @@
  * limitations under the License.
  ************************************************************************/
 
-#include "hk_app.h"
+/**
+ * @file
+ *  The CFS Housekeeping (HK) Application Public Definitions
+ *
+ * This provides default values for configurable items that affect
+ * the interface(s) of this module.  This includes the CMD/TLM message
+ * interface, tables definitions, and/or the public API, if applicable.
+ *
+ * @note This file may be overridden/superceded by mission-provided defintions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
+ */
+#ifndef DEFAULT_HK_FCNCODE_VALUES_H
+#define DEFAULT_HK_FCNCODE_VALUES_H
 
-/* UT includes */
-#include "uttest.h"
-#include "utassert.h"
-#include "utstubs.h"
+#define HK_CCVAL(x) HK_FunctionCode_##x
 
-HK_AppData_t HK_AppData;
+enum HK_FunctionCode
+{
+    HK_FunctionCode_NOOP           = 0,
+    HK_FunctionCode_RESET_COUNTERS = 1
+};
+
+#endif

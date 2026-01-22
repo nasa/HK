@@ -16,11 +16,29 @@
  * limitations under the License.
  ************************************************************************/
 
-#include "hk_app.h"
+/**
+ * @file
+ *  The CFS Housekeeping (HK) Application Table Structure Definition
+ *
+ * Provides default definitions for HK table structures
+ *
+ * @note This file may be overridden/superceded by mission-provided defintions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
+ */
+#ifndef DEFAULT_HK_TBL_H
+#define DEFAULT_HK_TBL_H
 
-/* UT includes */
-#include "uttest.h"
-#include "utassert.h"
-#include "utstubs.h"
+/************************************************************************
+** Includes
+*************************************************************************/
+#include "common_types.h"
 
-HK_AppData_t HK_AppData;
+#include "hk_tbldefs.h"
+#include "hk_tblstruct.h"
+
+/* Provide backward compatibility with existing table definitions */
+typedef HK_CopyTableEntry_t    hk_copy_table_entry_t;
+typedef HK_RuntimeTableEntry_t hk_runtime_tbl_entry_t;
+
+#endif

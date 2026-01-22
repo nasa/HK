@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -21,18 +20,19 @@
  * @file
  *  The CFS Housekeeping (HK) Application Message IDs header file
  */
-#ifndef HK_MSGIDS_H
-#define HK_MSGIDS_H
+#ifndef DEFAULT_HK_MSGIDS_H
+#define DEFAULT_HK_MSGIDS_H
+
+#include "hk_msgid_values.h"
 
 /**
  * \defgroup cfshkcmdmid CFS Housekeeping Command Message IDs
  * \{
  */
 
-#define HK_CMD_MID     0x189A /**< \brief HK Ground Commands Message ID */
-#define HK_SEND_HK_MID 0x189B /**< \brief HK Send Housekeeping Data Cmd Message ID */
-
-#define HK_SEND_COMBINED_PKT_MID 0x189C /**< \brief HK Send Combined Pkt Cmd Message ID */
+#define HK_CMD_MID               CFE_PLATFORM_HK_CMD_MIDVAL(CMD)
+#define HK_SEND_HK_MID           CFE_PLATFORM_HK_CMD_MIDVAL(SEND_HK)
+#define HK_SEND_COMBINED_PKT_MID CFE_PLATFORM_HK_CMD_MIDVAL(SEND_COMBINED_PKT)
 
 /**\}*/
 
@@ -41,12 +41,16 @@
  * \{
  */
 
-#define HK_HK_TLM_MID 0x089B /**< \brief HK Housekeeping Telemetry Message ID */
+#define HK_HK_TLM_MID CFE_PLATFORM_HK_TLM_MIDVAL(HK_TLM) /**< \brief HK Housekeeping Telemetry Message ID */
 
-#define HK_COMBINED_PKT1_MID 0x089C /**< \brief HK Combined Packet 1 Message ID */
-#define HK_COMBINED_PKT2_MID 0x089D /**< \brief HK Combined Packet 2 Message ID */
-#define HK_COMBINED_PKT3_MID 0x089E /**< \brief HK Combined Packet 3 Message ID */
-#define HK_COMBINED_PKT4_MID 0x089F /**< \brief HK Combined Packet 4 Message ID */
+#define HK_COMBINED_PKT1_MID \
+    CFE_PLATFORM_HK_TLM_MIDVAL(COMBINED_PKT1_TLM) /**< \brief HK Combined Packet 1 Message ID */
+#define HK_COMBINED_PKT2_MID \
+    CFE_PLATFORM_HK_TLM_MIDVAL(COMBINED_PKT2_TLM) /**< \brief HK Combined Packet 2 Message ID */
+#define HK_COMBINED_PKT3_MID \
+    CFE_PLATFORM_HK_TLM_MIDVAL(COMBINED_PKT3_TLM) /**< \brief HK Combined Packet 3 Message ID */
+#define HK_COMBINED_PKT4_MID \
+    CFE_PLATFORM_HK_TLM_MIDVAL(COMBINED_PKT4_TLM) /**< \brief HK Combined Packet 4 Message ID */
 
 /**\}*/
 

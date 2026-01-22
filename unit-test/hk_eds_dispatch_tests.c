@@ -16,11 +16,50 @@
  * limitations under the License.
  ************************************************************************/
 
+/*
+ * Includes
+ */
+
 #include "hk_app.h"
+#include "hk_cmds.h"
+#include "hk_msg.h"
+#include "hk_events.h"
+#include "hk_utils.h"
+#include "hk_dispatch.h"
+#include "hk_test_utils.h"
+#include "hk_eds_dispatcher.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 /* UT includes */
 #include "uttest.h"
 #include "utassert.h"
 #include "utstubs.h"
 
-HK_AppData_t HK_AppData;
+/*
+**********************************************************************************
+**          TEST CASE FUNCTIONS
+**********************************************************************************
+*/
+
+void Test_HK_AppPipe(void)
+{
+    /*
+     * Test Case For:
+     * void HK_AppPipe
+     */
+    CFE_SB_Buffer_t UtBuf;
+
+    UT_SetDeferredRetcode(UT_KEY(CFE_EDSMSG_Dispatch), 1, CFE_SUCCESS);
+
+    memset(&UtBuf, 0, sizeof(UtBuf));
+    UtAssert_VOIDCALL(HK_AppPipe(&UtBuf));
+}
+
+/*
+ * Register the test cases to execute with the unit test tool
+ */
+void UtTest_Setup(void)
+{
+    UtTest_Add(Test_HK_AppPipe, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppPipe");
+}

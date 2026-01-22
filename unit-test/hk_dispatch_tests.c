@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -22,6 +21,7 @@
  */
 
 #include "hk_dispatch.h"
+#include "hk_cmds.h"
 #include "hk_msg.h"
 #include "hk_events.h"
 #include "hk_msgids.h"
@@ -119,16 +119,6 @@ void Test_HK_AppPipe_SendHkCmd(void)
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_MSG_LEN_ERR_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_ERROR);
-
-    /* Bad Table Status */
-    HK_Dispatch_Test_SetupMsg(CFE_SB_ValueToMsgId(HK_SEND_HK_MID), 0, sizeof(HK_SendHkCmd_t));
-    UT_SetDefaultReturnValue(UT_KEY(HK_CheckStatusOfTables), CFE_STATUS_EXTERNAL_RESOURCE_FAIL);
-
-    /* Act */
-    HK_AppPipe(&Buf);
-
-    UtAssert_STUB_COUNT(HK_SendHkCmd, 2);
-    UtAssert_UINT32_EQ(HK_AppData.RunStatus, CFE_ES_RunStatus_APP_ERROR);
 }
 
 /*

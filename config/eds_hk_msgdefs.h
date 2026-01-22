@@ -16,11 +16,14 @@
  * limitations under the License.
  ************************************************************************/
 
-#include "hk_app.h"
+/**
+ * @file
+ *  The CFS Housekeeping (HK) Application function codes
+ *
+ */
+#ifndef EDS_HK_MSGDEFS_H
+#define EDS_HK_MSGDEFS_H
 
-/* UT includes */
-#include "uttest.h"
-#include "utassert.h"
-#include "utstubs.h"
+#include "hk_eds_typedefs.h"
 
-HK_AppData_t HK_AppData;
+#endif

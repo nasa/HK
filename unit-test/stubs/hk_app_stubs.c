@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -53,30 +52,6 @@ void HK_AppMain(void)
 
 /*
  * ----------------------------------------------------
- * Generated stub function for HK_NoopCmd()
- * ----------------------------------------------------
- */
-void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr)
-{
-    UT_GenStub_AddParam(HK_NoopCmd, const CFE_SB_Buffer_t *, BufPtr);
-
-    UT_GenStub_Execute(HK_NoopCmd, Basic, NULL);
-}
-
-/*
- * ----------------------------------------------------
- * Generated stub function for HK_ResetCountersCmd()
- * ----------------------------------------------------
- */
-void HK_ResetCountersCmd(const CFE_SB_Buffer_t *BufPtr)
-{
-    UT_GenStub_AddParam(HK_ResetCountersCmd, const CFE_SB_Buffer_t *, BufPtr);
-
-    UT_GenStub_Execute(HK_ResetCountersCmd, Basic, NULL);
-}
-
-/*
- * ----------------------------------------------------
  * Generated stub function for HK_ResetHkData()
  * ----------------------------------------------------
  */
@@ -84,30 +59,6 @@ void HK_ResetHkData(void)
 {
 
     UT_GenStub_Execute(HK_ResetHkData, Basic, NULL);
-}
-
-/*
- * ----------------------------------------------------
- * Generated stub function for HK_SendCombinedPktCmd()
- * ----------------------------------------------------
- */
-void HK_SendCombinedPktCmd(const CFE_SB_Buffer_t *BufPtr)
-{
-    UT_GenStub_AddParam(HK_SendCombinedPktCmd, const CFE_SB_Buffer_t *, BufPtr);
-
-    UT_GenStub_Execute(HK_SendCombinedPktCmd, Basic, NULL);
-}
-
-/*
- * ----------------------------------------------------
- * Generated stub function for HK_SendHkCmd()
- * ----------------------------------------------------
- */
-void HK_SendHkCmd(const CFE_SB_Buffer_t *BufPtr)
-{
-    UT_GenStub_AddParam(HK_SendHkCmd, const CFE_SB_Buffer_t *, BufPtr);
-
-    UT_GenStub_Execute(HK_SendHkCmd, Basic, NULL);
 }
 
 /*

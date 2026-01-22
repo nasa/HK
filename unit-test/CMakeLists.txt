@@ -13,6 +13,7 @@ add_cfe_coverage_stubs("hk_internal"
   stubs/hk_utils_stubs.c
   stubs/hk_app_stubs.c
   stubs/hk_dispatch_stubs.c
+  stubs/hk_cmds_stubs.c
 )
 
 # Link with the cfe core stubs and unit test assert libs

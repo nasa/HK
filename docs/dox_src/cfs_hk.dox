@@ -198,8 +198,8 @@
   The #HK_RESET_COUNTERS_CC \copybrief HK_RESET_COUNTERS_CC will reset counters in telemetry.
 
   <H2>5. Monitoring the command counter</H2>
-   
-  The #HK_HkTlm_Payload_t.CmdCounter will increment only 
+
+  The #HK_HkTlm_Payload_t.CmdCounter will increment only
   when the HK application receives a valid #HK_NOOP_CC.
 
   <H2>6. Monitoring the command error counter</H2>
@@ -211,23 +211,23 @@
       e. Unexpected packet length field for #HK_RESET_COUNTERS_CC command
 
   <H2>7. Monitoring the 'Combined Packets Sent" counter</H2>
-  
-  Each time a #HK_SEND_COMBINED_PKT_MID \copybrief HK_SEND_COMBINED_PKT_MID is 
+
+  Each time a #HK_SEND_COMBINED_PKT_MID \copybrief HK_SEND_COMBINED_PKT_MID is
   received without error #HK_HkTlm_Payload_t.CombinedPacketsSent will increment.
 
   <H2>8. Monitoring the 'Missing Data" counter</H2>
-  
-  Each time a #HK_SEND_COMBINED_PKT_MID \copybrief HK_SEND_COMBINED_PKT_MID is 
-  received without error, the HK app begins checking the 'Data Present' flag (located 
-  in the run-time table) for each of the data sections that make up the output packet. 
-  If a data portion is missing, HK sends a debug event (which is filtered by default) 
+
+  Each time a #HK_SEND_COMBINED_PKT_MID \copybrief HK_SEND_COMBINED_PKT_MID is
+  received without error, the HK app begins checking the 'Data Present' flag (located
+  in the run-time table) for each of the data sections that make up the output packet.
+  If a data portion is missing, HK sends a debug event (which is filtered by default)
   and increments #HK_HkTlm_Payload_t.MissingDataCtr.
-  The event will display the Message ID of the input message that would normally 
+  The event will display the Message ID of the input message that would normally
   provide the missing portion.
-  
-  <B>NOTE:</B> HK will report only one missing data portion in any output message. 
-  The #HK_HkTlm_Payload_t.MissingDataCtr will advance 
-  by one count (at most) and send one event (at most) for each 
+
+  <B>NOTE:</B> HK will report only one missing data portion in any output message.
+  The #HK_HkTlm_Payload_t.MissingDataCtr will advance
+  by one count (at most) and send one event (at most) for each
   #HK_SEND_COMBINED_PKT_MID.
 
   The HK app will not zero-out or alter the missing data section(s) in any way.
@@ -238,8 +238,8 @@
   The HK memory pool is used to allocate the memory needed to store the output
   packets. Each time a new copy table is processed, the memory for the output
   packets is dynamically allocated from the memory pool. The memory pool handle is
-  sent down in #HK_HkTlm_Payload_t. 
-  It is possible to get statistics from the cFE ES application on the memory pool 
+  sent down in #HK_HkTlm_Payload_t.
+  It is possible to get statistics from the cFE ES application on the memory pool
   used by this application. #CFE_ES_SEND_MEM_POOL_STATS_CC is
   used to get statistics will need this memory pool handle as a command parameter.
 **/
@@ -290,14 +290,14 @@
   <I>Copy A bytes from input message B, byte-offset C to output message Y,
   byte-offset Z. </I>
 
-  The structure format of a single copy table entry is defined by #hk_copy_table_entry_t.
+  The structure format of a single copy table entry is defined by #HK_CopyTableEntry_t.
 
   <B>HK Run-time Table Entries</B> - Each entry in the run-time table holds the address
   of the output packet and has variables that tell whether the input message ID
   has been subscribed to and whether or not the data from this entry is present in
   the output packet (since the last time the output packet was sent).
 
-  The structure format of a single run-time table entry is defined by #hk_runtime_tbl_entry_t.
+  The structure format of a single run-time table entry is defined by #HK_RuntimeTableEntry_t.
 
   <B>HK Copy Table Updates</B> - The copy table is polled for changes every housekeeping
   request. When an update is pending, HK cleans-up the SB subscriptions and frees

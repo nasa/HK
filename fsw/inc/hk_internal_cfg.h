@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -19,10 +18,22 @@
 
 /**
  * @file
- *  The CFS Housekeeping (HK) Application platform configuration header file
+ *  The CFS Housekeeping (HK) Application Private Config Definitions
+ *
+ * This provides default values for configurable items that are internal
+ * to this module and do NOT affect the interface(s) of this module.  Changes
+ * to items in this file only affect the local module and will be transparent
+ * to external entities that are using the public interface(s).
+ *
+ * @note This file may be overridden/superceded by mission-provided defintions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
  */
-#ifndef HK_PLATFORM_CFG_H
-#define HK_PLATFORM_CFG_H
+
+#ifndef HK_INTERNAL_CFG_H
+#define HK_INTERNAL_CFG_H
+
+#include "hk_internal_cfg_values.h"
 
 /**
  * \defgroup cfshkplatformcfg CFS Housekeeping Platform Configuration
@@ -40,7 +51,8 @@
  *       The maximum size dictated by cFE platform configuration
  *       parameter  OS_QUEUE_MAX_DEPTH
  */
-#define HK_PIPE_DEPTH 40
+#define HK_PIPE_DEPTH                  HK_INTERNAL_CFGVAL(PIPE_DEPTH)
+#define DEFAULT_HK_INTERNAL_PIPE_DEPTH 40
 
 /**
  *  \brief Discard Incomplete Combo Packets
@@ -53,7 +65,8 @@
  *  \par Limits
  *       This parameter can be set to 0 or 1 only.
  */
-#define HK_DISCARD_INCOMPLETE_COMBO 0
+#define HK_DISCARD_INCOMPLETE_COMBO                  HK_INTERNAL_CFGVAL(DISCARD_INCOMPLETE_COMBO)
+#define DEFAULT_HK_INTERNAL_DISCARD_INCOMPLETE_COMBO 0
 
 /**
  *  \brief Number of bytes in the HK Memory Pool
@@ -68,7 +81,8 @@
  *       an overhead cost in the memory pool.  The value must be larger than what is
  *       needed.
  */
-#define HK_NUM_BYTES_IN_MEM_POOL (6 * 1024)
+#define HK_NUM_BYTES_IN_MEM_POOL                  HK_INTERNAL_CFGVAL(NUM_BYTES_IN_MEM_POOL)
+#define DEFAULT_HK_INTERNAL_NUM_BYTES_IN_MEM_POOL (6 * 1024)
 
 /**
  *  \brief Name of the HK Copy Table
@@ -79,7 +93,8 @@
  *  \par Limits
  *       The Housekeeping app does not place a limit on this parameter
  */
-#define HK_COPY_TABLE_NAME "CopyTable"
+#define HK_COPY_TABLE_NAME                  HK_INTERNAL_CFGVAL(COPY_TABLE_NAME)
+#define DEFAULT_HK_INTERNAL_COPY_TABLE_NAME "CopyTable"
 
 /**
  *  \brief Name of the HK Run-time Table
@@ -90,7 +105,8 @@
  *  \par Limits
  *       The Housekeeping app does not place a limit on this parameter
  */
-#define HK_RUNTIME_TABLE_NAME "RuntimeTable"
+#define HK_RUNTIME_TABLE_NAME                  HK_INTERNAL_CFGVAL(RUNTIME_TABLE_NAME)
+#define DEFAULT_HK_INTERNAL_RUNTIME_TABLE_NAME "RuntimeTable"
 
 /**
  *  \brief HK Copy Table Filename
@@ -103,7 +119,8 @@
  *       the #OS_MAX_PATH_LEN value.
  */
 
-#define HK_COPY_TABLE_FILENAME "/cf/hk_cpy_tbl.tbl"
+#define HK_COPY_TABLE_FILENAME                  HK_INTERNAL_CFGVAL(COPY_TABLE_FILENAME)
+#define DEFAULT_HK_INTERNAL_COPY_TABLE_FILENAME "/cf/hk_cpy_tbl.tbl"
 
 /**
  * \brief Mission specific version number for HK application
@@ -119,7 +136,8 @@
  *       Must be defined as a numeric value that is greater than
  *       or equal to zero.
  */
-#define HK_MISSION_REV 0
+#define HK_MISSION_REV                  HK_INTERNAL_CFGVAL(MISSION_REV)
+#define DEFAULT_HK_INTERNAL_MISSION_REV 0
 
 /**
  * \brief Maximum size allowed for HK combined packet
@@ -131,7 +149,8 @@
  *       Must be defined as a numeric value that is greater than
  *       or equal to zero.
  */
-#define HK_MAX_COMBINED_PACKET_SIZE 1500
+#define HK_MAX_COMBINED_PACKET_SIZE                  HK_INTERNAL_CFGVAL(MAX_COMBINED_PACKET_SIZE)
+#define DEFAULT_HK_INTERNAL_MAX_COMBINED_PACKET_SIZE 1500
 
 /**\}*/
 
