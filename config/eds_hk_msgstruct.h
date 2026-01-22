@@ -16,11 +16,19 @@
  * limitations under the License.
  ************************************************************************/
 
-#include "hk_app.h"
+/**
+ * @file
+ *  The CFS Housekeeping (HK) Application Message Structure Definition
+ *
+ * Provides default definitions for message structures
+ *
+ * @note This file may be overridden/superceded by mission-provided defintions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
+ */
+#ifndef EDS_HK_MSGSTRUCT_H
+#define EDS_HK_MSGSTRUCT_H
 
-/* UT includes */
-#include "uttest.h"
-#include "utassert.h"
-#include "utstubs.h"
+#include "hk_eds_typedefs.h"
 
-HK_AppData_t HK_AppData;
+#endif

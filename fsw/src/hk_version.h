@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -30,9 +29,9 @@
  * \{
  */
 
-#define HK_MAJOR_VERSION 2  /**< \brief Major version number */
-#define HK_MINOR_VERSION 5  /**< \brief Minor version number */
-#define HK_REVISION      99 /**< \brief Revision number */
+#define HK_MAJOR_VERSION 7  /**< \brief Major version number */
+#define HK_MINOR_VERSION 0  /**< \brief Minor version number */
+#define HK_REVISION      0 /**< \brief Revision number */
 
 /**\}*/
 

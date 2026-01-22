@@ -18,18 +18,29 @@
 
 /**
  * @file
- *  Define HK Performance IDs
+ *  The CFS Housekeeping (HK) Application Table Structure Definition
+ *
+ * Provides default definitions for HK table structures
+ *
+ * @note This file may be overridden/superceded by mission-provided defintions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
  */
-#ifndef HK_PERFIDS_H
-#define HK_PERFIDS_H
+#ifndef DEFAULT_HK_TBLSTRUCT_H
+#define DEFAULT_HK_TBLSTRUCT_H
 
-/**
- * \defgroup cfshkmissioncfg CFS Housekeeping Mission Configuration
- * \{
- */
+/************************************************************************
+** Includes
+*************************************************************************/
+#include "common_types.h"
+#include "hk_tbldefs.h"
+#include "hk_mission_cfg.h"
 
-#define HK_APPMAIN_PERF_ID 25 /**< \brief Main application performance ID */
+/*************************************************************************
+** Type definitions
+**************************************************************************/
 
-/**\}*/
+typedef HK_CopyTableEntry_t    HK_CopyTable_Array_t[HK_COPY_TABLE_ENTRIES];
+typedef HK_RuntimeTableEntry_t HK_RuntimeTable_Array_t[HK_COPY_TABLE_ENTRIES];
 
 #endif

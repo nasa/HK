@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -226,7 +225,7 @@ CFE_Status_t HK_TableInit(void)
 
     /* Register The HK Copy Table */
     Status = CFE_TBL_Register(&HK_AppData.CopyTableHandle, HK_COPY_TABLE_NAME,
-                              (sizeof(hk_copy_table_entry_t) * HK_COPY_TABLE_ENTRIES),
+                              (sizeof(HK_CopyTableEntry_t) * HK_COPY_TABLE_ENTRIES),
                               CFE_TBL_OPT_DBL_BUFFER | CFE_TBL_OPT_LOAD_DUMP, HK_ValidateHkCopyTable);
 
     if (Status != CFE_SUCCESS)
@@ -238,7 +237,7 @@ CFE_Status_t HK_TableInit(void)
 
     /* Register The HK Runtime Table */
     Status = CFE_TBL_Register(&HK_AppData.RuntimeTableHandle, HK_RUNTIME_TABLE_NAME,
-                              (sizeof(hk_runtime_tbl_entry_t) * HK_COPY_TABLE_ENTRIES),
+                              (sizeof(HK_RuntimeTableEntry_t) * HK_COPY_TABLE_ENTRIES),
                               CFE_TBL_OPT_SNGL_BUFFER | CFE_TBL_OPT_DUMP_ONLY, NULL);
     if (Status != CFE_SUCCESS)
     {
@@ -301,67 +300,6 @@ CFE_Status_t HK_TableInit(void)
 
     return CFE_SUCCESS;
 } /* HK_TableInit */
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/*                                                                 */
-/* Send Combined Housekeeping Packet                               */
-/*                                                                 */
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void HK_SendCombinedPktCmd(const CFE_SB_Buffer_t *BufPtr)
-{
-    const HK_SendCombinedPkt_Payload_t *CmdPtr;
-
-    CmdPtr = &((const HK_SendCombinedPktCmd_t *)BufPtr)->Payload;
-
-    HK_SendCombinedHkPacket(CmdPtr->OutMsgToSend);
-}
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/*                                                                 */
-/* Housekeeping request                                            */
-/*                                                                 */
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void HK_SendHkCmd(const CFE_SB_Buffer_t *BufPtr)
-{
-    HK_HkTlm_Payload_t *PayloadPtr;
-
-    PayloadPtr = &HK_AppData.HkPacket.Payload;
-
-    /* copy data into housekeeping packet */
-    PayloadPtr->CmdCounter          = HK_AppData.CmdCounter;
-    PayloadPtr->ErrCounter          = HK_AppData.ErrCounter;
-    PayloadPtr->MissingDataCtr      = HK_AppData.MissingDataCtr;
-    PayloadPtr->CombinedPacketsSent = HK_AppData.CombinedPacketsSent;
-    PayloadPtr->MemPoolHandle       = HK_AppData.MemPoolHandle;
-
-    /* Send housekeeping telemetry packet...        */
-    CFE_SB_TimeStampMsg(CFE_MSG_PTR(HK_AppData.HkPacket.TelemetryHeader));
-    CFE_SB_TransmitMsg(CFE_MSG_PTR(HK_AppData.HkPacket.TelemetryHeader), true);
-}
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/*                                                                 */
-/* Noop command                                                    */
-/*                                                                 */
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr)
-{
-    CFE_EVS_SendEvent(HK_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "HK No-op command, Version %d.%d.%d.%d",
-                      HK_MAJOR_VERSION, HK_MINOR_VERSION, HK_REVISION, HK_MISSION_REV);
-
-    HK_AppData.CmdCounter++;
-}
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/*                                                                 */
-/* Reset counters command                                          */
-/*                                                                 */
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void HK_ResetCountersCmd(const CFE_SB_Buffer_t *BufPtr)
-{
-    HK_ResetHkData();
-    CFE_EVS_SendEvent(HK_RESET_INF_EID, CFE_EVS_EventType_INFORMATION, "HK Reset Counters command received");
-}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */

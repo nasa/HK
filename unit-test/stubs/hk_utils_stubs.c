@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -102,12 +101,12 @@ void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
  * Generated stub function for HK_ProcessNewCopyTable()
  * ----------------------------------------------------
  */
-CFE_Status_t HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
+CFE_Status_t HK_ProcessNewCopyTable(HK_CopyTableEntry_t *CpyTblPtr, HK_RuntimeTableEntry_t *RtTblPtr)
 {
     UT_GenStub_SetupReturnBuffer(HK_ProcessNewCopyTable, CFE_Status_t);
 
-    UT_GenStub_AddParam(HK_ProcessNewCopyTable, hk_copy_table_entry_t *, CpyTblPtr);
-    UT_GenStub_AddParam(HK_ProcessNewCopyTable, hk_runtime_tbl_entry_t *, RtTblPtr);
+    UT_GenStub_AddParam(HK_ProcessNewCopyTable, HK_CopyTableEntry_t *, CpyTblPtr);
+    UT_GenStub_AddParam(HK_ProcessNewCopyTable, HK_RuntimeTableEntry_t *, RtTblPtr);
 
     UT_GenStub_Execute(HK_ProcessNewCopyTable, Basic, NULL);
 
@@ -143,12 +142,12 @@ void HK_SetFlagsToNotPresent(CFE_SB_MsgId_t OutPkt)
  * Generated stub function for HK_TearDownOldCopyTable()
  * ----------------------------------------------------
  */
-CFE_Status_t HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr)
+CFE_Status_t HK_TearDownOldCopyTable(HK_CopyTableEntry_t *CpyTblPtr, HK_RuntimeTableEntry_t *RtTblPtr)
 {
     UT_GenStub_SetupReturnBuffer(HK_TearDownOldCopyTable, CFE_Status_t);
 
-    UT_GenStub_AddParam(HK_TearDownOldCopyTable, hk_copy_table_entry_t *, CpyTblPtr);
-    UT_GenStub_AddParam(HK_TearDownOldCopyTable, hk_runtime_tbl_entry_t *, RtTblPtr);
+    UT_GenStub_AddParam(HK_TearDownOldCopyTable, HK_CopyTableEntry_t *, CpyTblPtr);
+    UT_GenStub_AddParam(HK_TearDownOldCopyTable, HK_RuntimeTableEntry_t *, RtTblPtr);
 
     UT_GenStub_Execute(HK_TearDownOldCopyTable, Basic, NULL);
 

@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -27,12 +26,13 @@
 *************************************************************************/
 #include "cfe.h"
 #include "cfe_msgids.h"
-#include "hk_extern_typedefs.h"
+#include "hk_mission_cfg.h"
 #include "hk_msgids.h"
-#include "hk_tbldefs.h"
+#include "hk_tbl.h"
 #include "cfe_tbl_filedef.h"
+#include "cfe_sb_extern_typedefs.h"
 
-hk_copy_table_entry_t HK_CopyTable[HK_COPY_TABLE_ENTRIES] = {
+HK_CopyTable_Array_t HK_CopyTable = {
     /*         inputMid        inputOffset     outputMid    outputOffset  numBytes*/
 
     /*   0 */ {

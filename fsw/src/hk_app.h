@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -29,11 +28,10 @@
  ************************************************************************/
 
 #include "cfe.h"
-#include "hk_msgdefs.h"
 #include "hk_msg.h"
+#include "hk_tbl.h"
 #include "hk_utils.h"
 #include "hk_platform_cfg.h"
-#include "hk_extern_typedefs.h"
 
 /*************************************************************************
  * Macro definitions
@@ -77,8 +75,8 @@ typedef struct
     CFE_TBL_Handle_t CopyTableHandle;    /**< \brief Copy Table handle */
     CFE_TBL_Handle_t RuntimeTableHandle; /**< \brief Run-time table handle */
 
-    hk_copy_table_entry_t * CopyTablePtr;    /**< \brief Ptr to copy table entry */
-    hk_runtime_tbl_entry_t *RuntimeTablePtr; /**< \brief Ptr to run-time table entry */
+    HK_CopyTableEntry_t *   CopyTablePtr;    /**< \brief Ptr to copy table entry */
+    HK_RuntimeTableEntry_t *RuntimeTablePtr; /**< \brief Ptr to run-time table entry */
 
     uint8 MemPoolBuffer[HK_NUM_BYTES_IN_MEM_POOL]; /**< \brief HK mempool buffer */
 } HK_AppData_t;
@@ -134,68 +132,6 @@ CFE_Status_t HK_AppInit(void);
  *  \sa #HK_AppInit
  */
 CFE_Status_t HK_TableInit(void);
-
-/**
- * \brief Send Combined Housekeeping Message
- *
- *  \par Description
- *       Processes the command to send a combined housekeeping message
- *
- *  \par Assumptions, External Events, and Notes:
- *       This command does not affect the command execution counter, but
- *       this command will increment the cmd error counter if an invalid cmd
- *       length is detected.
- *
- *  \param [in]  BufPtr Pointer to Software Bus buffer
- */
-void HK_SendCombinedPktCmd(const CFE_SB_Buffer_t *BufPtr);
-
-/**
- * \brief Process housekeeping request
- *
- *  \par Description
- *       Processes an on-board housekeeping request message.
- *
- *  \par Assumptions, External Events, and Notes:
- *       This command does not affect the command execution counter, but
- *       this command will increment the cmd error counter if an invalid cmd
- *       length is detected.
- *
- *  \param [in] BufPtr Pointer to command message header
- */
-void HK_SendHkCmd(const CFE_SB_Buffer_t *BufPtr);
-
-/**
- * \brief Process noop command
- *
- *  \par Description
- *       Processes a noop ground command.
- *
- *  \par Assumptions, External Events, and Notes:
- *       None
- *
- *  \param [in]  BufPtr Pointer to Software Bus buffer
- *
- *  \sa #HK_NOOP_CC
- */
-void HK_NoopCmd(const CFE_SB_Buffer_t *BufPtr);
-
-/**
- * \brief Process reset counters command
- *
- *  \par Description
- *       Processes a reset counters ground command which will reset
- *       the memory manager commmand error and command execution counters
- *       to zero.
- *
- *  \par Assumptions, External Events, and Notes:
- *       None
- *
- *  \param [in]   BufPtr Pointer to Software Bus buffer
- *
- *  \sa #HK_RESET_COUNTERS_CC
- */
-void HK_ResetCountersCmd(const CFE_SB_Buffer_t *BufPtr);
 
 /**
  * \brief Reset housekeeping data

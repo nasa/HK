@@ -2,9 +2,15 @@ project(CFS_HK C)
 
 set(APP_SRC_FILES
   fsw/src/hk_app.c
-  fsw/src/hk_dispatch.c
+  fsw/src/hk_cmds.c
   fsw/src/hk_utils.c
 )
+
+if (CFE_EDS_ENABLED)
+  list(APPEND APP_SRC_FILES fsw/src/hk_eds_dispatch.c)
+else()
+  list(APPEND APP_SRC_FILES fsw/src/hk_dispatch.c)
+endif()
 
 # Create the app module
 add_cfe_app(hk ${APP_SRC_FILES})

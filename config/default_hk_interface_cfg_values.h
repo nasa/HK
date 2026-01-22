@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,447-1, and identified as “CFS CFDP (CF)
- * Application version 3.0.0”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2019 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -19,22 +18,21 @@
 
 /**
  * @file
+ *  The CFS Housekeeping (HK) Application Public Definitions
  *
- * Declarations and prototypes for hk_extern_typedefs module
+ * This provides default values for configurable items that affect
+ * the interface(s) of this module.  This includes the CMD/TLM message
+ * interface, tables definitions, and/or the public API, if applicable.
+ *
+ * @note This file may be overridden/superceded by mission-provided defintions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
  */
 
-#ifndef HK_EXTERN_TYPEDEFS_H
-#define HK_EXTERN_TYPEDEFS_H
+#ifndef DEFAULT_HK_INTERFACE_CFG_VALUES_H
+#define DEFAULT_HK_INTERFACE_CFG_VALUES_H
 
-/**
- *  \brief Maximum Number of HK Copy Table Entries
- *
- *  \par Description:
- *       Dictates the number of elements in the hk copy table.
- *
- *  \par Limits
- *       The maximum size of this parameter is 8192
- */
-#define HK_COPY_TABLE_ENTRIES 128
+/* Use the default configuration value for all */
+#define HK_INTERFACE_CFGVAL(x) DEFAULT_HK_INTERFACE_##x
 
-#endif /* HK_EXTERN_TYPEDEFS_H */
+#endif

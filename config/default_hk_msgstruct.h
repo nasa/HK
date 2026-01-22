@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -19,12 +18,20 @@
 
 /**
  * @file
- *  The CFS Housekeeping (HK) Application header file
+ *  The CFS Housekeeping (HK) Application Message Structure Definition
+ *
+ * Provides default definitions for message structures
+ *
+ * @note This file may be overridden/superceded by mission-provided defintions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
  */
-#ifndef HK_MSG_H
-#define HK_MSG_H
+#ifndef DEFAULT_HK_MSGSTRUCT_H
+#define DEFAULT_HK_MSGSTRUCT_H
 
-#include <cfe.h>
+#include "cfe_es_extern_typedefs.h"
+#include "cfe_sb_extern_typedefs.h"
+#include "cfe_msg_hdr.h"
 
 /**
  * \defgroup cfshkcmdstructs CFS Housekeeping Command Structures
@@ -86,19 +93,6 @@ typedef struct
  * \defgroup cfshktlm CFS Housekeeping Telemetry
  * \{
  */
-
-/**
- *  \brief HK Application housekeeping Payload
- */
-typedef struct
-{
-    uint8              CmdCounter;          /**< \brief Count of valid commands received */
-    uint8              ErrCounter;          /**< \brief Count of invalid commands received */
-    uint16             Padding;             /**< \brief Padding to force 32 bit alignment */
-    uint16             CombinedPacketsSent; /**< \brief Count of combined tlm pkts sent */
-    uint16             MissingDataCtr;      /**< \brief Number of times missing data was detected */
-    CFE_ES_MemHandle_t MemPoolHandle;       /**< \brief Memory pool handle used to get mempool diags */
-} HK_HkTlm_Payload_t;
 
 /**
  *  \brief HK Application housekeeping Packet

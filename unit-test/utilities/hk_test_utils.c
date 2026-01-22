@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -73,7 +72,7 @@ void UT_Handler_CFE_ES_WriteToSysLog(void *UserObj, UT_EntryKey_t FuncKey, const
     context_CFE_ES_WriteToSysLog.Spec[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH - 1] = '\0';
 }
 
-void HK_Test_InitGoodCopyTable(hk_copy_table_entry_t *CpyTbl)
+void HK_Test_InitGoodCopyTable(HK_CopyTableEntry_t *CpyTbl)
 {
     int32 i = 0;
 
@@ -118,23 +117,7 @@ void HK_Test_InitGoodCopyTable(hk_copy_table_entry_t *CpyTbl)
     }
 }
 
-void HK_Test_InitOverflowCopyTable(hk_copy_table_entry_t *CpyTbl)
-{
-    int32 i;
-    int32 overflowBytes = (HK_MAX_COMBINED_PACKET_SIZE / HK_COPY_TABLE_ENTRIES) + 1;
-
-    /* Set each table entry such that the combined size exceeds HK_MAX_COMBINED_PACKET_SIZE */
-    for (i = 0; i < HK_COPY_TABLE_ENTRIES; i++)
-    {
-        CpyTbl[i].InputMid     = CFE_SB_ValueToMsgId(CFE_EVS_HK_TLM_MID);
-        CpyTbl[i].InputOffset  = 12;
-        CpyTbl[i].OutputMid    = CFE_SB_ValueToMsgId(HK_COMBINED_PKT1_MID);
-        CpyTbl[i].OutputOffset = ((i + 1) * overflowBytes);
-        CpyTbl[i].NumBytes     = overflowBytes; /* Ensures overflow when summed across all entries */
-    }
-}
-
-void HK_Test_InitEmptyCopyTable(hk_copy_table_entry_t *CpyTbl)
+void HK_Test_InitEmptyCopyTable(HK_CopyTableEntry_t *CpyTbl)
 {
     int32 i = 0;
 
@@ -148,11 +131,11 @@ void HK_Test_InitEmptyCopyTable(hk_copy_table_entry_t *CpyTbl)
     }
 }
 
-void HK_Test_InitGoodRuntimeTable(hk_runtime_tbl_entry_t *RtTbl)
+void HK_Test_InitGoodRuntimeTable(HK_RuntimeTableEntry_t *RtTbl)
 {
     int32                   i = 0;
     CFE_SB_Buffer_t         Buffer;
-    hk_runtime_tbl_entry_t *RtEntry = NULL;
+    HK_RuntimeTableEntry_t *RtEntry = NULL;
 
     /* Loop thru the RunTime table initializing the fields */
     for (i = 0; i < HK_COPY_TABLE_ENTRIES; i++)
@@ -161,31 +144,31 @@ void HK_Test_InitGoodRuntimeTable(hk_runtime_tbl_entry_t *RtTbl)
 
         if (i < 5)
         {
-            RtEntry->OutputPktAddr      = &Buffer; /* just needs to be non-null */
+            RtEntry->OutputPktAddr      = CFE_ES_MEMADDRESS_C(&Buffer); /* just needs to be non-null */
             RtEntry->InputMidSubscribed = HK_INPUTMID_SUBSCRIBED;
             RtEntry->DataPresent        = HK_DATA_NOT_PRESENT;
         }
         else
         {
-            RtEntry->OutputPktAddr      = NULL;
+            RtEntry->OutputPktAddr      = CFE_ES_MEMADDRESS_C(NULL);
             RtEntry->InputMidSubscribed = HK_INPUTMID_NOT_SUBSCRIBED;
             RtEntry->DataPresent        = HK_DATA_NOT_PRESENT;
         }
     }
 }
 
-void HK_Test_InitEmptyRuntimeTable(hk_runtime_tbl_entry_t *RtTbl)
+void HK_Test_InitEmptyRuntimeTable(HK_RuntimeTableEntry_t *RtTbl)
 {
     int32 i = 0;
 
-    hk_runtime_tbl_entry_t *RtEntry = NULL;
+    HK_RuntimeTableEntry_t *RtEntry = NULL;
 
     /* Loop thru the RunTime table initializing the fields */
     for (i = 0; i < HK_COPY_TABLE_ENTRIES; i++)
     {
         RtEntry = &RtTbl[i];
 
-        RtEntry->OutputPktAddr      = NULL;
+        RtEntry->OutputPktAddr      = CFE_ES_MEMADDRESS_C(NULL);
         RtEntry->InputMidSubscribed = HK_INPUTMID_NOT_SUBSCRIBED;
         RtEntry->DataPresent        = HK_DATA_NOT_PRESENT;
     }

@@ -16,11 +16,13 @@
  * limitations under the License.
  ************************************************************************/
 
-#include "hk_app.h"
+/**
+ * @file
+ *  The CFS Housekeeping (HK) Application Message IDs header file
+ */
+#ifndef DEFAULT_HK_TOPICID_VALUES_H
+#define DEFAULT_HK_TOPICID_VALUES_H
 
-/* UT includes */
-#include "uttest.h"
-#include "utassert.h"
-#include "utstubs.h"
+#define CFE_MISSION_HK_TIDVAL(x) DEFAULT_CFE_MISSION_HK_##x##_TOPICID
 
-HK_AppData_t HK_AppData;
+#endif

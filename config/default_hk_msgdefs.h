@@ -16,11 +16,28 @@
  * limitations under the License.
  ************************************************************************/
 
-#include "hk_app.h"
+/**
+ * @file
+ *  The CFS Housekeeping (HK) Application function codes
+ *
+ */
+#ifndef DEFAULT_HK_MSGDEFS_H
+#define DEFAULT_HK_MSGDEFS_H
 
-/* UT includes */
-#include "uttest.h"
-#include "utassert.h"
-#include "utstubs.h"
+#include "common_types.h"
+#include "cfe_es_extern_typedefs.h"
 
-HK_AppData_t HK_AppData;
+/**
+ *  \brief HK Application housekeeping Payload
+ */
+typedef struct
+{
+    uint8              CmdCounter;          /**< \brief Count of valid commands received */
+    uint8              ErrCounter;          /**< \brief Count of invalid commands received */
+    uint16             Padding;             /**< \brief Padding to force 32 bit alignment */
+    uint16             CombinedPacketsSent; /**< \brief Count of combined tlm pkts sent */
+    uint16             MissingDataCtr;      /**< \brief Number of times missing data was detected */
+    CFE_ES_MemHandle_t MemPoolHandle;       /**< \brief Memory pool handle used to get mempool diags */
+} HK_HkTlm_Payload_t;
+
+#endif

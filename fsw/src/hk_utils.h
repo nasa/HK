@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -104,7 +103,7 @@ int32 HK_ValidateHkCopyTable(void *TblPtr);
  * \retval #CFE_SUCCESS              \copydoc CFE_SUCCESS
  * \retval #HK_NULL_POINTER_DETECTED \copydoc HK_NULL_POINTER_DETECTED
  */
-CFE_Status_t HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr);
+CFE_Status_t HK_ProcessNewCopyTable(HK_CopyTableEntry_t *CpyTblPtr, HK_RuntimeTableEntry_t *RtTblPtr);
 
 /**
  * \brief Tear Down Old Copy Table
@@ -123,7 +122,7 @@ CFE_Status_t HK_ProcessNewCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime
  * \retval #CFE_SUCCESS              \copydoc CFE_SUCCESS
  * \retval #HK_NULL_POINTER_DETECTED \copydoc HK_NULL_POINTER_DETECTED
  */
-CFE_Status_t HK_TearDownOldCopyTable(hk_copy_table_entry_t *CpyTblPtr, hk_runtime_tbl_entry_t *RtTblPtr);
+CFE_Status_t HK_TearDownOldCopyTable(HK_CopyTableEntry_t *CpyTblPtr, HK_RuntimeTableEntry_t *RtTblPtr);
 
 /**
  * \brief Send combined output message

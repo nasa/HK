@@ -1,8 +1,7 @@
 /************************************************************************
- * NASA Docket No. GSC-18,919-1, and identified as “Core Flight
- * System (cFS) Housekeeping (HK) Application version 2.5.1”
+ * NASA Docket No. GSC-19,200-1, and identified as "cFS Draco"
  *
- * Copyright (c) 2021 United States Government as represented by the
+ * Copyright (c) 2023 United States Government as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All Rights Reserved.
  *
@@ -27,6 +26,7 @@
 ** Includes
 *************************************************************************/
 #include "hk_app.h"
+#include "hk_cmds.h"
 #include "hk_events.h"
 #include "hk_msgids.h"
 #include "hk_dispatch.h"
@@ -101,7 +101,7 @@ void HK_SendCombinedPktVerifyDispatch(const CFE_SB_Buffer_t *BufPtr)
 {
     if (HK_VerifyMsgLength(BufPtr, sizeof(HK_SendCombinedPktCmd_t)) == HK_SUCCESS)
     {
-        HK_SendCombinedPktCmd(BufPtr);
+        HK_SendCombinedPktCmd((const HK_SendCombinedPktCmd_t *)BufPtr);
     }
 }
 
@@ -114,7 +114,7 @@ void HK_SendHkVerifyDispatch(const CFE_SB_Buffer_t *BufPtr)
 {
     if (HK_VerifyMsgLength(BufPtr, sizeof(HK_SendHkCmd_t)) == HK_SUCCESS)
     {
-        HK_SendHkCmd(BufPtr);
+        HK_SendHkCmd((const HK_SendHkCmd_t *)BufPtr);
     }
 }
 
@@ -129,7 +129,7 @@ void HK_NoopVerifyDispatch(const CFE_SB_Buffer_t *BufPtr)
 
     if (HK_VerifyCmdLength(BufPtr, ExpectedLength) == HK_SUCCESS)
     {
-        HK_NoopCmd(BufPtr);
+        HK_NoopCmd((const HK_NoopCmd_t *)BufPtr);
     }
     else
     {
@@ -148,7 +148,7 @@ void HK_ResetCountersVerifyDispatch(const CFE_SB_Buffer_t *BufPtr)
 
     if (HK_VerifyCmdLength(BufPtr, ExpectedLength) == HK_SUCCESS)
     {
-        HK_ResetCountersCmd(BufPtr);
+        HK_ResetCountersCmd((const HK_ResetCountersCmd_t *)BufPtr);
     }
     else
     {
@@ -161,58 +161,75 @@ void HK_ResetCountersVerifyDispatch(const CFE_SB_Buffer_t *BufPtr)
 /* Process a command pipe message                                  */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
+void HK_AppProcessCmd(const CFE_SB_Buffer_t *BufPtr)
 {
     CFE_SB_MsgId_t    MessageID   = CFE_SB_INVALID_MSG_ID; /* Init to invalid value */
     CFE_MSG_FcnCode_t CommandCode = 0;
 
+    CFE_MSG_GetFcnCode(&BufPtr->Msg, &CommandCode);
+
+    switch (CommandCode)
+    {
+        case HK_NOOP_CC:
+            HK_NoopVerifyDispatch(BufPtr);
+            break;
+
+        case HK_RESET_COUNTERS_CC:
+            HK_ResetCountersVerifyDispatch(BufPtr);
+            break;
+
+        default:
+            CFE_MSG_GetMsgId(&BufPtr->Msg, &MessageID);
+            CFE_EVS_SendEvent(HK_CC_ERR_EID, CFE_EVS_EventType_ERROR,
+                              "Cmd Msg with Invalid command code Rcvd -- ID = 0x%08lX, CC = %d",
+                              (unsigned long)CFE_SB_MsgIdToValue(MessageID), CommandCode);
+            HK_AppData.ErrCounter++;
+            break;
+    }
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*                                                                 */
+/* Process a command pipe message                                  */
+/*                                                                 */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
+{
+    static CFE_SB_MsgId_t CMD_MID               = CFE_SB_MSGID_RESERVED;
+    static CFE_SB_MsgId_t SEND_HK_MID           = CFE_SB_MSGID_RESERVED;
+    static CFE_SB_MsgId_t SEND_COMBINED_PKT_MID = CFE_SB_MSGID_RESERVED;
+
+    CFE_SB_MsgId_t MessageID = CFE_SB_INVALID_MSG_ID;
+
+    /* cache the local MID Values here, this avoids repeat lookups */
+    if (!CFE_SB_IsValidMsgId(CMD_MID))
+    {
+        CMD_MID               = CFE_SB_ValueToMsgId(HK_CMD_MID);
+        SEND_HK_MID           = CFE_SB_ValueToMsgId(HK_SEND_HK_MID);
+        SEND_COMBINED_PKT_MID = CFE_SB_ValueToMsgId(HK_SEND_COMBINED_PKT_MID);
+    }
+
     CFE_MSG_GetMsgId(&BufPtr->Msg, &MessageID);
 
-    switch (CFE_SB_MsgIdToValue(MessageID))
+    if (CFE_SB_MsgId_Equal(MessageID, SEND_HK_MID))
     {
-        case HK_SEND_COMBINED_PKT_MID:
-            HK_SendCombinedPktVerifyDispatch(BufPtr);
-            break;
-
-        /* Request for HK's Housekeeping data...      */
-        case HK_SEND_HK_MID:
-            /* Send out HK's housekeeping data */
-            HK_SendHkVerifyDispatch(BufPtr);
-
-            /* Check for copy table load and runtime dump request */
-            if (HK_CheckStatusOfTables() != HK_SUCCESS)
-            {
-                HK_AppData.RunStatus = CFE_ES_RunStatus_APP_ERROR;
-            }
-            break;
-
-        /* HK ground commands   */
-        case HK_CMD_MID:
-
-            CFE_MSG_GetFcnCode(&BufPtr->Msg, &CommandCode);
-
-            switch (CommandCode)
-            {
-                case HK_NOOP_CC:
-                    HK_NoopVerifyDispatch(BufPtr);
-                    break;
-
-                case HK_RESET_COUNTERS_CC:
-                    HK_ResetCountersVerifyDispatch(BufPtr);
-                    break;
-
-                default:
-                    CFE_EVS_SendEvent(HK_CC_ERR_EID, CFE_EVS_EventType_ERROR,
-                                      "Cmd Msg with Invalid command code Rcvd -- ID = 0x%08lX, CC = %d",
-                                      (unsigned long)CFE_SB_MsgIdToValue(MessageID), CommandCode);
-                    HK_AppData.ErrCounter++;
-                    break;
-            }
-            break;
-
+        /* Send out HK's housekeeping data */
+        HK_SendHkVerifyDispatch(BufPtr);
+    }
+    else if (CFE_SB_MsgId_Equal(MessageID, SEND_COMBINED_PKT_MID))
+    {
+        HK_SendCombinedPktVerifyDispatch(BufPtr);
+    }
+    else if (CFE_SB_MsgId_Equal(MessageID, CMD_MID))
+    {
+        /*
+        ** HK application commands...
+        */
+        HK_AppProcessCmd(BufPtr);
+    }
+    else
+    {
         /* Incoming housekeeping data from other Subsystems...       */
-        default:
-            HK_ProcessIncomingHkData(BufPtr);
-            break;
+        HK_ProcessIncomingHkData(BufPtr);
     }
 }

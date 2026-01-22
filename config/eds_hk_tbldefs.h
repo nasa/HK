@@ -16,11 +16,23 @@
  * limitations under the License.
  ************************************************************************/
 
-#include "hk_app.h"
+/**
+ * @file
+ *  The CFS Housekeeping (HK) Application Table Structure Definition
+ *
+ * This is a compatibility header for the "hk_tbldefs.h" file that has
+ * traditionally provided the table definitions for cFS apps.
+ *
+ * @note This file may be overridden/superceded by mission-provided defintions
+ * either by overriding this header or by generating definitions from a command/data
+ * dictionary tool.
+ */
+#ifndef EDS_HK_TBLDEFS_H
+#define EDS_HK_TBLDEFS_H
 
-/* UT includes */
-#include "uttest.h"
-#include "utassert.h"
-#include "utstubs.h"
+/************************************************************************
+** Includes
+*************************************************************************/
+#include "hk_eds_typedefs.h"
 
-HK_AppData_t HK_AppData;
+#endif
