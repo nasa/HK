@@ -78,13 +78,13 @@ void HK_AppMain(void)
         */
         Status = CFE_SB_ReceiveBuffer(&BufPtr, HK_AppData.CmdPipe, HK_SB_TIMEOUT);
 
+        /*
+        ** Performance Log Entry Stamp.
+        */
+        CFE_ES_PerfLogEntry(HK_APPMAIN_PERF_ID);
+
         if (Status == CFE_SUCCESS)
         {
-            /*
-            ** Performance Log Entry Stamp.
-            */
-            CFE_ES_PerfLogEntry(HK_APPMAIN_PERF_ID);
-
             /* Perform Message Processing */
             HK_AppPipe(BufPtr);
         }
@@ -130,6 +130,9 @@ void HK_AppMain(void)
 CFE_Status_t HK_AppInit(void)
 {
     CFE_Status_t Status = CFE_SUCCESS;
+
+    /* Initialize (zero-out) the global data structure */
+    memset(&HK_AppData, 0, sizeof(HK_AppData));
 
     HK_AppData.RunStatus = CFE_ES_RunStatus_APP_RUN;
 
