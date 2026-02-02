@@ -148,7 +148,8 @@ void Test_HK_AppMain_RcvBufFail(void)
     /* Arrange */
     int32 strCmpResult;
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK_APP Exiting due to CFE_SB_RcvMsg error 0x%%08X");
 
     /* Set return codes for table functions so that HK_TableInit
@@ -307,7 +308,8 @@ void Test_HK_AppInit_EVSRegFail(void)
     CFE_Status_t ReturnValue;
     int32        strCmpResult;
     char         ExpectedSysLogString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    snprintf(ExpectedSysLogString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedSysLogString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK: error registering for event services: 0x%%08X\n");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_EVS_Register), -1);
@@ -372,7 +374,8 @@ void Test_HK_AppInit_SBSubscribe1Fail(void)
     char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     int32        ForcedReturnVal = -1;
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Error Subscribing to HK Snd Cmb Pkt, MID=0x%%08X, RC=0x%%08X");
 
     UT_SetDeferredRetcode(UT_KEY(CFE_SB_Subscribe), 1, ForcedReturnVal);
@@ -409,7 +412,8 @@ void Test_HK_AppInit_SBSubscribe2Fail(void)
     char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     int32        ForcedReturnVal = -1;
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Error Subscribing to HK Request, MID=0x%%08X, RC=0x%%08X");
 
     UT_SetDeferredRetcode(UT_KEY(CFE_SB_Subscribe), 2, ForcedReturnVal);
@@ -446,7 +450,8 @@ void Test_HK_AppInit_SBSubscribe3Fail(void)
     char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     int32        ForcedReturnVal = -1;
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Error Subscribing to HK Gnd Cmds, MID=0x%%08X, RC=0x%%08X");
 
     UT_SetDeferredRetcode(UT_KEY(CFE_SB_Subscribe), 3, ForcedReturnVal);
@@ -543,7 +548,8 @@ void Test_HK_AppInit_SendEventFail(void)
     int32        strCmpResult;
     uint8        call_count_CFE_ES_WriteToSysLog;
     char         ExpectedSysLogString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    snprintf(ExpectedSysLogString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedSysLogString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK App:Error Sending Initialization Event,RC=0x%%08X\n");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_EVS_SendEvent), -1);
@@ -707,7 +713,8 @@ void Test_HK_TableInit_ManageCpyTblFail(void)
     CFE_Status_t ReturnValue;
     int32        strCmpResult;
     char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Error from TBL Manage call for Copy Table,RC=0x%%08X");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_Manage), -1);
@@ -742,7 +749,8 @@ void Test_HK_TableInit_ManageRtTblFail(void)
     CFE_Status_t ReturnValue;
     int32        strCmpResult;
     char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Error from TBL Manage call for Runtime Table,RC=0x%%08X");
 
     UT_SetDeferredRetcode(UT_KEY(CFE_TBL_Manage), 2, -1);
@@ -846,7 +854,8 @@ void Test_HK_TableInit_ProcessNewCpyTblFail(void)
     CFE_Status_t ReturnValue;
     int32        strCmpResult;
     char         ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Process New Copy Table Failed, status = 0x%%08X");
 
     UT_SetDeferredRetcode(UT_KEY(CFE_TBL_GetAddress), 1, CFE_TBL_INFO_UPDATED);
@@ -918,7 +927,9 @@ void UtTest_Setup(void)
     UtTest_Add(Test_HK_AppMain_RcvBufFail, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppMain_RcvBufFail");
 
     UtTest_Add(Test_HK_AppMain_RcvBufTimeout, HK_Test_Setup, HK_Test_TearDown, "Test_HK_AppMain_RcvBufTimeout");
-    UtTest_Add(Test_HK_AppMain_RcvBufTimeoutCheckFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_AppMain_RcvBufTimeoutCheckFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_AppMain_RcvBufTimeoutCheckFail");
 
     /* Test functions for HK_AppInit */
@@ -934,19 +945,31 @@ void UtTest_Setup(void)
 
     /* Test functions for HK_TableInit */
     UtTest_Add(Test_HK_TableInit_Success, HK_Test_Setup, HK_Test_TearDown, "Test_HK_TableInit_Success");
-    UtTest_Add(Test_HK_TableInit_RegisterCpyTblFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TableInit_RegisterCpyTblFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TableInit_RegisterCpyTblFail");
-    UtTest_Add(Test_HK_TableInit_RegisterRtTblFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TableInit_RegisterRtTblFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TableInit_RegisterRtTblFail");
     UtTest_Add(Test_HK_TableInit_LoadCpyTblFail, HK_Test_Setup, HK_Test_TearDown, "Test_HK_TableInit_LoadCpyTblFail");
-    UtTest_Add(Test_HK_TableInit_ManageCpyTblFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TableInit_ManageCpyTblFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TableInit_ManageCpyTblFail");
     UtTest_Add(Test_HK_TableInit_ManageRtTblFail, HK_Test_Setup, HK_Test_TearDown, "Test_HK_TableInit_ManageRtTblFail");
-    UtTest_Add(Test_HK_TableInit_GetAddrCpyTblFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TableInit_GetAddrCpyTblFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TableInit_GetAddrCpyTblFail");
-    UtTest_Add(Test_HK_TableInit_GetAddrRtTblFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TableInit_GetAddrRtTblFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TableInit_GetAddrRtTblFail");
-    UtTest_Add(Test_HK_TableInit_ProcessNewCpyTblFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TableInit_ProcessNewCpyTblFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TableInit_ProcessNewCpyTblFail");
 
     /* Test functions for HK_ResetHkData */

@@ -88,8 +88,13 @@ CFE_Status_t HK_SendHkCmd(const HK_SendHkCmd_t *BufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 CFE_Status_t HK_NoopCmd(const HK_NoopCmd_t *BufPtr)
 {
-    CFE_EVS_SendEvent(HK_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "HK No-op command, Version %d.%d.%d.%d",
-                      HK_MAJOR_VERSION, HK_MINOR_VERSION, HK_REVISION, HK_MISSION_REV);
+    CFE_EVS_SendEvent(HK_NOOP_INF_EID,
+                      CFE_EVS_EventType_INFORMATION,
+                      "HK No-op command, Version %d.%d.%d.%d",
+                      HK_MAJOR_VERSION,
+                      HK_MINOR_VERSION,
+                      HK_REVISION,
+                      HK_MISSION_REV);
 
     HK_AppData.CmdCounter++;
 
