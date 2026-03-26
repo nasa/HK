@@ -199,11 +199,11 @@
 
   <H2>5. Monitoring the command counter</H2>
 
-  The #HK_HkTlm_Payload_t.CmdCounter will increment only
+  The #HK_HkTlm_Payload_t.CommandCounter will increment only
   when the HK application receives a valid #HK_NOOP_CC.
 
   <H2>6. Monitoring the command error counter</H2>
-  The #HK_HkTlm_Payload_t.ErrCounter will increment under the following conditions:
+  The #HK_HkTlm_Payload_t.CommandErrorCounter will increment under the following conditions:
       a. Invalid command code
       b. Unexpected packet length field for #HK_SEND_COMBINED_PKT_MID command
       c. Unexpected packet length field for #HK_SEND_HK_MID command

@@ -138,7 +138,7 @@ void Test_HK_AppPipe_NoopCmd(void)
     HK_AppPipe(&Buf);
 
     UtAssert_STUB_COUNT(HK_NoopCmd, 1);
-    UtAssert_ZERO(HK_AppData.ErrCounter);
+    UtAssert_ZERO(HK_AppData.CommandErrorCounter);
 
     /* Bad Length */
     HK_Dispatch_Test_SetupMsg(CFE_SB_ValueToMsgId(HK_CMD_MID), HK_NOOP_CC, 1);
@@ -150,7 +150,7 @@ void Test_HK_AppPipe_NoopCmd(void)
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_CMD_LEN_ERR_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_ERROR);
-    UtAssert_UINT8_EQ(HK_AppData.ErrCounter, 1);
+    UtAssert_UINT8_EQ(HK_AppData.CommandErrorCounter, 1);
 }
 
 /*
@@ -170,7 +170,7 @@ void Test_HK_AppPipe_ResetCountersCmd(void)
     HK_AppPipe(&Buf);
 
     UtAssert_STUB_COUNT(HK_ResetCountersCmd, 1);
-    UtAssert_ZERO(HK_AppData.ErrCounter);
+    UtAssert_ZERO(HK_AppData.CommandErrorCounter);
 
     /* Bad Length */
     HK_Dispatch_Test_SetupMsg(CFE_SB_ValueToMsgId(HK_CMD_MID), HK_RESET_COUNTERS_CC, 1);
@@ -182,7 +182,7 @@ void Test_HK_AppPipe_ResetCountersCmd(void)
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_CMD_LEN_ERR_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_ERROR);
-    UtAssert_UINT8_EQ(HK_AppData.ErrCounter, 1);
+    UtAssert_UINT8_EQ(HK_AppData.CommandErrorCounter, 1);
 }
 
 /*
@@ -204,7 +204,7 @@ void Test_HK_AppPipe_UnknownCmd(void)
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, HK_CC_ERR_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_ERROR);
-    UtAssert_UINT8_EQ(HK_AppData.ErrCounter, 1);
+    UtAssert_UINT8_EQ(HK_AppData.CommandErrorCounter, 1);
 }
 
 /*

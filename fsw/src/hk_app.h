@@ -62,9 +62,9 @@ typedef struct
 {
     HK_HkPacket_t HkPacket; /**< \brief HK Housekeeping Packet */
 
-    CFE_SB_PipeId_t CmdPipe;    /**< \brief Pipe Id for HK command pipe */
-    uint8           CmdCounter; /**< \brief Number of valid commands received */
-    uint8           ErrCounter; /**< \brief Number of invalid commands received */
+    CFE_SB_PipeId_t CmdPipe;             /**< \brief Pipe Id for HK command pipe */
+    uint8           CommandCounter;      /**< \brief Number of valid commands received */
+    uint8           CommandErrorCounter; /**< \brief Number of invalid commands received */
 
     uint16 MissingDataCtr;      /**< \brief Number of times missing data was detected */
     uint16 CombinedPacketsSent; /**< \brief Count of combined output msgs sent */

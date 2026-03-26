@@ -895,8 +895,8 @@ void Test_HK_TableInit_ProcessNewCpyTblFail(void)
 void Test_HK_ResetHkData(void)
 {
     /* Arrange */
-    HK_AppData.CmdCounter          = 1;
-    HK_AppData.ErrCounter          = 1;
+    HK_AppData.CommandCounter      = 1;
+    HK_AppData.CommandErrorCounter = 1;
     HK_AppData.CombinedPacketsSent = 1;
     HK_AppData.MissingDataCtr      = 1;
 
@@ -904,8 +904,8 @@ void Test_HK_ResetHkData(void)
     HK_ResetHkData();
 
     /* Assert */
-    UtAssert_INT32_EQ(HK_AppData.CmdCounter, 0);
-    UtAssert_INT32_EQ(HK_AppData.ErrCounter, 0);
+    UtAssert_INT32_EQ(HK_AppData.CommandCounter, 0);
+    UtAssert_INT32_EQ(HK_AppData.CommandErrorCounter, 0);
     UtAssert_INT32_EQ(HK_AppData.CombinedPacketsSent, 0);
     UtAssert_INT32_EQ(HK_AppData.MissingDataCtr, 0);
 

@@ -74,7 +74,7 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
     }
     else if (status != CFE_SUCCESS)
     {
-        ++HK_AppData.HkPacket.Payload.ErrCounter;
+        ++HK_AppData.HkPacket.Payload.CommandErrorCounter;
 
         CFE_MSG_GetMsgId(&BufPtr->Msg, &MsgId);
         CFE_MSG_GetFcnCode(&BufPtr->Msg, &MsgFc);

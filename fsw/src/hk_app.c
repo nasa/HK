@@ -347,8 +347,8 @@ CFE_Status_t HK_TableInit(void)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_ResetHkData(void)
 {
-    HK_AppData.CmdCounter          = 0;
-    HK_AppData.ErrCounter          = 0;
+    HK_AppData.CommandCounter      = 0;
+    HK_AppData.CommandErrorCounter = 0;
     HK_AppData.CombinedPacketsSent = 0;
     HK_AppData.MissingDataCtr      = 0;
 }

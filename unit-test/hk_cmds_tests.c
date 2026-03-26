@@ -84,8 +84,8 @@ void Test_HK_SendHkCmd(void)
     HK_HkTlm_Payload_t *PayloadPtr;
 
     /* Setup app data values */
-    HK_AppData.CmdCounter          = 1;
-    HK_AppData.ErrCounter          = 2;
+    HK_AppData.CommandCounter      = 1;
+    HK_AppData.CommandErrorCounter = 2;
     HK_AppData.MissingDataCtr      = 3;
     HK_AppData.CombinedPacketsSent = 4;
     HK_AppData.MemPoolHandle       = HK_UT_MEMPOOL_1;
@@ -100,8 +100,8 @@ void Test_HK_SendHkCmd(void)
 
     /* Assert */
     PayloadPtr = &HK_AppData.HkPacket.Payload;
-    UtAssert_INT32_EQ(HK_AppData.CmdCounter, PayloadPtr->CmdCounter);
-    UtAssert_INT32_EQ(HK_AppData.ErrCounter, PayloadPtr->ErrCounter);
+    UtAssert_INT32_EQ(HK_AppData.CommandCounter, PayloadPtr->CommandCounter);
+    UtAssert_INT32_EQ(HK_AppData.CommandErrorCounter, PayloadPtr->CommandErrorCounter);
     UtAssert_INT32_EQ(HK_AppData.MissingDataCtr, PayloadPtr->MissingDataCtr);
     UtAssert_INT32_EQ(HK_AppData.CombinedPacketsSent, PayloadPtr->CombinedPacketsSent);
     UtAssert_True(CFE_RESOURCEID_TEST_EQUAL(HK_AppData.MemPoolHandle, PayloadPtr->MemPoolHandle),
@@ -154,8 +154,8 @@ void Test_HK_NoopCmd(void)
 
     UtAssert_True(strCmpResult == 0, "Event string matched expected result, '%s'", context_CFE_EVS_SendEvent[0].Spec);
 
-    UtAssert_INT32_EQ(HK_AppData.CmdCounter, 1);
-    UtAssert_INT32_EQ(HK_AppData.ErrCounter, 0);
+    UtAssert_INT32_EQ(HK_AppData.CommandCounter, 1);
+    UtAssert_INT32_EQ(HK_AppData.CommandErrorCounter, 0);
 }
 
 /**********************************************************************/
@@ -196,8 +196,8 @@ void Test_HK_ResetCountersCmd(void)
     UtAssert_True(strCmpResult == 0, "Event string matched expected result, '%s'", context_CFE_EVS_SendEvent[0].Spec);
 
     /* neither counter is updated in this function in success case */
-    UtAssert_INT32_EQ(HK_AppData.CmdCounter, 0);
-    UtAssert_INT32_EQ(HK_AppData.ErrCounter, 0);
+    UtAssert_INT32_EQ(HK_AppData.CommandCounter, 0);
+    UtAssert_INT32_EQ(HK_AppData.CommandErrorCounter, 0);
 }
 
 /****************************************************************************/

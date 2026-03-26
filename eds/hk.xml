@@ -41,8 +41,9 @@
 
        <ContainerDataType name="HkTlm_Payload" shortDescription="HK housekeeping">
         <EntryList>
-          <Entry name="CmdCounter" type="BASE_TYPES/uint8" shortDescription="Count of valid commands received" />
-          <Entry name="ErrCounter" type="BASE_TYPES/uint8" shortDescription="Count of invalid commands received" />
+          <Entry name="CommandCounter" type="BASE_TYPES/uint8" shortDescription="Count of valid commands received" />
+          <Entry name="CommandErrorCounter" type="BASE_TYPES/uint8" shortDescription="Count of invalid commands received" />
+          <PaddingEntry sizeInBits="16" shortDescription="32-bit alignment padding"/>
           <Entry name="CombinedPacketsSent" type="BASE_TYPES/uint16" shortDescription="Count of combined tlm pkts sent" />
           <Entry name="MissingDataCtr" type="BASE_TYPES/uint16" shortDescription="Number of times missing data was detected" />
           <Entry name="MemPoolHandle" type="CFE_ES/MemHandle" shortDescription="Memory pool handle used to get mempool diags" />

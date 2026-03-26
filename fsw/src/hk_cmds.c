@@ -62,8 +62,8 @@ CFE_Status_t HK_SendHkCmd(const HK_SendHkCmd_t *BufPtr)
     PayloadPtr = &HK_AppData.HkPacket.Payload;
 
     /* copy data into housekeeping packet */
-    PayloadPtr->CmdCounter          = HK_AppData.CmdCounter;
-    PayloadPtr->ErrCounter          = HK_AppData.ErrCounter;
+    PayloadPtr->CommandCounter      = HK_AppData.CommandCounter;
+    PayloadPtr->CommandErrorCounter = HK_AppData.CommandErrorCounter;
     PayloadPtr->MissingDataCtr      = HK_AppData.MissingDataCtr;
     PayloadPtr->CombinedPacketsSent = HK_AppData.CombinedPacketsSent;
     PayloadPtr->MemPoolHandle       = HK_AppData.MemPoolHandle;
@@ -96,7 +96,7 @@ CFE_Status_t HK_NoopCmd(const HK_NoopCmd_t *BufPtr)
                       HK_REVISION,
                       HK_MISSION_REV);
 
-    HK_AppData.CmdCounter++;
+    HK_AppData.CommandCounter++;
 
     return CFE_SUCCESS;
 }

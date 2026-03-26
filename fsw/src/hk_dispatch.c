@@ -138,7 +138,7 @@ void HK_NoopVerifyDispatch(const CFE_SB_Buffer_t *BufPtr)
     }
     else
     {
-        HK_AppData.ErrCounter++;
+        HK_AppData.CommandErrorCounter++;
     }
 }
 
@@ -157,7 +157,7 @@ void HK_ResetCountersVerifyDispatch(const CFE_SB_Buffer_t *BufPtr)
     }
     else
     {
-        HK_AppData.ErrCounter++;
+        HK_AppData.CommandErrorCounter++;
     }
 }
 
@@ -190,7 +190,7 @@ void HK_AppProcessCmd(const CFE_SB_Buffer_t *BufPtr)
                               "Cmd Msg with Invalid command code Rcvd -- ID = 0x%08lX, CC = %d",
                               (unsigned long)CFE_SB_MsgIdToValue(MessageID),
                               CommandCode);
-            HK_AppData.ErrCounter++;
+            HK_AppData.CommandErrorCounter++;
             break;
     }
 }
