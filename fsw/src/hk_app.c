@@ -101,8 +101,10 @@ void HK_AppMain(void)
         }
         else
         {
-            CFE_EVS_SendEvent(HK_RCV_MSG_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "HK_APP Exiting due to CFE_SB_RcvMsg error 0x%08X", (unsigned int)Status);
+            CFE_EVS_SendEvent(HK_RCV_MSG_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "HK_APP Exiting due to CFE_SB_RcvMsg error 0x%08X",
+                              (unsigned int)Status);
 
             /* Write to syslog in case there is a problem with event services */
             CFE_ES_WriteToSysLog("HK_APP Exiting due to CFE_SB_RcvMsg error 0x%08X\n", (unsigned int)Status);
@@ -134,7 +136,8 @@ CFE_Status_t HK_AppInit(void)
     HK_AppData.RunStatus = CFE_ES_RunStatus_APP_RUN;
 
     /* Initialize housekeeping packet  */
-    CFE_MSG_Init(CFE_MSG_PTR(HK_AppData.HkPacket.TelemetryHeader), CFE_SB_ValueToMsgId(HK_HK_TLM_MID),
+    CFE_MSG_Init(CFE_MSG_PTR(HK_AppData.HkPacket.TelemetryHeader),
+                 CFE_SB_ValueToMsgId(HK_HK_TLM_MID),
                  sizeof(HK_HkPacket_t));
 
     /* Register for event services...        */
@@ -149,7 +152,9 @@ CFE_Status_t HK_AppInit(void)
     Status = CFE_SB_CreatePipe(&HK_AppData.CmdPipe, HK_PIPE_DEPTH, HK_PIPE_NAME);
     if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(HK_CR_PIPE_ERR_EID, CFE_EVS_EventType_ERROR, "Error Creating SB Pipe,RC=0x%08X",
+        CFE_EVS_SendEvent(HK_CR_PIPE_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error Creating SB Pipe,RC=0x%08X",
                           (unsigned int)Status);
         return Status;
     }
@@ -158,8 +163,10 @@ CFE_Status_t HK_AppInit(void)
     Status = CFE_SB_Subscribe(CFE_SB_ValueToMsgId(HK_SEND_COMBINED_PKT_MID), HK_AppData.CmdPipe);
     if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(HK_SUB_CMB_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Error Subscribing to HK Snd Cmb Pkt, MID=0x%08X, RC=0x%08X", HK_SEND_COMBINED_PKT_MID,
+        CFE_EVS_SendEvent(HK_SUB_CMB_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error Subscribing to HK Snd Cmb Pkt, MID=0x%08X, RC=0x%08X",
+                          HK_SEND_COMBINED_PKT_MID,
                           (unsigned int)Status);
         return Status;
     }
@@ -168,8 +175,10 @@ CFE_Status_t HK_AppInit(void)
     Status = CFE_SB_Subscribe(CFE_SB_ValueToMsgId(HK_SEND_HK_MID), HK_AppData.CmdPipe);
     if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(HK_SUB_REQ_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Error Subscribing to HK Request, MID=0x%08X, RC=0x%08X", HK_SEND_HK_MID,
+        CFE_EVS_SendEvent(HK_SUB_REQ_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error Subscribing to HK Request, MID=0x%08X, RC=0x%08X",
+                          HK_SEND_HK_MID,
                           (unsigned int)Status);
         return Status;
     }
@@ -178,8 +187,11 @@ CFE_Status_t HK_AppInit(void)
     Status = CFE_SB_Subscribe(CFE_SB_ValueToMsgId(HK_CMD_MID), HK_AppData.CmdPipe);
     if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(HK_SUB_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Error Subscribing to HK Gnd Cmds, MID=0x%08X, RC=0x%08X", HK_CMD_MID, (unsigned int)Status);
+        CFE_EVS_SendEvent(HK_SUB_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error Subscribing to HK Gnd Cmds, MID=0x%08X, RC=0x%08X",
+                          HK_CMD_MID,
+                          (unsigned int)Status);
         return Status;
     }
 
@@ -187,7 +199,9 @@ CFE_Status_t HK_AppInit(void)
     Status = CFE_ES_PoolCreate(&HK_AppData.MemPoolHandle, HK_AppData.MemPoolBuffer, sizeof(HK_AppData.MemPoolBuffer));
     if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(HK_CR_POOL_ERR_EID, CFE_EVS_EventType_ERROR, "Error Creating Memory Pool,RC=0x%08X",
+        CFE_EVS_SendEvent(HK_CR_POOL_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error Creating Memory Pool,RC=0x%08X",
                           (unsigned int)Status);
         return Status;
     }
@@ -203,8 +217,13 @@ CFE_Status_t HK_AppInit(void)
     }
 
     /* Application initialization event */
-    Status = CFE_EVS_SendEvent(HK_INIT_INF_EID, CFE_EVS_EventType_INFORMATION, "HK Initialized.  Version %d.%d.%d.%d",
-                               HK_MAJOR_VERSION, HK_MINOR_VERSION, HK_REVISION, HK_MISSION_REV);
+    Status = CFE_EVS_SendEvent(HK_INIT_INF_EID,
+                               CFE_EVS_EventType_INFORMATION,
+                               "HK Initialized.  Version %d.%d.%d.%d",
+                               HK_MAJOR_VERSION,
+                               HK_MINOR_VERSION,
+                               HK_REVISION,
+                               HK_MISSION_REV);
 
     if (Status != CFE_SUCCESS)
     {
@@ -224,24 +243,32 @@ CFE_Status_t HK_TableInit(void)
     CFE_Status_t Status = CFE_SUCCESS;
 
     /* Register The HK Copy Table */
-    Status = CFE_TBL_Register(&HK_AppData.CopyTableHandle, HK_COPY_TABLE_NAME,
+    Status = CFE_TBL_Register(&HK_AppData.CopyTableHandle,
+                              HK_COPY_TABLE_NAME,
                               (sizeof(HK_CopyTableEntry_t) * HK_COPY_TABLE_ENTRIES),
-                              CFE_TBL_OPT_DBL_BUFFER | CFE_TBL_OPT_LOAD_DUMP, HK_ValidateHkCopyTable);
+                              CFE_TBL_OPT_DBL_BUFFER | CFE_TBL_OPT_LOAD_DUMP,
+                              HK_ValidateHkCopyTable);
 
     if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(HK_CPTBL_REG_ERR_EID, CFE_EVS_EventType_ERROR, "Error Registering Copy Table,RC=0x%08X",
+        CFE_EVS_SendEvent(HK_CPTBL_REG_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error Registering Copy Table,RC=0x%08X",
                           (unsigned int)Status);
         return Status;
     }
 
     /* Register The HK Runtime Table */
-    Status = CFE_TBL_Register(&HK_AppData.RuntimeTableHandle, HK_RUNTIME_TABLE_NAME,
+    Status = CFE_TBL_Register(&HK_AppData.RuntimeTableHandle,
+                              HK_RUNTIME_TABLE_NAME,
                               (sizeof(HK_RuntimeTableEntry_t) * HK_COPY_TABLE_ENTRIES),
-                              CFE_TBL_OPT_SNGL_BUFFER | CFE_TBL_OPT_DUMP_ONLY, NULL);
+                              CFE_TBL_OPT_SNGL_BUFFER | CFE_TBL_OPT_DUMP_ONLY,
+                              NULL);
     if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(HK_RTTBL_REG_ERR_EID, CFE_EVS_EventType_ERROR, "Error Registering Runtime Table,RC=0x%08X",
+        CFE_EVS_SendEvent(HK_RTTBL_REG_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error Registering Runtime Table,RC=0x%08X",
                           (unsigned int)Status);
         return Status;
     }
@@ -249,7 +276,9 @@ CFE_Status_t HK_TableInit(void)
     Status = CFE_TBL_Load(HK_AppData.CopyTableHandle, CFE_TBL_SRC_FILE, HK_COPY_TABLE_FILENAME);
     if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(HK_CPTBL_LD_ERR_EID, CFE_EVS_EventType_ERROR, "Error Loading Copy Table,RC=0x%08X",
+        CFE_EVS_SendEvent(HK_CPTBL_LD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error Loading Copy Table,RC=0x%08X",
                           (unsigned int)Status);
         return Status;
     }
@@ -257,16 +286,20 @@ CFE_Status_t HK_TableInit(void)
     Status = CFE_TBL_Manage(HK_AppData.CopyTableHandle);
     if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(HK_CPTBL_MNG_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Error from TBL Manage call for Copy Table,RC=0x%08X", (unsigned int)Status);
+        CFE_EVS_SendEvent(HK_CPTBL_MNG_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error from TBL Manage call for Copy Table,RC=0x%08X",
+                          (unsigned int)Status);
         return Status;
     }
 
     Status = CFE_TBL_Manage(HK_AppData.RuntimeTableHandle);
     if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(HK_RTTBL_MNG_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Error from TBL Manage call for Runtime Table,RC=0x%08X", (unsigned int)Status);
+        CFE_EVS_SendEvent(HK_RTTBL_MNG_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error from TBL Manage call for Runtime Table,RC=0x%08X",
+                          (unsigned int)Status);
         return Status;
     }
 
@@ -274,7 +307,9 @@ CFE_Status_t HK_TableInit(void)
     /* Status should be CFE_TBL_INFO_UPDATED because we loaded it above */
     if (Status != CFE_TBL_INFO_UPDATED)
     {
-        CFE_EVS_SendEvent(HK_CPTBL_GADR_ERR_EID, CFE_EVS_EventType_ERROR, "Error Getting Adr for Cpy Tbl,RC=0x%08X",
+        CFE_EVS_SendEvent(HK_CPTBL_GADR_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error Getting Adr for Cpy Tbl,RC=0x%08X",
                           (unsigned int)Status);
         return Status;
     }
@@ -282,8 +317,10 @@ CFE_Status_t HK_TableInit(void)
     Status = CFE_TBL_GetAddress((void *)(&HK_AppData.RuntimeTablePtr), HK_AppData.RuntimeTableHandle);
     if (Status != CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(HK_RTTBL_GADR_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Error Getting Adr for Runtime Table,RC=0x%08X", (unsigned int)Status);
+        CFE_EVS_SendEvent(HK_RTTBL_GADR_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Error Getting Adr for Runtime Table,RC=0x%08X",
+                          (unsigned int)Status);
         return Status;
     }
 
@@ -292,8 +329,10 @@ CFE_Status_t HK_TableInit(void)
     if (Status != CFE_SUCCESS)
     {
         /* If status was not success, then the copy table function received a NULL pointer argument */
-        CFE_EVS_SendEvent(HK_NEWCPYTBL_INIT_FAILED_EID, CFE_EVS_EventType_ERROR,
-                          "Process New Copy Table Failed, status = 0x%08X", (unsigned int)Status);
+        CFE_EVS_SendEvent(HK_NEWCPYTBL_INIT_FAILED_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Process New Copy Table Failed, status = 0x%08X",
+                          (unsigned int)Status);
 
         return Status;
     }
@@ -308,8 +347,8 @@ CFE_Status_t HK_TableInit(void)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_ResetHkData(void)
 {
-    HK_AppData.CmdCounter          = 0;
-    HK_AppData.ErrCounter          = 0;
+    HK_AppData.CommandCounter      = 0;
+    HK_AppData.CommandErrorCounter = 0;
     HK_AppData.CombinedPacketsSent = 0;
     HK_AppData.MissingDataCtr      = 0;
 }

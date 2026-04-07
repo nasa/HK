@@ -74,22 +74,28 @@ void HK_AppPipe(const CFE_SB_Buffer_t *BufPtr)
     }
     else if (status != CFE_SUCCESS)
     {
-        ++HK_AppData.HkPacket.Payload.ErrCounter;
+        ++HK_AppData.HkPacket.Payload.CommandErrorCounter;
 
         CFE_MSG_GetMsgId(&BufPtr->Msg, &MsgId);
         CFE_MSG_GetFcnCode(&BufPtr->Msg, &MsgFc);
         if (status == CFE_STATUS_WRONG_MSG_LENGTH)
         {
             CFE_MSG_GetSize(&BufPtr->Msg, &MsgSize);
-            CFE_EVS_SendEvent(HK_CMD_LEN_ERR_EID, CFE_EVS_EventType_ERROR,
+            CFE_EVS_SendEvent(HK_CMD_LEN_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
                               "Invalid msg length: ID = 0x%08lX, CC = %d, Len = %lu",
-                              (unsigned long)CFE_SB_MsgIdToValue(MsgId), MsgFc, (unsigned long)MsgSize);
+                              (unsigned long)CFE_SB_MsgIdToValue(MsgId),
+                              MsgFc,
+                              (unsigned long)MsgSize);
         }
         else
         {
-            CFE_EVS_SendEvent(HK_CC_ERR_EID, CFE_EVS_EventType_ERROR,
+            CFE_EVS_SendEvent(HK_CC_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
                               "Invalid message recvd: ID=0x%08lX, CC=%d, status=%d",
-                              (unsigned long)CFE_SB_MsgIdToValue(MsgId), MsgFc, (int)status);
+                              (unsigned long)CFE_SB_MsgIdToValue(MsgId),
+                              MsgFc,
+                              (int)status);
         }
     }
 }

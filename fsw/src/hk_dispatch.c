@@ -53,9 +53,12 @@ int32 HK_VerifyCmdLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength)
         CFE_MSG_GetMsgId(&BufPtr->Msg, &MessageID);
         CFE_MSG_GetFcnCode(&BufPtr->Msg, &CommandCode);
 
-        CFE_EVS_SendEvent(HK_CMD_LEN_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(HK_CMD_LEN_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Cmd Msg with Bad length Rcvd: ID = 0x%08lX, CC = %d, Exp Len = %d, Len = %d",
-                          (unsigned long)CFE_SB_MsgIdToValue(MessageID), CommandCode, (int)ExpectedLength,
+                          (unsigned long)CFE_SB_MsgIdToValue(MessageID),
+                          CommandCode,
+                          (int)ExpectedLength,
                           (int)ActualLength);
 
         Status = HK_BAD_MSG_LENGTH_RC;
@@ -81,9 +84,11 @@ int32 HK_VerifyMsgLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength)
     {
         CFE_MSG_GetMsgId(&BufPtr->Msg, &MessageID);
 
-        CFE_EVS_SendEvent(HK_MSG_LEN_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(HK_MSG_LEN_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Msg with Bad length Rcvd: ID = 0x%08lX, Exp Len = %u, Len = %u",
-                          (unsigned long)CFE_SB_MsgIdToValue(MessageID), (unsigned int)ExpectedLength,
+                          (unsigned long)CFE_SB_MsgIdToValue(MessageID),
+                          (unsigned int)ExpectedLength,
                           (unsigned int)ActualLength);
 
         Status = HK_BAD_MSG_LENGTH_RC;
@@ -133,7 +138,7 @@ void HK_NoopVerifyDispatch(const CFE_SB_Buffer_t *BufPtr)
     }
     else
     {
-        HK_AppData.ErrCounter++;
+        HK_AppData.CommandErrorCounter++;
     }
 }
 
@@ -152,7 +157,7 @@ void HK_ResetCountersVerifyDispatch(const CFE_SB_Buffer_t *BufPtr)
     }
     else
     {
-        HK_AppData.ErrCounter++;
+        HK_AppData.CommandErrorCounter++;
     }
 }
 
@@ -180,10 +185,12 @@ void HK_AppProcessCmd(const CFE_SB_Buffer_t *BufPtr)
 
         default:
             CFE_MSG_GetMsgId(&BufPtr->Msg, &MessageID);
-            CFE_EVS_SendEvent(HK_CC_ERR_EID, CFE_EVS_EventType_ERROR,
+            CFE_EVS_SendEvent(HK_CC_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
                               "Cmd Msg with Invalid command code Rcvd -- ID = 0x%08lX, CC = %d",
-                              (unsigned long)CFE_SB_MsgIdToValue(MessageID), CommandCode);
-            HK_AppData.ErrCounter++;
+                              (unsigned long)CFE_SB_MsgIdToValue(MessageID),
+                              CommandCode);
+            HK_AppData.CommandErrorCounter++;
             break;
     }
 }

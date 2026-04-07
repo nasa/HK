@@ -44,7 +44,7 @@
  *  \par Command Verification
  *       Successful execution of this command may be verified with the
  *       following telemetry:
- *       - #HK_HkTlm_Payload_t.CmdCounter will increment
+ *       - #HK_HkTlm_Payload_t.CommandCounter will increment
  *       - The #HK_NOOP_INF_EID informational event message will be generated
  *
  *  \par Error Conditions
@@ -70,7 +70,7 @@
  *  \par Command Verification
  *       Successful execution of this command may be verified with the
  *       following telemetry:
- *       - #HK_HkTlm_Payload_t.CmdCounter will be reset
+ *       - #HK_HkTlm_Payload_t.CommandCounter will be reset
  *       - The #HK_RESET_INF_EID informational event message will
  *         be generated
  *
