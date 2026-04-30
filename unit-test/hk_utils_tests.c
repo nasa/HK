@@ -43,6 +43,12 @@ HK_RuntimeTableEntry_t NewRtTblPtr[HK_COPY_TABLE_ENTRIES];
 HK_CopyTableEntry_t    NewCopyTblPtr[HK_COPY_TABLE_ENTRIES];
 uint8                  call_count_CFE_EVS_SendEvent;
 
+typedef union
+{
+    CFE_SB_Buffer_t Buf;
+    uint8           Data[32];
+} UT_HK_CopyBuffer_t;
+
 /*
  * Function Definitions
  */
@@ -74,7 +80,7 @@ void Test_HK_ProcessIncomingHkData_MidNotFound(void)
     int32                  i;
     int32                  NumEntriesWithDataPresent = 0;
     CFE_SB_MsgId_t         forced_MsgID              = HK_UT_MID_100; /* not in copy table */
-    CFE_SB_Buffer_t        Buf;
+    UT_HK_CopyBuffer_t     Buf;
     HK_RuntimeTableEntry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     HK_CopyTableEntry_t    CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
@@ -87,7 +93,7 @@ void Test_HK_ProcessIncomingHkData_MidNotFound(void)
     HK_AppData.RuntimeTablePtr = RtTblPtr;
 
     /* Act */
-    HK_ProcessIncomingHkData(&Buf);
+    HK_ProcessIncomingHkData(&Buf.Buf);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -117,12 +123,12 @@ void Test_HK_ProcessIncomingHkData_MidNotFound(void)
 void Test_HK_ProcessIncomingHkData_LengthOkEqual(void)
 {
     /* Arrange */
-    int32           NumEntriesWithDataPresent = 0;
-    CFE_SB_MsgId_t  forced_MsgID;
-    size_t          forced_Size;
-    CFE_SB_Buffer_t Buf;
-    int             i;
-    CFE_SB_Buffer_t OutputPkt;
+    int32              NumEntriesWithDataPresent = 0;
+    CFE_SB_MsgId_t     forced_MsgID;
+    size_t             forced_Size;
+    int                i;
+    UT_HK_CopyBuffer_t Buf;
+    UT_HK_CopyBuffer_t OutputPkt;
 
     HK_RuntimeTableEntry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     HK_CopyTableEntry_t    CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -142,7 +148,7 @@ void Test_HK_ProcessIncomingHkData_LengthOkEqual(void)
     UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
 
     /* Act */
-    HK_ProcessIncomingHkData(&Buf);
+    HK_ProcessIncomingHkData(&Buf.Buf);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -175,12 +181,12 @@ void Test_HK_ProcessIncomingHkData_LengthOkEqual(void)
 void Test_HK_ProcessIncomingHkData_LengthOkGreater(void)
 {
     /* Arrange */
-    int32           i;
-    int32           NumEntriesWithDataPresent = 0;
-    CFE_SB_MsgId_t  forced_MsgID;
-    size_t          forced_Size;
-    CFE_SB_Buffer_t Buf;
-    CFE_SB_Buffer_t OutputPkt;
+    int32              i;
+    int32              NumEntriesWithDataPresent = 0;
+    CFE_SB_MsgId_t     forced_MsgID;
+    size_t             forced_Size;
+    UT_HK_CopyBuffer_t Buf;
+    UT_HK_CopyBuffer_t OutputPkt;
 
     HK_RuntimeTableEntry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     HK_CopyTableEntry_t    CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -200,7 +206,7 @@ void Test_HK_ProcessIncomingHkData_LengthOkGreater(void)
     UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
 
     /* Act */
-    HK_ProcessIncomingHkData(&Buf);
+    HK_ProcessIncomingHkData(&Buf.Buf);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -232,11 +238,12 @@ void Test_HK_ProcessIncomingHkData_LengthOkGreater(void)
 void Test_HK_ProcessIncomingHkData_MessageError(void)
 {
     /* Arrange */
-    int32                  i;
-    int32                  NumEntriesWithDataPresent = 0;
-    CFE_SB_MsgId_t         forced_MsgID;
-    size_t                 forced_Size;
-    CFE_SB_Buffer_t        Buf;
+    int32              i;
+    int32              NumEntriesWithDataPresent = 0;
+    CFE_SB_MsgId_t     forced_MsgID;
+    size_t             forced_Size;
+    UT_HK_CopyBuffer_t Buf;
+
     HK_RuntimeTableEntry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     HK_CopyTableEntry_t    CopyTblPtr[HK_COPY_TABLE_ENTRIES];
     int32                  strCmpResult;
@@ -259,7 +266,7 @@ void Test_HK_ProcessIncomingHkData_MessageError(void)
              "HK table definition exceeds packet length. MID:0x%%08lX, Length:%%d, Count:%%d");
 
     /* Act */
-    HK_ProcessIncomingHkData(&Buf);
+    HK_ProcessIncomingHkData(&Buf.Buf);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
