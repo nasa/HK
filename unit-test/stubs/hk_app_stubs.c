@@ -46,7 +46,6 @@ CFE_Status_t HK_AppInit(void)
  */
 void HK_AppMain(void)
 {
-
     UT_GenStub_Execute(HK_AppMain, Basic, NULL);
 }
 
@@ -57,7 +56,6 @@ void HK_AppMain(void)
  */
 void HK_ResetHkData(void)
 {
-
     UT_GenStub_Execute(HK_ResetHkData, Basic, NULL);
 }
 

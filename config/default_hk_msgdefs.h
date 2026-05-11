@@ -32,8 +32,8 @@
  */
 typedef struct
 {
-    uint8              CmdCounter;          /**< \brief Count of valid commands received */
-    uint8              ErrCounter;          /**< \brief Count of invalid commands received */
+    uint8              CommandCounter;      /**< \brief Count of valid commands received */
+    uint8              CommandErrorCounter; /**< \brief Count of invalid commands received */
     uint16             Padding;             /**< \brief Padding to force 32 bit alignment */
     uint16             CombinedPacketsSent; /**< \brief Count of combined tlm pkts sent */
     uint16             MissingDataCtr;      /**< \brief Number of times missing data was detected */

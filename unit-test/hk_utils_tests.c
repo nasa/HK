@@ -43,6 +43,12 @@ HK_RuntimeTableEntry_t NewRtTblPtr[HK_COPY_TABLE_ENTRIES];
 HK_CopyTableEntry_t    NewCopyTblPtr[HK_COPY_TABLE_ENTRIES];
 uint8                  call_count_CFE_EVS_SendEvent;
 
+typedef union
+{
+    CFE_SB_Buffer_t Buf;
+    uint8           Data[32];
+} UT_HK_CopyBuffer_t;
+
 /*
  * Function Definitions
  */
@@ -74,7 +80,7 @@ void Test_HK_ProcessIncomingHkData_MidNotFound(void)
     int32                  i;
     int32                  NumEntriesWithDataPresent = 0;
     CFE_SB_MsgId_t         forced_MsgID              = HK_UT_MID_100; /* not in copy table */
-    CFE_SB_Buffer_t        Buf;
+    UT_HK_CopyBuffer_t     Buf;
     HK_RuntimeTableEntry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     HK_CopyTableEntry_t    CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
@@ -87,7 +93,7 @@ void Test_HK_ProcessIncomingHkData_MidNotFound(void)
     HK_AppData.RuntimeTablePtr = RtTblPtr;
 
     /* Act */
-    HK_ProcessIncomingHkData(&Buf);
+    HK_ProcessIncomingHkData(&Buf.Buf);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -117,12 +123,12 @@ void Test_HK_ProcessIncomingHkData_MidNotFound(void)
 void Test_HK_ProcessIncomingHkData_LengthOkEqual(void)
 {
     /* Arrange */
-    int32           NumEntriesWithDataPresent = 0;
-    CFE_SB_MsgId_t  forced_MsgID;
-    size_t          forced_Size;
-    CFE_SB_Buffer_t Buf;
-    int             i;
-    CFE_SB_Buffer_t OutputPkt;
+    int32              NumEntriesWithDataPresent = 0;
+    CFE_SB_MsgId_t     forced_MsgID;
+    size_t             forced_Size;
+    int                i;
+    UT_HK_CopyBuffer_t Buf;
+    UT_HK_CopyBuffer_t OutputPkt;
 
     HK_RuntimeTableEntry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     HK_CopyTableEntry_t    CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -142,7 +148,7 @@ void Test_HK_ProcessIncomingHkData_LengthOkEqual(void)
     UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
 
     /* Act */
-    HK_ProcessIncomingHkData(&Buf);
+    HK_ProcessIncomingHkData(&Buf.Buf);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -175,12 +181,12 @@ void Test_HK_ProcessIncomingHkData_LengthOkEqual(void)
 void Test_HK_ProcessIncomingHkData_LengthOkGreater(void)
 {
     /* Arrange */
-    int32           i;
-    int32           NumEntriesWithDataPresent = 0;
-    CFE_SB_MsgId_t  forced_MsgID;
-    size_t          forced_Size;
-    CFE_SB_Buffer_t Buf;
-    CFE_SB_Buffer_t OutputPkt;
+    int32              i;
+    int32              NumEntriesWithDataPresent = 0;
+    CFE_SB_MsgId_t     forced_MsgID;
+    size_t             forced_Size;
+    UT_HK_CopyBuffer_t Buf;
+    UT_HK_CopyBuffer_t OutputPkt;
 
     HK_RuntimeTableEntry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     HK_CopyTableEntry_t    CopyTblPtr[HK_COPY_TABLE_ENTRIES];
@@ -200,7 +206,7 @@ void Test_HK_ProcessIncomingHkData_LengthOkGreater(void)
     UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
 
     /* Act */
-    HK_ProcessIncomingHkData(&Buf);
+    HK_ProcessIncomingHkData(&Buf.Buf);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -232,11 +238,12 @@ void Test_HK_ProcessIncomingHkData_LengthOkGreater(void)
 void Test_HK_ProcessIncomingHkData_MessageError(void)
 {
     /* Arrange */
-    int32                  i;
-    int32                  NumEntriesWithDataPresent = 0;
-    CFE_SB_MsgId_t         forced_MsgID;
-    size_t                 forced_Size;
-    CFE_SB_Buffer_t        Buf;
+    int32              i;
+    int32              NumEntriesWithDataPresent = 0;
+    CFE_SB_MsgId_t     forced_MsgID;
+    size_t             forced_Size;
+    UT_HK_CopyBuffer_t Buf;
+
     HK_RuntimeTableEntry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     HK_CopyTableEntry_t    CopyTblPtr[HK_COPY_TABLE_ENTRIES];
     int32                  strCmpResult;
@@ -254,11 +261,12 @@ void Test_HK_ProcessIncomingHkData_MessageError(void)
     UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
     UT_SetDataBuffer(UT_KEY(CFE_MSG_GetSize), &forced_Size, sizeof(forced_Size), false);
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK table definition exceeds packet length. MID:0x%%08lX, Length:%%d, Count:%%d");
 
     /* Act */
-    HK_ProcessIncomingHkData(&Buf);
+    HK_ProcessIncomingHkData(&Buf.Buf);
 
     call_count_CFE_EVS_SendEvent = UT_GetStubCount(UT_KEY(CFE_EVS_SendEvent));
 
@@ -360,7 +368,8 @@ void Test_HK_ProcessNewCopyTable_NullCpyTbl(void)
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Null pointer detected in new copy tbl processing: CpyTbl = %%p, RtTbl = %%p");
 
     /* Act */
@@ -395,7 +404,8 @@ void Test_HK_ProcessNewCopyTable_NullRtTbl(void)
     char                ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
     CFE_Status_t        ReturnValue;
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Null pointer detected in new copy tbl processing: CpyTbl = %%p, RtTbl = %%p");
 
     /* Act */
@@ -439,7 +449,8 @@ void Test_HK_ProcessNewCopyTable_PoolBufFail(void)
 
     HK_Test_InitGoodCopyTable(CopyTblPtr);
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK Processing New Table: ES_GetPoolBuf for size %%d returned 0x%%04X");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_ES_GetPoolBuf), (CFE_SUCCESS - 1));
@@ -463,7 +474,9 @@ void Test_HK_ProcessNewCopyTable_PoolBufFail(void)
         strCmpResult =
             strncmp(ExpectedEventString, context_CFE_EVS_SendEvent[i].Spec, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH);
 
-        UtAssert_True(strCmpResult == 0, "Event #%d string matched expected result, '%s'", (int)i,
+        UtAssert_True(strCmpResult == 0,
+                      "Event #%d string matched expected result, '%s'",
+                      (int)i,
                       context_CFE_EVS_SendEvent[i].Spec);
     }
 
@@ -501,7 +514,8 @@ void Test_HK_ProcessNewCopyTable_SubscribeFail(void)
     HK_RuntimeTableEntry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     HK_CopyTableEntry_t    CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK Processing New Table:SB_Subscribe for Mid 0x%%08lX returned 0x%%04X");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_SB_Subscribe), !CFE_SUCCESS);
@@ -528,7 +542,9 @@ void Test_HK_ProcessNewCopyTable_SubscribeFail(void)
         strCmpResult =
             strncmp(ExpectedEventString, context_CFE_EVS_SendEvent[i].Spec, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH);
 
-        UtAssert_True(strCmpResult == 0, "Event #%d string matched expected result, '%s'", (int)i,
+        UtAssert_True(strCmpResult == 0,
+                      "Event #%d string matched expected result, '%s'",
+                      (int)i,
                       context_CFE_EVS_SendEvent[i].Spec);
     }
 
@@ -805,7 +821,8 @@ void Test_HK_TearDownOldCopyTable_NullCpyTbl(void)
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Null pointer detected in copy tbl tear down: CpyTbl = %%p, RtTbl = %%p");
 
     /* Act */
@@ -841,7 +858,8 @@ void Test_HK_TearDownOldCopyTable_NullRtTbl(void)
 
     char ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Null pointer detected in copy tbl tear down: CpyTbl = %%p, RtTbl = %%p");
 
     /* Act */
@@ -880,7 +898,8 @@ void Test_HK_TearDownOldCopyTable_PoolFreeFail(void)
     HK_RuntimeTableEntry_t RtTblPtr[HK_COPY_TABLE_ENTRIES];
     HK_CopyTableEntry_t    CopyTblPtr[HK_COPY_TABLE_ENTRIES];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "HK TearDown: ES_putPoolBuf Err pkt:0x%%08lX ret 0x%%04X, hdl 0x%%08lx");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_ES_PutPoolBuf), (CFE_SUCCESS - 1));
@@ -907,7 +926,9 @@ void Test_HK_TearDownOldCopyTable_PoolFreeFail(void)
         strCmpResult =
             strncmp(ExpectedEventString, context_CFE_EVS_SendEvent[i].Spec, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH);
 
-        UtAssert_True(strCmpResult == 0, "Event #%d string matched expected result, '%s'", (int)i,
+        UtAssert_True(strCmpResult == 0,
+                      "Event #%d string matched expected result, '%s'",
+                      (int)i,
                       context_CFE_EVS_SendEvent[i].Spec);
     }
 }
@@ -1142,7 +1163,8 @@ void Test_HK_SendCombinedHkPacket_EmptyTable(void)
     HK_AppData.RuntimeTablePtr = RtTblPtr;
     HK_AppData.CopyTablePtr    = CopyTblPtr;
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Combined HK Packet 0x%%08lX is not found in current HK Copy Table");
 
     /* Act */
@@ -1189,7 +1211,8 @@ void Test_HK_SendCombinedHkPacket_PacketNotFound(void)
     HK_AppData.RuntimeTablePtr = RtTblPtr;
     HK_AppData.CopyTablePtr    = CopyTblPtr;
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Combined HK Packet 0x%%08lX is not found in current HK Copy Table");
 
     UT_SetDataBuffer(UT_KEY(CFE_MSG_GetMsgId), &forced_MsgID, sizeof(forced_MsgID), false);
@@ -1325,7 +1348,8 @@ void Test_HK_CheckStatusOfCopyTable_TblStatFail(void)
     int32 strCmpResult;
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Unexpected CFE_TBL_GetStatus return (0x%%08X) for Copy Table");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_GetStatus), !CFE_SUCCESS);
@@ -1387,7 +1411,8 @@ void Test_HK_CheckStatusOfCopyTable_TblValPendingFail(void)
     int32 strCmpResult;
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Unexpected CFE_TBL_Validate return (0x%%08X) for Copy Table");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_GetStatus), CFE_TBL_INFO_VALIDATION_PENDING);
@@ -1426,7 +1451,8 @@ void Test_HK_CheckStatusOfCopyTable_TblInfoUpReleaseFail(void)
     int32 strCmpResult;
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Unexpected CFE_TBL_ReleaseAddress return (0x%%08X) for Copy Table");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_GetStatus), CFE_TBL_INFO_UPDATE_PENDING);
@@ -1465,7 +1491,8 @@ void Test_HK_CheckStatusOfCopyTable_TblInfoUpUpdateFail(void)
     int32 strCmpResult;
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Unexpected CFE_TBL_Update return (0x%%08X) for Copy Table");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_GetStatus), CFE_TBL_INFO_UPDATE_PENDING);
@@ -1505,7 +1532,8 @@ void Test_HK_CheckStatusOfCopyTable_TblInfoUpGetAddrFail(void)
     int32 strCmpResult;
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Unexpected CFE_TBL_GetAddress return (0x%%08X) for Copy Table");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_GetStatus), CFE_TBL_INFO_UPDATE_PENDING);
@@ -1546,7 +1574,8 @@ void Test_HK_CheckStatusOfCopyTable_TblInfoUpProcessFail(void)
     int32 strCmpResult;
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Process New Copy Table Failed, status = 0x%%08X");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_GetStatus), CFE_TBL_INFO_UPDATE_PENDING);
@@ -1651,7 +1680,8 @@ void Test_HK_CheckStatusOfDumpTable_TblStatFail(void)
     int32 strCmpResult;
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Unexpected CFE_TBL_GetStatus return (0x%%08X) for Runtime Table");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_GetStatus), !CFE_SUCCESS);
@@ -1715,7 +1745,8 @@ void Test_HK_CheckStatusOfDumpTable_TblStatUpDumpFail(void)
     int32 strCmpResult;
     char  ExpectedEventString[CFE_MISSION_EVS_MAX_MESSAGE_LENGTH];
 
-    snprintf(ExpectedEventString, CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
+    snprintf(ExpectedEventString,
+             CFE_MISSION_EVS_MAX_MESSAGE_LENGTH,
              "Unexpected CFE_TBL_DumpToBuffer return (0x%%08X) for Runtime Table");
 
     UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_GetStatus), CFE_TBL_INFO_DUMP_PENDING);
@@ -1949,110 +1980,198 @@ void UtTest_Setup(void)
     /* Boiler Plate */
 
     /* Test functions for HK_ProcessIncomingHkData */
-    UtTest_Add(Test_HK_ProcessIncomingHkData_MidNotFound, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessIncomingHkData_MidNotFound,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessIncomingHkData_MidNotFound");
-    UtTest_Add(Test_HK_ProcessIncomingHkData_LengthOkEqual, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessIncomingHkData_LengthOkEqual,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessIncomingHkData_LengthOkEqual");
-    UtTest_Add(Test_HK_ProcessIncomingHkData_LengthOkGreater, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessIncomingHkData_LengthOkGreater,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessIncomingHkData_LengthOkGreater");
-    UtTest_Add(Test_HK_ProcessIncomingHkData_MessageError, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessIncomingHkData_MessageError,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessIncomingHkData_MessageError");
 
     /* Test functions for HK_ValidateHkCopyTable */
-    UtTest_Add(Test_HK_ValidateHkCopyTable_Success, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ValidateHkCopyTable_Success,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ValidateHkCopyTable_Success");
     UtTest_Add(Test_HK_ValidateHkCopyTable_Error, HK_Test_Setup, HK_Test_TearDown, "Test_HK_ValidateHkCopyTable_Error");
 
     /* Test functions for HK_ProcessNewCopyTable */
-    UtTest_Add(Test_HK_ProcessNewCopyTable_EmptyTable, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessNewCopyTable_EmptyTable,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessNewCopyTable_EmptyTable");
-    UtTest_Add(Test_HK_ProcessNewCopyTable_NullCpyTbl, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessNewCopyTable_NullCpyTbl,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessNewCopyTable_NullCpyTbl");
-    UtTest_Add(Test_HK_ProcessNewCopyTable_NullRtTbl, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessNewCopyTable_NullRtTbl,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessNewCopyTable_NullRtTbl");
-    UtTest_Add(Test_HK_ProcessNewCopyTable_PoolBufFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessNewCopyTable_PoolBufFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessNewCopyTable_PoolBufFail");
-    UtTest_Add(Test_HK_ProcessNewCopyTable_SubscribeFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessNewCopyTable_SubscribeFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessNewCopyTable_SubscribeFail");
-    UtTest_Add(Test_HK_ProcessNewCopyTable_Success, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessNewCopyTable_Success,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessNewCopyTable_Success");
-    UtTest_Add(Test_HK_ProcessNewCopyTable_Success2, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessNewCopyTable_Success2,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessNewCopyTable_Success2");
-    UtTest_Add(Test_HK_ProcessNewCopyTable_PacketSizeZero, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessNewCopyTable_PacketSizeZero,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessNewCopyTable_PacketSizeZero");
-    UtTest_Add(Test_HK_ProcessNewCopyTable_AllPacketsSizeZero, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_ProcessNewCopyTable_AllPacketsSizeZero,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_ProcessNewCopyTable_AllPacketsSizeZero");
 
     /* Test functions for HK_TearDownOldCopyTable */
-    UtTest_Add(Test_HK_TearDownOldCopyTable_NullCpyTbl, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TearDownOldCopyTable_NullCpyTbl,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TearDownOldCopyTable_NullCpyTbl");
-    UtTest_Add(Test_HK_TearDownOldCopyTable_NullRtTbl, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TearDownOldCopyTable_NullRtTbl,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TearDownOldCopyTable_NullRtTbl");
-    UtTest_Add(Test_HK_TearDownOldCopyTable_PoolFreeFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TearDownOldCopyTable_PoolFreeFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TearDownOldCopyTable_PoolFreeFail");
-    UtTest_Add(Test_HK_TearDownOldCopyTable_Success, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TearDownOldCopyTable_Success,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TearDownOldCopyTable_Success");
-    UtTest_Add(Test_HK_TearDownOldCopyTable_EmptyTable, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TearDownOldCopyTable_EmptyTable,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TearDownOldCopyTable_EmptyTable");
-    UtTest_Add(Test_HK_TearDownOldCopyTable_Success2, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_TearDownOldCopyTable_Success2,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_TearDownOldCopyTable_Success2");
 
     /* Test functions for HK_SendCombinedHkPacket */
-    UtTest_Add(Test_HK_SendCombinedHkPacket_NoMissingData, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_SendCombinedHkPacket_NoMissingData,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_SendCombinedHkPacket_NoMissingData");
-    UtTest_Add(Test_HK_SendCombinedHkPacket_MissingData, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_SendCombinedHkPacket_MissingData,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_SendCombinedHkPacket_MissingData");
-    UtTest_Add(Test_HK_SendCombinedHkPacket_EmptyTable, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_SendCombinedHkPacket_EmptyTable,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_SendCombinedHkPacket_EmptyTable");
-    UtTest_Add(Test_HK_SendCombinedHkPacket_PacketNotFound, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_SendCombinedHkPacket_PacketNotFound,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_SendCombinedHkPacket_PacketNotFound");
 
     /* Test functions for HK_CheckStatusOfTables */
-    UtTest_Add(Test_HK_CheckStatusOfTables_AllSuccess, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfTables_AllSuccess,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfTables_AllSuccess");
-    UtTest_Add(Test_HK_CheckStatusOfTables_CpyTblFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfTables_CpyTblFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfTables_CpyTblFail");
-    UtTest_Add(Test_HK_CheckStatusOfTables_RtTblFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfTables_RtTblFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfTables_RtTblFail");
 
     /* Test functions for HK_CheckStatusOfCopyTable */
-    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblSuccess, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblSuccess,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfCopyTable_TblSuccess");
-    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblStatFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblStatFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfCopyTable_TblStatFail");
-    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblValPendingSuccess, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblValPendingSuccess,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfCopyTable_TblValPendingSuccess");
-    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblValPendingFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblValPendingFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfCopyTable_TblValPendingFail");
-    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblInfoUpReleaseFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblInfoUpReleaseFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfCopyTable_TblInfoUpReleaseFail");
-    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblInfoUpUpdateFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblInfoUpUpdateFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfCopyTable_TblInfoUpUpdateFail");
-    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblInfoUpGetAddrFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblInfoUpGetAddrFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfCopyTable_TblInfoUpGetAddrFail");
-    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblInfoUpProcessFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblInfoUpProcessFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfCopyTable_TblInfoUpProcessFail");
-    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblInfoUpProcessSuccess, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfCopyTable_TblInfoUpProcessSuccess,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfCopyTable_TblInfoUpProcessSuccess");
 
     /* Test functions for HK_CheckStatusOfDumpTable */
-    UtTest_Add(Test_HK_CheckStatusOfDumpTable_TblStatSuccess, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfDumpTable_TblStatSuccess,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfDumpTable_TblStatSuccess");
-    UtTest_Add(Test_HK_CheckStatusOfDumpTable_TblStatFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfDumpTable_TblStatFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfDumpTable_TblStatFail");
-    UtTest_Add(Test_HK_CheckStatusOfDumpTable_TblStatUpDumpSuccess, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfDumpTable_TblStatUpDumpSuccess,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfDumpTable_TblStatUpDumpSuccess");
-    UtTest_Add(Test_HK_CheckStatusOfDumpTable_TblStatUpDumpFail, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckStatusOfDumpTable_TblStatUpDumpFail,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckStatusOfDumpTable_TblStatUpDumpFail");
 
     /* Test functions for HK_CheckForMissingData */
-    UtTest_Add(Test_HK_CheckForMissingData_MissingData, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckForMissingData_MissingData,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckForMissingData_MissingData");
-    UtTest_Add(Test_HK_CheckForMissingData_NoMissingData_AddrNull, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckForMissingData_NoMissingData_AddrNull,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckForMissingData_NoMissingData_AddrNull");
-    UtTest_Add(Test_HK_CheckForMissingData_NoMissingData_OutputMidMismatch, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckForMissingData_NoMissingData_OutputMidMismatch,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckForMissingData_NoMissingData_OutputMidMismatch");
-    UtTest_Add(Test_HK_CheckForMissingData_NoMissingData_DataPresent, HK_Test_Setup, HK_Test_TearDown,
+    UtTest_Add(Test_HK_CheckForMissingData_NoMissingData_DataPresent,
+               HK_Test_Setup,
+               HK_Test_TearDown,
                "Test_HK_CheckForMissingData_NoMissingData_DataPresent");
 
     /* Test functions for HK_SetFlagsToNotPresent */
