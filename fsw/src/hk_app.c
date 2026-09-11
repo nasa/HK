@@ -48,7 +48,7 @@ HK_AppData_t HK_AppData;
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_AppMain(void)
 {
-    CFE_Status_t     Status = CFE_SUCCESS;
+    CFE_Status_t     Status;
     CFE_SB_Buffer_t *BufPtr = NULL;
 
     /*
@@ -131,7 +131,7 @@ void HK_AppMain(void)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 CFE_Status_t HK_AppInit(void)
 {
-    CFE_Status_t Status = CFE_SUCCESS;
+    CFE_Status_t Status;
 
     HK_AppData.RunStatus = CFE_ES_RunStatus_APP_RUN;
 
@@ -240,14 +240,12 @@ CFE_Status_t HK_AppInit(void)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 CFE_Status_t HK_TableInit(void)
 {
-    CFE_Status_t Status = CFE_SUCCESS;
-
     /* Register The HK Copy Table */
-    Status = CFE_TBL_Register(&HK_AppData.CopyTableHandle,
-                              HK_COPY_TABLE_NAME,
-                              (sizeof(HK_CopyTableEntry_t) * HK_COPY_TABLE_ENTRIES),
-                              CFE_TBL_OPT_DBL_BUFFER | CFE_TBL_OPT_LOAD_DUMP,
-                              HK_ValidateHkCopyTable);
+    CFE_Status_t Status = CFE_TBL_Register(&HK_AppData.CopyTableHandle,
+                                           HK_COPY_TABLE_NAME,
+                                           (sizeof(HK_CopyTableEntry_t) * HK_COPY_TABLE_ENTRIES),
+                                           CFE_TBL_OPT_DBL_BUFFER | CFE_TBL_OPT_LOAD_DUMP,
+                                           HK_ValidateHkCopyTable);
 
     if (Status != CFE_SUCCESS)
     {
