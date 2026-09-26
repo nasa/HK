@@ -40,7 +40,6 @@
 ** Type definitions
 **************************************************************************/
 
-typedef HK_CopyTableEntry_t    HK_CopyTable_Array_t[HK_COPY_TABLE_ENTRIES];
-typedef HK_RuntimeTableEntry_t HK_RuntimeTable_Array_t[HK_COPY_TABLE_ENTRIES];
+typedef HK_CopyTableEntry_t HK_CopyTable_Array_t[HK_COPY_TABLE_ENTRIES];
 
 #endif
