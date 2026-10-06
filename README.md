@@ -35,7 +35,7 @@ For information about a mission ready cFS bundle, see: https://github.com/nasa/c
 
 ## Known issues
 
-See all [open issues](https://github.com/nasa/CS/issues) and closed to milestones later than this version.
+See all [open issues](https://github.com/nasa/HK/issues) and closed to milestones later than this version.
 
 ## Getting Help
 
