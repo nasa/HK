@@ -37,8 +37,4 @@
 #include "hk_tbldefs.h"
 #include "hk_tblstruct.h"
 
-/* Provide backward compatibility with existing table definitions */
-typedef HK_CopyTableEntry_t    hk_copy_table_entry_t;
-typedef HK_RuntimeTableEntry_t hk_runtime_tbl_entry_t;
-
 #endif
