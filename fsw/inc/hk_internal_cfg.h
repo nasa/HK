@@ -137,7 +137,7 @@
  *       or equal to zero.
  */
 #define HK_MISSION_REV                  HK_INTERNAL_CFGVAL(MISSION_REV)
-#define DEFAULT_HK_INTERNAL_MISSION_REV 0
+#define DEFAULT_HK_INTERNAL_MISSION_REV 0xFF
 
 /**
  * \brief Maximum size allowed for HK combined packet
