@@ -44,15 +44,15 @@
 void HK_ProcessIncomingHkData(const CFE_SB_Buffer_t *BufPtr)
 {
     HK_CopyTableEntry_t    *StartOfCopyTable = HK_AppData.CopyTablePtr;
-    HK_CopyTableEntry_t    *CpyTblEntry      = NULL;
-    HK_RuntimeTableEntry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
-    HK_RuntimeTableEntry_t *RtTblEntry       = NULL;
-    uint16                  Loop             = 0;
-    CFE_SB_MsgId_t          MessageID        = CFE_SB_INVALID_MSG_ID;
-    uint8                  *DestPtr          = NULL;
-    uint8                  *SrcPtr           = NULL;
-    size_t                  MessageLength    = 0;
-    int32                   MessageErrors    = 0;
+    HK_CopyTableEntry_t    *CpyTblEntry;
+    HK_RuntimeTableEntry_t *StartOfRtTable = HK_AppData.RuntimeTablePtr;
+    HK_RuntimeTableEntry_t *RtTblEntry;
+    uint16                  Loop;
+    CFE_SB_MsgId_t          MessageID = CFE_SB_INVALID_MSG_ID;
+    uint8                  *DestPtr;
+    uint8                  *SrcPtr;
+    size_t                  MessageLength = 0;
+    int32                   MessageErrors = 0;
     int32                   LastByteAccessed;
 
     CFE_MSG_GetMsgId(&BufPtr->Msg, &MessageID);
@@ -205,13 +205,13 @@ int32 HK_ValidateHkCopyTable(void *TblPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 CFE_Status_t HK_ProcessNewCopyTable(HK_CopyTableEntry_t *CpyTblPtr, HK_RuntimeTableEntry_t *RtTblPtr)
 {
-    HK_CopyTableEntry_t    *StartOfCopyTable = NULL;
-    HK_CopyTableEntry_t    *OuterCpyEntry    = NULL;
-    HK_CopyTableEntry_t    *InnerDefEntry    = NULL;
-    HK_RuntimeTableEntry_t *StartOfRtTable   = NULL;
-    HK_RuntimeTableEntry_t *OuterRtEntry     = NULL;
-    HK_RuntimeTableEntry_t *InnerRtEntry     = NULL;
-    int32                   Loop1            = 0;
+    HK_CopyTableEntry_t    *StartOfCopyTable;
+    HK_CopyTableEntry_t    *OuterCpyEntry;
+    HK_CopyTableEntry_t    *InnerDefEntry;
+    HK_RuntimeTableEntry_t *StartOfRtTable;
+    HK_RuntimeTableEntry_t *OuterRtEntry;
+    HK_RuntimeTableEntry_t *InnerRtEntry;
+    int32                   Loop1;
     int32                   Loop2;
     CFE_SB_MsgId_t          MidOfThisPacket;
     int32                   SizeOfThisPacket;
@@ -358,18 +358,18 @@ CFE_Status_t HK_ProcessNewCopyTable(HK_CopyTableEntry_t *CpyTblPtr, HK_RuntimeTa
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 CFE_Status_t HK_TearDownOldCopyTable(HK_CopyTableEntry_t *CpyTblPtr, HK_RuntimeTableEntry_t *RtTblPtr)
 {
-    HK_CopyTableEntry_t    *StartOfCopyTable = NULL;
-    HK_CopyTableEntry_t    *OuterCpyEntry    = NULL;
-    HK_CopyTableEntry_t    *InnerDefEntry    = NULL;
-    HK_RuntimeTableEntry_t *StartOfRtTable   = NULL;
-    HK_RuntimeTableEntry_t *OuterRtEntry     = NULL;
-    HK_RuntimeTableEntry_t *InnerRtEntry     = NULL;
-    int32                   Loop1            = 0;
+    HK_CopyTableEntry_t    *StartOfCopyTable;
+    HK_CopyTableEntry_t    *OuterCpyEntry;
+    HK_CopyTableEntry_t    *InnerDefEntry;
+    HK_RuntimeTableEntry_t *StartOfRtTable;
+    HK_RuntimeTableEntry_t *OuterRtEntry;
+    HK_RuntimeTableEntry_t *InnerRtEntry;
+    int32                   Loop1;
     int32                   Loop2;
     CFE_SB_MsgId_t          MidOfThisPacket;
-    void                   *OutputPktAddr = NULL;
-    void                   *InnerPktAddr  = NULL;
-    void                   *SavedPktAddr  = NULL;
+    void                   *OutputPktAddr;
+    void                   *InnerPktAddr;
+    void                   *SavedPktAddr;
     CFE_Status_t            Result;
 
     /* Ensure that the input arguments are valid */
@@ -459,13 +459,13 @@ CFE_Status_t HK_TearDownOldCopyTable(HK_CopyTableEntry_t *CpyTblPtr, HK_RuntimeT
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_SendCombinedHkPacket(CFE_SB_MsgId_t WhichMidToSend)
 {
-    bool                    PacketFound      = false;
-    HK_RuntimeTableEntry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
-    HK_RuntimeTableEntry_t *RtTblEntry       = NULL;
-    int32                   Loop             = 0;
+    bool                    PacketFound    = false;
+    HK_RuntimeTableEntry_t *StartOfRtTable = HK_AppData.RuntimeTablePtr;
+    HK_RuntimeTableEntry_t *RtTblEntry;
+    int32                   Loop;
     CFE_SB_MsgId_t          ThisEntrysOutMid = CFE_SB_INVALID_MSG_ID;
     CFE_SB_MsgId_t          InputMidMissing  = CFE_SB_INVALID_MSG_ID;
-    CFE_SB_Buffer_t        *OutBuffer        = NULL;
+    CFE_SB_Buffer_t        *OutBuffer;
 
     /* Look thru each item in this Table, but only send this packet once, at most */
     for (Loop = 0; ((Loop < HK_COPY_TABLE_ENTRIES) && (PacketFound == false)); Loop++)
@@ -702,9 +702,9 @@ int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *Missi
     int32                   Loop             = 0;
     int32                   Status           = HK_NO_MISSING_DATA;
     HK_CopyTableEntry_t    *StartOfCopyTable = HK_AppData.CopyTablePtr;
-    HK_CopyTableEntry_t    *CpyTblEntry      = NULL;
-    HK_RuntimeTableEntry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
-    HK_RuntimeTableEntry_t *RtTblEntry       = NULL;
+    HK_CopyTableEntry_t    *CpyTblEntry;
+    HK_RuntimeTableEntry_t *StartOfRtTable = HK_AppData.RuntimeTablePtr;
+    HK_RuntimeTableEntry_t *RtTblEntry;
 
     /* Loop thru each item in the runtime table until end is reached or
      * data-not-present detected */
@@ -736,11 +736,11 @@ int32 HK_CheckForMissingData(CFE_SB_MsgId_t OutPktToCheck, CFE_SB_MsgId_t *Missi
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void HK_SetFlagsToNotPresent(CFE_SB_MsgId_t OutPkt)
 {
-    int32                   Loop             = 0;
+    int32                   Loop;
     HK_CopyTableEntry_t    *StartOfCopyTable = HK_AppData.CopyTablePtr;
-    HK_CopyTableEntry_t    *CpyTblEntry      = NULL;
-    HK_RuntimeTableEntry_t *StartOfRtTable   = HK_AppData.RuntimeTablePtr;
-    HK_RuntimeTableEntry_t *RtTblEntry       = NULL;
+    HK_CopyTableEntry_t    *CpyTblEntry;
+    HK_RuntimeTableEntry_t *StartOfRtTable = HK_AppData.RuntimeTablePtr;
+    HK_RuntimeTableEntry_t *RtTblEntry;
 
     /* Look thru each item in the runtime table until end is reached */
     for (Loop = 0; Loop < HK_COPY_TABLE_ENTRIES; Loop++)
